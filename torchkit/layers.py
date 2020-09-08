@@ -76,7 +76,30 @@ def conv3d(*args, **kwargs) -> torch.nn.modules.conv.Conv3d:
 
 
 class Flatten(nn.Module):
-    """Flattens convolutional feature maps for fully-connected layers."""
+    """Flattens convolutional feature maps for fully-connected layers.
+
+    This is a convenience module meant to be plugged into a
+    `torch.nn.Sequential` model.
+
+    Example usage:
+
+    ```python
+        import torch.nn as nn
+        from torchkit import layers
+
+        # Assume an input of shape (3, 28, 28).
+        net = nn.Sequential(
+            layers.conv2d(3, 8, kernel_size=3),
+            nn.ReLU(),
+            layers.conv2d(8, 16, kernel_size=3),
+            nn.ReLU(),
+            layers.Flatten(),
+            nn.Linear(28*28*16, 256),
+            nn.ReLU(),
+            nn.Linear(256, 2),
+        )
+    ```
+    """
 
     def __init__(self):
         super().__init__()
@@ -232,16 +255,7 @@ class GlobalAvgPool3d(_GlobalAvgPool):
 
 
 class CausalConv1d(nn.Conv1d):
-    """A causal a.k.a. masked 1D convolution.
-
-    Args:
-        in_channels: The number of input channels.
-        out_channels: The number of output channels.
-        kernel_size: The filter size.
-        stride: The filter stride.
-        dilation: The filter dilation factor.
-        bias: Whether to add the bias term or not.
-    """
+    """A causal a.k.a. masked 1D convolution."""
 
     def __init__(
         self,
@@ -252,6 +266,18 @@ class CausalConv1d(nn.Conv1d):
         dilation: int = 1,
         bias: bool = True,
     ):
+        """Constructor.
+
+        Args:
+            in_channels: The number of input channels.
+            out_channels: The number of output channels.
+            kernel_size: The filter size.
+            stride: The filter stride.
+            dilation: The filter dilation factor.
+            bias: Whether to add the bias term or not.
+
+        :meta public:
+        """
         self.__padding = (kernel_size - 1) * dilation
 
         super().__init__(

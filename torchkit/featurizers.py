@@ -14,6 +14,19 @@ class BaseFeaturizer(abc.ABC, nn.Module):
     """Abstract base class for featurizers.
 
     Subclasses must implement the `_build_featurizer` method.
+
+    Note:
+        `layers_train` controls how the featurizer is fine-tuned. If set to
+        `'frozen'`, model weights and batch norm stats are also frozen. If set
+        to `'all'`, model weights and batch norm stats are trained and updated.
+        If set to `'bn_only'`, only the batch norm variables and statistics are
+        trained and updated.
+
+        `bn_use_running_stats` gives you more fine-grained control over the
+        batch norm statistics. If set to `False`, the mean and variance are
+        calculated from the batch and the statistics are updated. If set to
+        `True`, batch norm layers will not update and only normalize using the
+        running mean and variance that were computed during pretraining.
     """
 
     def __init__(
@@ -29,7 +42,7 @@ class BaseFeaturizer(abc.ABC, nn.Module):
             layers_train: Controls which layers are trained. Can be one of
                 `['all', 'frozen', 'bn_only']`.
             bn_use_running_stats: Set to `True` to disable batch statistics and
-                use running mean and variance learned during training.
+                use running mean and variance learned during pre-training.
         """
         super().__init__()
 
@@ -68,7 +81,7 @@ class BaseFeaturizer(abc.ABC, nn.Module):
         pass
 
     def forward(self, x: TensorType) -> TensorType:
-        """Extract features from the video frames.
+        """Extract features from a batch or batch of sequence of images.
 
         Raises:
             ValueError: If the input tensor is not 2D (batch of images) or 3D

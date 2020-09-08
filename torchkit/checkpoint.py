@@ -19,7 +19,7 @@ class Checkpoint:
 
     ```python
         import os
-        from torchkit import Checkpoint
+        from torchkit.checkpoint import Checkpoint
 
         checkpoint_dir = "/tmp/training_checkpoints"
         checkpoint_path = os.path.join(checkpoint_dir, "weights.ckpt")
@@ -125,7 +125,7 @@ class CheckpointManager:
     Example usage:
 
     ```python
-        from torchkit import Checkpoint, CheckpointManager
+        from torchkit.checkpoint import Checkpoint, CheckpointManager
 
         # Create a checkpoint manager instance.
         checkpoint_manager = checkpoint.CheckpointManager(

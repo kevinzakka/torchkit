@@ -1,6 +1,3 @@
-"""Useful loss methods.
-"""
-
 import torch
 import torch.nn.functional as F
 
@@ -79,9 +76,11 @@ def huber_loss(
     delta: float,
     reduction: str = "mean",
 ) -> TensorType:
-    """Huber loss.
+    """Huber loss with tunable margin [1].
 
-    This loss function is less sensitive to outliers than the L2 loss.
+    This is a more general version of PyTorch's
+    `torch.nn.functional.smooth_l1_loss` that allows the user to change the
+    margin parameter.
 
     Args:
         input: A `FloatTensor` representing the model output.
@@ -95,6 +94,10 @@ def huber_loss(
         If reduction is `none`, a 2D tensor.
         If reduction is `sum`, a 1D tensor.
         If reduction is `mean`, a scalar 1D tensor.
+
+    References:
+        [1]: Wikipedia Huber Loss,
+        https://en.wikipedia.org/wiki/Huber_loss
     """
     assert isinstance(input, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(target, (torch.FloatTensor, torch.cuda.FloatTensor))

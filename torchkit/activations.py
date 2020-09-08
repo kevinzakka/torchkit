@@ -22,6 +22,11 @@ class Swish(nn.Module):
     """
 
     def __init__(self, inplace: bool = False):
+        """Constructor.
+
+        Args:
+            inplace: Perform the activation inplace.
+        """
         super().__init__()
 
         self.inplace = inplace
