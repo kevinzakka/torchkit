@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>torchkit.config &mdash; torchkit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="torchkit.experiment" href="../expm.experiment/" />
+    <link rel="prev" title="Experiment Management" href="../expm/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> torchkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../expm/">Experiment Management</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../expm.experiment/">torchkit.experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../expm.checkpoint/">torchkit.checkpoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../expm.logger/">torchkit.logger</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../featurizers/">torchkit.featurizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../activations/">torchkit.activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/">torchkit.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">torchkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../expm/">Experiment Management</a> &raquo;</li>
+        
+      <li>torchkit.config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/torchkit/expm.config.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="torchkit-config">
+<h1>torchkit.config<a class="headerlink" href="#torchkit-config" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is only meant to serve as a template for your project’s config file.</p>
+</div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">yacs.config</span> <span class="kn">import</span> <span class="n">CfgNode</span> <span class="k">as</span> <span class="n">CN</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Beginning of config file</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Directories</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">TEMP_DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">LOG_DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">)</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">CKPT_DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span><span class="p">,</span> <span class="s2">&quot;checkpoints&quot;</span><span class="p">)</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Experiment params</span>
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Seed for python, numpy and pytorch.</span>
+<span class="c1"># Set this to `None` if you do not want to seed the results.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">SEED</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Optimization level for mixed precision training using NVIDIA Apex.</span>
+<span class="c1"># Can be one of [0, 1, 2].</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">FP16_OPT</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">_C</span><span class="o">.</span><span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">TRAIN_MAX_ITERS</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Data augmentation params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">AUGMENTATION</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="n">_C</span><span class="o">.</span><span class="n">IMAGE_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+
+<span class="n">_C</span><span class="o">.</span><span class="n">AUGMENTATION</span><span class="o">.</span><span class="n">TRAIN</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;global_resize&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;horizontal_flip&quot;</span><span class="p">,</span>
+    <span class="c1"># &#39;vertical_flip&#39;,</span>
+    <span class="c1"># &quot;color_jitter&quot;,</span>
+    <span class="c1"># &quot;rotate&quot;,</span>
+    <span class="s2">&quot;normalize&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">_C</span><span class="o">.</span><span class="n">AUGMENTATION</span><span class="o">.</span><span class="n">EVAL</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;global_resize&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;normalize&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Evaluator params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">EVAL</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># How many iterations of the validation data loader to run.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">EVAL</span><span class="o">.</span><span class="n">VAL_ITERS</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Model params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1">## Feature extraction network</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># Can be one of:</span>
+<span class="c1"># &#39;resnet18&#39;, &#39;resnet34&#39;, &#39;resnet50&#39;, &#39;resnet101&#39;</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">NETWORK_TYPE</span> <span class="o">=</span> <span class="s2">&quot;resnet18&quot;</span>
+
+<span class="c1"># Whether to use pretrained ImageNet weights.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">PRETRAINED</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># This variable controls how we want proceed with fine-tuning the base model.</span>
+<span class="c1"># &#39;frozen&#39;: weights are fixed and batch_norm stats are also fixed.</span>
+<span class="c1"># &#39;all&#39;: everything is trained and batch norm stats are updated.</span>
+<span class="c1"># &#39;bn_only&#39;: only tune batch_norm variables and update batch norm stats.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">TRAIN_BASE</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+
+<span class="c1"># This variable controls how the batch norm layers apply normalization. If set</span>
+<span class="c1"># to False, the mean and variance are calculated from the batch. If set to True,</span>
+<span class="c1"># batch norm layers will normalize using the mean and variance of its moving</span>
+<span class="c1"># (i.e. running) statistics, learned during training.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">BN_USE_RUNNING_STATS</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># These variables specify where to place the output head of the base model.</span>
+<span class="c1"># Inception networks use a string.</span>
+<span class="c1"># Resnet networks use an integer.</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">OUT_LAYER_NAME</span> <span class="o">=</span> <span class="s2">&quot;Mixed_5d&quot;</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">FEATURIZER</span><span class="o">.</span><span class="n">OUT_LAYER_IDX</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Loss params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">LOSS</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Optimizer params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">OPTIMIZER</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># supported optimizers are: adam, sgd</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">OPTIMIZER</span><span class="o">.</span><span class="n">TYPE</span> <span class="o">=</span> <span class="s2">&quot;adam&quot;</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">OPTIMIZER</span><span class="o">.</span><span class="n">MOMENTUM</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">OPTIMIZER</span><span class="o">.</span><span class="n">WEIGHT_DECAY</span> <span class="o">=</span> <span class="mf">1e-4</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Logging params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">LOGGING</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># number of steps between summary logging</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">LOGGING</span><span class="o">.</span><span class="n">REPORT_INTERVAL</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># number of steps between eval logging</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">LOGGING</span><span class="o">.</span><span class="n">EVAL_INTERVAL</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># Checkpointing params</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">CHECKPOINT</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
+
+<span class="c1"># number of steps between consecutive checkpoints</span>
+<span class="n">_C</span><span class="o">.</span><span class="n">CHECKPOINT</span><span class="o">.</span><span class="n">SAVE_INTERVAL</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># ============================================== #</span>
+<span class="c1"># End of config file</span>
+<span class="c1"># ============================================== #</span>
+<span class="n">CONFIG</span> <span class="o">=</span> <span class="n">_C</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../expm.experiment/" class="btn btn-neutral float-right" title="torchkit.experiment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../expm/" class="btn btn-neutral float-left" title="Experiment Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Kevin Zakka
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
