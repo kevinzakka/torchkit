@@ -169,6 +169,92 @@
   <div class="section" id="torchkit-utils-video-utils">
 <h1>torchkit.utils.video_utils<a class="headerlink" href="#torchkit-utils-video-utils" title="Permalink to this headline">¶</a></h1>
 <p>Helper methods for manipulating videos.</p>
+<span class="target" id="module-torchkit.utils.video_utils"></span><dl class="py function">
+<dt id="torchkit.utils.video_utils.video_dimensions">
+<code class="sig-prename descclassname">torchkit.utils.video_utils.</code><code class="sig-name descname">video_dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video_filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><a class="headerlink" href="#torchkit.utils.video_utils.video_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the (height, width) of a video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>video_filename</strong> – The name of the video file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple containing the height and width of the frames of the video.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the video doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.video_utils.video_fps">
+<code class="sig-prename descclassname">torchkit.utils.video_utils.</code><code class="sig-name descname">video_fps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video_filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#torchkit.utils.video_utils.video_fps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a video’s frame rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>video_filename</strong> – The name of the video file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A float indicating the number of frames per second in the video.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the video doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.video_utils.video_to_audio">
+<code class="sig-prename descclassname">torchkit.utils.video_utils.</code><code class="sig-name descname">video_to_audio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video_filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sampling_rate</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">44100</span></em><span class="sig-paren">)</span> &#x2192; Generator<span class="p">[</span>Tuple<span class="p">[</span>numpy.ndarray<span class="p">, </span>int<span class="p">]</span><span class="p">, </span>None<span class="p">, </span>None<span class="p">]</span><a class="headerlink" href="#torchkit.utils.video_utils.video_to_audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all audio chunks from a video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video_filename</strong> – The name of the video file.</p></li>
+<li><p><strong>sampling_rate</strong> – The number of audio samples per second.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterator over a tuple of numpy arrays and ints, where each array is a
+buffer of floats in the range [-1, 1] and each int is its associated
+timestamp in seconds.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the video doesn’t exist.</p></li>
+<li><p><strong>OSError</strong> – If the audio stream is empty.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.video_utils.video_to_frames">
+<code class="sig-prename descclassname">torchkit.utils.video_utils.</code><code class="sig-name descname">video_to_frames</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video_filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">fps</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Generator<span class="p">[</span>Tuple<span class="p">[</span>numpy.ndarray<span class="p">, </span>float<span class="p">]</span><span class="p">, </span>None<span class="p">, </span>None<span class="p">]</span><a class="headerlink" href="#torchkit.utils.video_utils.video_to_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all frames from a video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video_filename</strong> – The name of the video file.</p></li>
+<li><p><strong>fps</strong> – The fps of the video. If 0, it will be inferred from the metadata
+of the video.</p></li>
+<li><p><strong>resize</strong> – If the frames are to be resized, this specifies the height and
+width. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> to keep original resolution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterator over a tuple of numpy arrays and ints, where each array is
+an RGB uint8 frame and each int is its associated timestamp in seconds.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If fps is greater than the rate of the video.</p></li>
+<li><p><strong>FileNotFoundError</strong> – If the video doesn’t exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
