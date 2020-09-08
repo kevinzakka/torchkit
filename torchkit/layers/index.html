@@ -159,8 +159,199 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="torchkit-layers">
-<h1>torchkit.layers<a class="headerlink" href="#torchkit-layers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-torchkit.layers">
+<span id="torchkit-layers"></span><h1>torchkit.layers<a class="headerlink" href="#module-torchkit.layers" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="torchkit.layers.conv2d">
+<code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; torch.nn.modules.conv.Conv2d<a class="headerlink" href="#torchkit.layers.conv2d" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">same</span></code> 2D convolution, i.e. output shape equals input shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_planes</strong> – The number of input feature maps.</p></li>
+<li><p><strong>out_planes</strong> – The number of output feature maps.</p></li>
+<li><p><strong>kernel_size</strong> – The filter size.</p></li>
+<li><p><strong>stride</strong> – The filter stride.</p></li>
+<li><p><strong>dilation</strong> – The filter dilation factor.</p></li>
+<li><p><strong>bias</strong> – Whether to add a bias.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.layers.conv3d">
+<code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">conv3d</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; torch.nn.modules.conv.Conv3d<a class="headerlink" href="#torchkit.layers.conv3d" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">same</span></code> 3D convolution, i.e. output shape equals input shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_planes</strong> – The number of input feature maps.</p></li>
+<li><p><strong>out_planes</strong> – The number of output feature maps.</p></li>
+<li><p><strong>kernel_size</strong> – The filter size.</p></li>
+<li><p><strong>stride</strong> – The filter stride.</p></li>
+<li><p><strong>dilation</strong> – The filter dilation factor.</p></li>
+<li><p><strong>bias</strong> – Whether to add a bias.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.Flatten">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">Flatten</code><a class="headerlink" href="#torchkit.layers.Flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flattens convolutional feature maps for fully-connected layers.</p>
+<p>This is a convenience module meant to be plugged into a
+<code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code> model.</p>
+<p>Example usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">torchkit</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="c1"># Assume an input of shape (3, 28, 28).</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="torchkit.layers.Flatten.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.Flatten.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.SpatialSoftArgmax">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">SpatialSoftArgmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.SpatialSoftArgmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatial softmax as defined in [1].</p>
+<p>Concretely, the spatial softmax of each feature map is used to compute a
+weighted mean of the pixel locations, effectively performing a soft arg-max
+over the feature dimension.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>References:</dt><dd><p>[1]: End-to-End Training of Deep Visuomotor Policies,
+<a class="reference external" href="https://arxiv.org/abs/1504.00702">https://arxiv.org/abs/1504.00702</a></p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt id="torchkit.layers.SpatialSoftArgmax.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.SpatialSoftArgmax.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>normalize</strong> – Whether to use normalized image coordinates, i.e.
+coordinates in the range <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalMaxPool1d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalMaxPool1d</code><a class="headerlink" href="#torchkit.layers.GlobalMaxPool1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global max pooling operation for temporal or 1D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalMaxPool1d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalMaxPool1d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalMaxPool2d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalMaxPool2d</code><a class="headerlink" href="#torchkit.layers.GlobalMaxPool2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global max pooling operation for spatial or 2D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalMaxPool2d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalMaxPool2d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalMaxPool3d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalMaxPool3d</code><a class="headerlink" href="#torchkit.layers.GlobalMaxPool3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global max pooling operation for 3D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalMaxPool3d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalMaxPool3d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalAvgPool1d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalAvgPool1d</code><a class="headerlink" href="#torchkit.layers.GlobalAvgPool1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global average pooling operation for temporal or 1D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalAvgPool1d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalAvgPool1d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalAvgPool2d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalAvgPool2d</code><a class="headerlink" href="#torchkit.layers.GlobalAvgPool2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global average pooling operation for spatial or 2D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalAvgPool2d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalAvgPool2d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.GlobalAvgPool3d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">GlobalAvgPool3d</code><a class="headerlink" href="#torchkit.layers.GlobalAvgPool3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global average pooling operation for 3D data.</p>
+<dl class="py method">
+<dt id="torchkit.layers.GlobalAvgPool3d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.GlobalAvgPool3d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.layers.CausalConv1d">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.layers.</code><code class="sig-name descname">CausalConv1d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_channels</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">out_channels</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">stride</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dilation</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">bias</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.CausalConv1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A causal a.k.a. masked 1D convolution.</p>
+<dl class="py method">
+<dt id="torchkit.layers.CausalConv1d.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_channels</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">out_channels</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">stride</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dilation</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">bias</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.layers.CausalConv1d.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_channels</strong> – The number of input channels.</p></li>
+<li><p><strong>out_channels</strong> – The number of output channels.</p></li>
+<li><p><strong>kernel_size</strong> – The filter size.</p></li>
+<li><p><strong>stride</strong> – The filter stride.</p></li>
+<li><p><strong>dilation</strong> – The filter dilation factor.</p></li>
+<li><p><strong>bias</strong> – Whether to add the bias term or not.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

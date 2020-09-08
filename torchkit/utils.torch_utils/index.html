@@ -166,8 +166,119 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="torchkit-utils-torch-utils">
-<h1>torchkit.utils.torch_utils<a class="headerlink" href="#torchkit-utils-torch-utils" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-torchkit.utils.torch_utils">
+<span id="torchkit-utils-torch-utils"></span><h1>torchkit.utils.torch_utils<a class="headerlink" href="#module-torchkit.utils.torch_utils" title="Permalink to this headline">¶</a></h1>
+<p>Pytorch-related utils.</p>
+<dl class="py class">
+<dt id="torchkit.utils.torch_utils.Normalize">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">Normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize a batch of images.</p>
+<p>Default values are taken from [1].</p>
+<p class="rubric">References</p>
+<p>[1]: GitHub discussion,
+<a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
+<dl class="py method">
+<dt id="torchkit.utils.torch_utils.Normalize.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean</strong> – The color channel means. By default, ImageNet channel means
+are used.</p></li>
+<li><p><strong>std</strong> – The color channel standard deviation. By default, ImageNet
+channel standard deviations are used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.utils.torch_utils.UnNormalize">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">UnNormalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unnormalize a batch of images that have been normalized.</p>
+<p>Speficially, re-multiply by the standard deviation and
+shift by the mean. Default values are taken from [1].</p>
+<p class="rubric">References</p>
+<p>[1]: GitHub discussion,
+<a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
+<dl class="py method">
+<dt id="torchkit.utils.torch_utils.UnNormalize.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean</strong> – The color channel means. By default, ImageNet channel means
+are used.</p></li>
+<li><p><strong>std</strong> – The color channel standard deviation. By default, ImageNet
+channel standard deviations are used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.torch_utils.freeze_model">
+<code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">freeze_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">torch.nn.modules.module.Module</span></em>, <em class="sig-param"><span class="n">bn_freeze_affine</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Freeze PyTorch model weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – The model to freeze, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
+<li><p><strong>bn_freeze_affine</strong> – If True, freezes batch norm params gamma and beta.</p></li>
+<li><p><strong>bn_use_running_stats</strong> – If True, switches from batch statistics to running
+mean and std. This is recommended for very small batch sizes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.torch_utils.get_total_params">
+<code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">get_total_params</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">torch.nn.modules.module.Module</span></em>, <em class="sig-param"><span class="n">trainable</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total number of parameters in a PyTorch model <a class="reference external" href="https://stackoverflow.com/a/62508086">1</a>.</p>
+<p>Example usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">SimpleMLP</span><span class="p">()</span>
+<span class="n">num_params</span> <span class="o">=</span> <span class="n">torch_utils</span><span class="o">.</span><span class="n">get_total_params</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+
+<span class="c1"># prints the following:</span>
+<span class="o">+------------+------------+</span>
+<span class="o">|</span>  <span class="n">Modules</span>   <span class="o">|</span> <span class="n">Parameters</span> <span class="o">|</span>
+<span class="o">+------------+------------+</span>
+<span class="o">|</span> <span class="n">fc1</span><span class="o">.</span><span class="n">weight</span> <span class="o">|</span>     <span class="mi">48</span>     <span class="o">|</span>
+<span class="o">|</span>  <span class="n">fc1</span><span class="o">.</span><span class="n">bias</span>  <span class="o">|</span>     <span class="mi">16</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="n">fc2</span><span class="o">.</span><span class="n">weight</span> <span class="o">|</span>     <span class="mi">32</span>     <span class="o">|</span>
+<span class="o">|</span>  <span class="n">fc2</span><span class="o">.</span><span class="n">bias</span>  <span class="o">|</span>     <span class="mi">2</span>      <span class="o">|</span>
+<span class="o">+------------+------------+</span>
+<span class="n">Total</span> <span class="n">Trainable</span> <span class="n">Params</span><span class="p">:</span> <span class="mi">98</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – The model, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
+<li><p><strong>trainable</strong> – Only return trainable parameters.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+</dd></dl>
+
 </div>
 
 

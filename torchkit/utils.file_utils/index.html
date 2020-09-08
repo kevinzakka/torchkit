@@ -168,6 +168,189 @@
   <div class="section" id="torchkit-utils-file-utils">
 <h1>torchkit.utils.file_utils<a class="headerlink" href="#torchkit-utils-file-utils" title="Permalink to this headline">¶</a></h1>
 <p>A bunch of helper methods for interacting with dirs, subdirs and files.</p>
+<span class="target" id="module-torchkit.utils.file_utils"></span><dl class="py function">
+<dt id="torchkit.utils.file_utils.mkdir">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">mkdir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.mkdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a directory if it doesn’t already exist.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.rm">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">rm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.rm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a file or folder.</p>
+<p>Use with caution!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>IOError</strong> – If not a valid file or directory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.get_subdirs">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">get_subdirs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">nonempty</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">hidden</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">basename</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sortfunc</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Callable<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="headerlink" href="#torchkit.utils.file_utils.get_subdirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of subdirectories in a given directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> – The path to the directory.</p></li>
+<li><p><strong>nonempty</strong> – Only return non-empty subdirs.</p></li>
+<li><p><strong>hidden</strong> – Return hidden files as well.</p></li>
+<li><p><strong>sort</strong> – Whether to sort by alphabetical order.</p></li>
+<li><p><strong>basename</strong> – Only return the tail of the subdir paths.</p></li>
+<li><p><strong>sortfunc</strong> – An optional sorting Callable to use if sort is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.get_files">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">get_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sort</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">lexicographical</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="headerlink" href="#torchkit.utils.file_utils.get_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of files in a given directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> – The path to the directory.</p></li>
+<li><p><strong>pattern</strong> – The wildcard to filter files with.</p></li>
+<li><p><strong>sort</strong> – Whether to sort the returned list.</p></li>
+<li><p><strong>lexicographical</strong> – If sort, use lexicographical order. Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> for
+numerical ordering.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.is_folder_empty">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">is_folder_empty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#torchkit.utils.file_utils.is_folder_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>A folder is not empty if it contains &gt;=1 non hidden files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.load_jpeg">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">load_jpeg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#torchkit.utils.file_utils.load_jpeg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a JPEG image as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – The name of the image file.</p></li>
+<li><p><strong>resize</strong> – The height and width of the loaded image. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> to keep
+original image dims.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A numpy uint8 array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.write_image_to_jpeg">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">write_image_to_jpeg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">jpeg_quality</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">95</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.write_image_to_jpeg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a numpy uint8 image array as a JPEG image to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> – A numpy RGB uint8 image.</p></li>
+<li><p><strong>filename</strong> – The filename of the saved image.</p></li>
+<li><p><strong>jpeg_quality</strong> – The quality of the jpeg image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the numpy dtype is not uint8.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.write_audio_to_binary">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">write_audio_to_binary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.write_audio_to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a numpy float64 audio array as a binary npy file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> – A numpy float64 array.</p></li>
+<li><p><strong>filename</strong> – The filename of the saved audio file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the numpy dtype is not float64.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.write_timestamps_to_txt">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">write_timestamps_to_txt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.write_timestamps_to_txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a list of timestamps as a txt file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> – A numpy float64 array.</p></li>
+<li><p><strong>filename</strong> – The filename of the saved txt file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.flatten">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">flatten</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_list</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Any<span class="p">]</span><a class="headerlink" href="#torchkit.utils.file_utils.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flattens a list of lists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.copy_folder">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">copy_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.copy_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies a folder to a new location.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.move_folder">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">move_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.move_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a folder to a new location.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.copy_file">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">copy_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.copy_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies a file to a new location.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.move_file">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">move_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.move_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a file to a new location.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.write_json">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">write_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">d</span><span class="p">:</span> <span class="n">Mapping<span class="p">[</span>Any<span class="p">, </span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.utils.file_utils.write_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a dict to a json file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.load_json">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">load_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>Any<span class="p">, </span>Any<span class="p">]</span><a class="headerlink" href="#torchkit.utils.file_utils.load_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a json file to a dict.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.utils.file_utils.dict_from_list">
+<code class="sig-prename descclassname">torchkit.utils.file_utils.</code><code class="sig-name descname">dict_from_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>Any<span class="p">, </span>Any<span class="p">]</span><a class="headerlink" href="#torchkit.utils.file_utils.dict_from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a dictionary from a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – A flat list.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dict where the keys are range(0, len(x)) and the values are the list
+contents.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

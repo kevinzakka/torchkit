@@ -159,8 +159,111 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="torchkit-featurizers">
-<h1>torchkit.featurizers<a class="headerlink" href="#torchkit-featurizers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-torchkit.featurizers">
+<span id="torchkit-featurizers"></span><h1>torchkit.featurizers<a class="headerlink" href="#module-torchkit.featurizers" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="torchkit.featurizers.BaseFeaturizer">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.featurizers.</code><code class="sig-name descname">BaseFeaturizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'bn_only'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.BaseFeaturizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Abstract base class for featurizers.</p>
+<p>Subclasses must implement the <code class="docutils literal notranslate"><span class="pre">_build_featurizer</span></code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">layers_train</span></code> controls how the featurizer is fine-tuned. If set to
+<code class="docutils literal notranslate"><span class="pre">'frozen'</span></code>, model weights and batch norm stats are also frozen. If set
+to <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, model weights and batch norm stats are trained and updated.
+If set to <code class="docutils literal notranslate"><span class="pre">'bn_only'</span></code>, only the batch norm variables and statistics are
+trained and updated.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bn_use_running_stats</span></code> gives you more fine-grained control over the
+batch norm statistics. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, the mean and variance are
+calculated from the batch and the statistics are updated. If set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, batch norm layers will not update and only normalize using the
+running mean and variance that were computed during pretraining.</p>
+</div>
+<dl class="py method">
+<dt id="torchkit.featurizers.BaseFeaturizer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'bn_only'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.BaseFeaturizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pretrained</strong> – Whether to use Imagenet pretrained weights.</p></li>
+<li><p><strong>layers_train</strong> – Controls which layers are trained. Can be one of
+<code class="docutils literal notranslate"><span class="pre">['all',</span> <span class="pre">'frozen',</span> <span class="pre">'bn_only']</span></code>.</p></li>
+<li><p><strong>bn_use_running_stats</strong> – Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to disable batch statistics and
+use running mean and variance learned during pre-training.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="torchkit.featurizers.BaseFeaturizer.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">torch.Tensor</span></em><span class="sig-paren">)</span> &#x2192; torch.Tensor<a class="headerlink" href="#torchkit.featurizers.BaseFeaturizer.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract features from a batch or batch of sequence of images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the input tensor is not 2D (batch of images) or 3D
+(batch of sequence of images).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="torchkit.featurizers.BaseFeaturizer.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.featurizers.BaseFeaturizer.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the model in <code class="docutils literal notranslate"><span class="pre">train</span></code> mode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="torchkit.featurizers.BaseFeaturizer.eval">
+<code class="sig-name descname">eval</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.featurizers.BaseFeaturizer.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the model in <code class="docutils literal notranslate"><span class="pre">eval</span></code> mode.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.featurizers.ResNetFeaturizer">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.featurizers.</code><code class="sig-name descname">ResNetFeaturizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_type</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'resnet18'</span></em>, <em class="sig-param"><span class="n">out_layer_idx</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'bn_only'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.ResNetFeaturizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchkit.featurizers.BaseFeaturizer" title="torchkit.featurizers.BaseFeaturizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.featurizers.BaseFeaturizer</span></code></a></p>
+<p>A ResNet-based feature extractor.</p>
+<dl class="py method">
+<dt id="torchkit.featurizers.ResNetFeaturizer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_type</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'resnet18'</span></em>, <em class="sig-param"><span class="n">out_layer_idx</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">7</span></em>, <em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'bn_only'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.ResNetFeaturizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_type</strong> – The model type to use. Can be one of
+<code class="docutils literal notranslate"><span class="pre">['resnet18',</span> <span class="pre">'resnet34',</span> <span class="pre">'resnet50',</span> <span class="pre">'resnet101']</span></code>.</p></li>
+<li><p><strong>out_layer_idx</strong> – The index of the layer to use as output.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="torchkit.featurizers.InceptionFeaturizer">
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.featurizers.</code><code class="sig-name descname">InceptionFeaturizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_layer_name</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'Mixed_5d'</span></em>, <em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'frozen'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.InceptionFeaturizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchkit.featurizers.BaseFeaturizer" title="torchkit.featurizers.BaseFeaturizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.featurizers.BaseFeaturizer</span></code></a></p>
+<p>An InceptionV3-based feature extractor.</p>
+<dl class="py method">
+<dt id="torchkit.featurizers.InceptionFeaturizer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_layer_name</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'Mixed_5d'</span></em>, <em class="sig-param"><span class="n">pretrained</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">layers_train</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'frozen'</span></em>, <em class="sig-param"><span class="n">bn_use_running_stats</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.featurizers.InceptionFeaturizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>out_layer_name</strong> – Which layer of the inception model to use as the
+output.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

@@ -167,8 +167,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="torchkit-experiment">
-<h1>torchkit.experiment<a class="headerlink" href="#torchkit-experiment" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-torchkit.experiment">
+<span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="torchkit.experiment.seed_rng">
+<code class="sig-prename descclassname">torchkit.experiment.</code><code class="sig-name descname">seed_rng</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.experiment.seed_rng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds python, numpy, and torch RNGs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="torchkit.experiment.init_experiment">
+<code class="sig-prename descclassname">torchkit.experiment.</code><code class="sig-name descname">init_experiment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logdir</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n">yacs.config.CfgNode</span></em>, <em class="sig-param"><span class="n">config_file</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">override_list</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Sequence<span class="p">[</span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">transient</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.experiment.init_experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a training experiment.</p>
+<p>Instantiates the compute device (CPU, GPU), serializes the config file to
+the log directory, optionally updates the config variables with values from
+a provided yaml file and seeds the RNGs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logdir</strong> – Path to the log directory.</p></li>
+<li><p><strong>config</strong> – The module-wide config dict.</p></li>
+<li><p><strong>config_file</strong> – Path to an experimental run yaml file containing config
+options we’d like to override.</p></li>
+<li><p><strong>override_list</strong> – Additional command line args we’d like to override in the
+config file.</p></li>
+<li><p><strong>transient</strong> – Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to make a transient session, i.e. a session
+where the logging and config params are not saved to disk. This is
+useful for debugging sessions.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
