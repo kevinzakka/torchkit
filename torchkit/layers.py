@@ -190,7 +190,8 @@ class _GlobalMaxPool(nn.Module):
             raise ValueError("{}D is not supported.")
 
     def forward(self, x: TensorType) -> TensorType:
-        return self._pool(x, kernel_size=x.size()[2:]).squeeze()
+        out = self._pool(x, kernel_size=x.size()[2:])
+        return out.squeeze(dim=-1).squeeze(dim=-1)
 
 
 class GlobalMaxPool1d(_GlobalMaxPool):
@@ -230,7 +231,8 @@ class _GlobalAvgPool(nn.Module):
             raise ValueError("{}D is not supported.")
 
     def forward(self, x: TensorType) -> TensorType:
-        return self._pool(x, kernel_size=x.size()[2:]).squeeze()
+        out = self._pool(x, kernel_size=x.size()[2:])
+        return out.squeeze(dim=-1).squeeze(dim=-1)
 
 
 class GlobalAvgPool1d(_GlobalAvgPool):

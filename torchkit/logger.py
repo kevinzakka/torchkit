@@ -175,7 +175,7 @@ class Logger:
                         )
                 else:
                     self.log_scalar(
-                        metric["scalar"], global_step, split, metric_name
+                        metric["scalar"], global_step, metric_name, split,
                     )
             if "image" in metric:
                 img = metric["image"][0]
