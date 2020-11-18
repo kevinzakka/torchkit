@@ -171,7 +171,7 @@
 <p>Pytorch-related utils.</p>
 <dl class="py class">
 <dt id="torchkit.utils.torch_utils.Normalize">
-<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">Normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">Normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.485, 0.456, 0.406)</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.229, 0.224, 0.225)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize a batch of images.</p>
 <p>Default values are taken from [1].</p>
 <p class="rubric">References</p>
@@ -179,7 +179,7 @@
 <a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
 <dl class="py method">
 <dt id="torchkit.utils.torch_utils.Normalize.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.485, 0.456, 0.406)</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.229, 0.224, 0.225)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -197,7 +197,7 @@ channel standard deviations are used.</p></li>
 
 <dl class="py class">
 <dt id="torchkit.utils.torch_utils.UnNormalize">
-<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">UnNormalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">torchkit.utils.torch_utils.</code><code class="sig-name descname">UnNormalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.485, 0.456, 0.406)</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.229, 0.224, 0.225)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unnormalize a batch of images that have been normalized.</p>
 <p>Speficially, re-multiply by the standard deviation and
 shift by the mean. Default values are taken from [1].</p>
@@ -206,7 +206,7 @@ shift by the mean. Default values are taken from [1].</p>
 <a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
 <dl class="py method">
 <dt id="torchkit.utils.torch_utils.UnNormalize.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.485, 0.456, 0.406</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">0.229, 0.224, 0.225</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.485, 0.456, 0.406)</span></em>, <em class="sig-param"><span class="n">std</span><span class="p">:</span> <span class="n">AbstractSet</span> <span class="o">=</span> <span class="default_value">(0.229, 0.224, 0.225)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
