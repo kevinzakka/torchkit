@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>torchkit.checkpoint &mdash; torchkit  documentation</title>
   
@@ -16,7 +16,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -29,7 +32,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -51,7 +53,7 @@
           
 
           
-            <a href="../../" class="icon icon-home" alt="Documentation Home"> torchkit
+            <a href="../../" class="icon icon-home"> torchkit
           
 
           
@@ -89,7 +91,6 @@
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../expm/">Experiment Management</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../expm.config/">torchkit.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.experiment/">torchkit.experiment</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.checkpoint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.logger/">torchkit.logger</a></li>
@@ -140,6 +141,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -153,7 +156,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/torchkit/expm.checkpoint.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -171,7 +174,7 @@
 <h1>torchkit.checkpoint<a class="headerlink" href="#torchkit-checkpoint" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="torchkit.checkpoint.Checkpoint">
-<em class="property">class </em><code class="sig-prename descclassname">torchkit.checkpoint.</code><code class="sig-name descname">Checkpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.checkpoint.</span></code><code class="sig-name descname"><span class="pre">Checkpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save and restore PyTorch objects implementing <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attributes.</p>
 <p>A Checkpoint object should be used in conjunction with a CheckpointManager.</p>
 <p>Example usage:</p>
@@ -193,7 +196,7 @@
 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint">https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint</a></p>
 <dl class="py method">
 <dt id="torchkit.checkpoint.Checkpoint.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <p>Accepts keyword arguments whose values are objects that contain a
 <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attribute and thus can be serialized to disk.</p>
@@ -213,7 +216,7 @@ attribute.</p>
 
 <dl class="py method">
 <dt id="torchkit.checkpoint.Checkpoint.restore">
-<code class="sig-name descname">restore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">save_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>torch.device<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#torchkit.checkpoint.Checkpoint.restore" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">restore</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.device</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.restore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore a state from a saved checkpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -227,7 +230,7 @@ attribute.</p>
 
 <dl class="py method">
 <dt id="torchkit.checkpoint.Checkpoint.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">save_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.checkpoint.Checkpoint.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a state to disk.</p>
 <p>Modified from brentyi/fannypack.</p>
 <dl class="field-list simple">
@@ -241,7 +244,7 @@ attribute.</p>
 
 <dl class="py class">
 <dt id="torchkit.checkpoint.CheckpointManager">
-<em class="property">class </em><code class="sig-prename descclassname">torchkit.checkpoint.</code><code class="sig-name descname">CheckpointManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint">torchkit.checkpoint.Checkpoint</a></span></em>, <em class="sig-param"><span class="n">directory</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n">torch.device</span></em>, <em class="sig-param"><span class="n">max_to_keep</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.checkpoint.</span></code><code class="sig-name descname"><span class="pre">CheckpointManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint"><span class="pre">torchkit.checkpoint.Checkpoint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_to_keep</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Manages multiple checkpoints by keeping some and deleting unneeded ones.</p>
 <p>Example usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchkit.checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span><span class="p">,</span> <span class="n">CheckpointManager</span>
@@ -267,7 +270,7 @@ attribute.</p>
 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager">https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager</a></p>
 <dl class="py method">
 <dt id="torchkit.checkpoint.CheckpointManager.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint">torchkit.checkpoint.Checkpoint</a></span></em>, <em class="sig-param"><span class="n">directory</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n">torch.device</span></em>, <em class="sig-param"><span class="n">max_to_keep</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint"><span class="pre">torchkit.checkpoint.Checkpoint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_to_keep</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -284,8 +287,26 @@ oldest first, until <code class="docutils literal notranslate"><span class="pre"
 </dd></dl>
 
 <dl class="py method">
+<dt id="torchkit.checkpoint.CheckpointManager.list_checkpoints">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">list_checkpoints</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.list_checkpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all checkpoints in a checkpoint directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="torchkit.checkpoint.CheckpointManager.load_latest_checkpoint">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">load_latest_checkpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint"><span class="pre">torchkit.checkpoint.Checkpoint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.device</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.load_latest_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the last saved checkpoint.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="torchkit.checkpoint.CheckpointManager.load_specific_checkpoint">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">load_specific_checkpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#torchkit.checkpoint.Checkpoint" title="torchkit.checkpoint.Checkpoint"><span class="pre">torchkit.checkpoint.Checkpoint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.device</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.load_specific_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a specific checkpoint.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="torchkit.checkpoint.CheckpointManager.restore_or_initialize">
-<code class="sig-name descname">restore_or_initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.restore_or_initialize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">restore_or_initialize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.restore_or_initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore items in checkpoint from the latest checkpoint file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -297,7 +318,7 @@ file if one is found, else 0 is returned.</p>
 
 <dl class="py method">
 <dt id="torchkit.checkpoint.CheckpointManager.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">global_step</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new checkpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -316,37 +337,29 @@ checkpoint.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../expm.logger/" class="btn btn-neutral float-right" title="torchkit.logger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../expm.experiment/" class="btn btn-neutral float-left" title="torchkit.experiment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../expm.logger/" class="btn btn-neutral float-right" title="torchkit.logger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../expm.experiment/" class="btn btn-neutral float-left" title="torchkit.experiment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Kevin Zakka
+        &#169; Copyright 2020, Kevin Zakka.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

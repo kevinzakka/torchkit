@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Experiment Management &mdash; torchkit  documentation</title>
   
@@ -16,7 +16,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -29,14 +32,13 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="../../genindex/" />
     <link rel="search" title="Search" href="../../search/" />
-    <link rel="next" title="torchkit.config" href="../expm.config/" />
+    <link rel="next" title="torchkit.experiment" href="../expm.experiment/" />
     <link rel="prev" title="Installation" href="../installation/" /> 
 </head>
 
@@ -51,7 +53,7 @@
           
 
           
-            <a href="../../" class="icon icon-home" alt="Documentation Home"> torchkit
+            <a href="../../" class="icon icon-home"> torchkit
           
 
           
@@ -89,7 +91,6 @@
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Experiment Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../expm.config/">torchkit.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.experiment/">torchkit.experiment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.checkpoint/">torchkit.checkpoint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.logger/">torchkit.logger</a></li>
@@ -140,6 +141,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -151,7 +154,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/torchkit/expm.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -169,142 +172,11 @@
 <h1>Experiment Management<a class="headerlink" href="#experiment-management" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../expm.config/">torchkit.config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../expm.experiment/">torchkit.experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../expm.checkpoint/">torchkit.checkpoint</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../expm.logger/">torchkit.logger</a></li>
 </ul>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">torchkit</span></code> uses <a class="reference external" href="https://github.com/rbgirshick/yacs">YACS</a>
-to organize a project and manage its various experimental configurations.
-Quoting the <a class="reference external" href="https://github.com/rbgirshick/yacs/blob/master/README.md">README</a>:</p>
-<blockquote>
-<div><p>“To use YACS for your project, you first create a project config file,
-typically called config.py or defaults.py. This file is the one-stop reference
-point for all configurable options. It should be very well documented and
-provide sensible defaults for all options.”</p>
-</div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">torchkit</span></code> provides an example <code class="docutils literal notranslate"><span class="pre">config.py</span></code> you can use as a template for
-your project. Here’s an excerpt illustrating hyperparameters like the
-seed, the batch size, and data augmentation transforms.</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ============================================== #</span>
-<span class="c1"># Beginning of config file</span>
-<span class="c1"># ============================================== #</span>
-<span class="n">_C</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
-
-<span class="c1"># ============================================== #</span>
-<span class="c1"># Directories</span>
-<span class="c1"># ============================================== #</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
-
-<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">LOG_DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">)</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">CKPT_DIR</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_C</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">DIR</span><span class="p">,</span> <span class="s2">&quot;checkpoints&quot;</span><span class="p">)</span>
-
-<span class="c1"># ============================================== #</span>
-<span class="c1"># Experiment params</span>
-<span class="c1"># ============================================== #</span>
-<span class="c1"># Seed for python, numpy and pytorch.</span>
-<span class="c1"># Set this to `None` if you do not want to seed the results.</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">SEED</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">_C</span><span class="o">.</span><span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">TRAIN_MAX_ITERS</span> <span class="o">=</span> <span class="mi">2000</span>
-
-<span class="c1"># ============================================== #</span>
-<span class="c1"># Data augmentation params</span>
-<span class="c1"># ============================================== #</span>
-<span class="n">_C</span><span class="o">.</span><span class="n">AUGMENTATION</span> <span class="o">=</span> <span class="n">CN</span><span class="p">()</span>
-
-<span class="n">_C</span><span class="o">.</span><span class="n">IMAGE_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
-
-<span class="n">_C</span><span class="o">.</span><span class="n">AUGMENTATION</span><span class="o">.</span><span class="n">TRAIN</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;global_resize&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;horizontal_flip&quot;</span><span class="p">,</span>
-    <span class="c1"># &quot;color_jitter&quot;,</span>
-    <span class="s2">&quot;normalize&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="o">...</span>
-
-<span class="c1"># ============================================== #</span>
-<span class="c1"># End of config file</span>
-<span class="c1"># ============================================== #</span>
-<span class="n">CONFIG</span> <span class="o">=</span> <span class="n">_C</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>When setting up a new experiment run, the idea is to import this global <code class="docutils literal notranslate"><span class="pre">CONFIG</span></code>
-variable and only update it with experiment-specific changes. This is achieved by
-creating a YAML configuration file (one for each run) with override values for
-only the parameters you want to change in the default <code class="docutils literal notranslate"><span class="pre">config.py</span></code> file.</p>
-<p>For illustration purposes, suppose in a new experiment, we want to decrease
-the batch size and turn off data augmentation. To do this, we create the below
-YAML file and save it to <code class="docutils literal notranslate"><span class="pre">configs/example.yaml</span></code>.</p>
-<blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">BATCH_SIZE</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="nt">AUGMENTATION</span><span class="p">:</span>
-  <span class="nt">TRAIN</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">normalize</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>We’re now ready to start a new experimental run. This is where <code class="docutils literal notranslate"><span class="pre">torchkit</span></code> steps
-in and facilitates the process of updating the global <code class="docutils literal notranslate"><span class="pre">CONFIG</span></code> dict. The
-<code class="docutils literal notranslate"><span class="pre">init_experiment</span></code> method does 4 things:</p>
-<ol class="arabic">
-<li><p>It instantiates the compute device, using a GPU if it finds one.</p></li>
-<li><p>It seeds all RNGs if a seed is set in <code class="docutils literal notranslate"><span class="pre">config.py</span></code>.</p></li>
-<li><p>It overrides the values of the <code class="docutils literal notranslate"><span class="pre">CONFIG</span></code> dict with the ones provided in the yaml file. Parameters not mentioned in the YAML file are left untouched.</p></li>
-<li><p>It serializes a copy of the final updated config dict to a log directory. This allows the user to resume training with an exact copy of all the hyperparameters that were used for that run.</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suppose your project is called `example` and it contains a global</span>
-<span class="c1"># config file saved as `example/config.py`.</span>
-
-<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
-<span class="kn">from</span> <span class="nn">example.config</span> <span class="kn">import</span> <span class="n">CONFIG</span>
-<span class="kn">from</span> <span class="nn">torchkit.experiment</span> <span class="kn">import</span> <span class="n">init_experiment</span>
-
-<span class="n">experiment_name</span> <span class="o">=</span> <span class="s1">&#39;example&#39;</span>
-<span class="n">config_path</span> <span class="o">=</span> <span class="s1">&#39;configs/example.yaml&#39;</span>
-<span class="n">log_dir</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONFIG</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">LOG_DIR</span><span class="p">,</span> <span class="n">experiment_name</span><span class="p">)</span>
-
-<span class="n">config</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="n">init_experiment</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">CONFIG</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span>
-
-<span class="c1"># The `config` (not CONFIG) dict now holds all the correct experiment-related</span>
-<span class="c1"># hyperparameters.</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ol>
-<p>Sometimes, you may want to debug with some new parameters without saving the
-config to disk and having to deal with re-writes or re-loading values. You
-can specify that this a transient experiment session with:</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">init_experiment</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">CONFIG</span><span class="p">,</span> <span class="n">config_path</span><span class="p">,</span> <span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>Finally, sometimes, it may be more useful to modify a config value via a command
-line argument rather than through a YAML file, for example when looping over
-different hyperparameter values and performing a grid search. When this is the
-case, you can use the <code class="docutils literal notranslate"><span class="pre">override_list</span></code> arg which gets executed after the global
-config dict is updated with the experiment-specific YAML file.</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
-<span class="kn">from</span> <span class="nn">example.config</span> <span class="kn">import</span> <span class="n">CONFIG</span>
-<span class="kn">from</span> <span class="nn">torchkit.experiment</span> <span class="kn">import</span> <span class="n">init_experiment</span>
-
-<span class="k">for</span> <span class="n">weight_decay</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">]:</span>
-    <span class="n">override_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OPTIMIZER.WEIGHT_DECAY&quot;</span><span class="p">,</span> <span class="n">weight_decay</span><span class="p">]</span>
-    <span class="n">log_dir</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONFIG</span><span class="o">.</span><span class="n">DIRS</span><span class="o">.</span><span class="n">LOG_DIR</span><span class="p">,</span> <span class="s2">&quot;test_tuning&quot;</span><span class="p">)</span>
-    <span class="n">config</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="n">init_experiment</span><span class="p">(</span>
-        <span class="n">log_dir</span><span class="p">,</span> <span class="n">CONFIG</span><span class="p">,</span> <span class="s2">&quot;configs/example.yaml&quot;</span><span class="p">,</span> <span class="n">override_list</span><span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 
 
@@ -312,37 +184,29 @@ config dict is updated with the experiment-specific YAML file.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../expm.config/" class="btn btn-neutral float-right" title="torchkit.config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../installation/" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../expm.experiment/" class="btn btn-neutral float-right" title="torchkit.experiment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../installation/" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Kevin Zakka
+        &#169; Copyright 2020, Kevin Zakka.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>torchkit.experiment &mdash; torchkit  documentation</title>
   
@@ -16,7 +16,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -29,7 +32,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -37,7 +39,7 @@
     <link rel="index" title="Index" href="../../genindex/" />
     <link rel="search" title="Search" href="../../search/" />
     <link rel="next" title="torchkit.checkpoint" href="../expm.checkpoint/" />
-    <link rel="prev" title="torchkit.config" href="../expm.config/" /> 
+    <link rel="prev" title="Experiment Management" href="../expm/" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +53,7 @@
           
 
           
-            <a href="../../" class="icon icon-home" alt="Documentation Home"> torchkit
+            <a href="../../" class="icon icon-home"> torchkit
           
 
           
@@ -89,7 +91,6 @@
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../expm/">Experiment Management</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../expm.config/">torchkit.config</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.experiment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.checkpoint/">torchkit.checkpoint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../expm.logger/">torchkit.logger</a></li>
@@ -140,6 +141,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -153,7 +156,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/torchkit/expm.experiment.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -171,32 +174,23 @@
 <span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="torchkit.experiment.seed_rng">
-<code class="sig-prename descclassname">torchkit.experiment.</code><code class="sig-name descname">seed_rng</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#torchkit.experiment.seed_rng" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seeds python, numpy, and torch RNGs.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="torchkit.experiment.init_experiment">
-<code class="sig-prename descclassname">torchkit.experiment.</code><code class="sig-name descname">init_experiment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logdir</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n">yacs.config.CfgNode</span></em>, <em class="sig-param"><span class="n">config_file</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">override_list</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Sequence<span class="p">[</span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">transient</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.experiment.init_experiment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes a training experiment.</p>
-<p>Instantiates the compute device (CPU, GPU), serializes the config file to
-the log directory, optionally updates the config variables with values from
-a provided yaml file and seeds the RNGs.</p>
+<code class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></code><code class="sig-name descname"><span class="pre">seed_rng</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_deterministic</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_benchmark</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.experiment.seed_rng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds python, numpy, pytorch and CUDA/cudNN RNGs <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">1</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>logdir</strong> – Path to the log directory.</p></li>
-<li><p><strong>config</strong> – The module-wide config dict.</p></li>
-<li><p><strong>config_file</strong> – Path to an experimental run yaml file containing config
-options we’d like to override.</p></li>
-<li><p><strong>override_list</strong> – Additional command line args we’d like to override in the
-config file.</p></li>
-<li><p><strong>transient</strong> – Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to make a transient session, i.e. a session
-where the logging and config params are not saved to disk. This is
-useful for debugging sessions.</p></li>
+<li><p><strong>seed</strong> – The seed to use.</p></li>
+<li><p><strong>cudnn_deterministic</strong> – Enforce CUDA convolution determinism. The algorithm
+itself might not be deterministic so setting this to True ensures
+we make it repeatable.</p></li>
+<li><p><strong>cudnn_benchmark</strong> – Set this to True to allow CUDA to find the best
+convolutional algorithm to use for the given parameters. When False,
+cuDNN will deterministically select the same algorithm at a possible
+cost in performance.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">References</p>
 </dd></dl>
 
 </div>
@@ -206,37 +200,29 @@ useful for debugging sessions.</p></li>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../expm.checkpoint/" class="btn btn-neutral float-right" title="torchkit.checkpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../expm.config/" class="btn btn-neutral float-left" title="torchkit.config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../expm.checkpoint/" class="btn btn-neutral float-right" title="torchkit.checkpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../expm/" class="btn btn-neutral float-left" title="Experiment Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Kevin Zakka
+        &#169; Copyright 2020, Kevin Zakka.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
