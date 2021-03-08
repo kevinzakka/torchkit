@@ -45,7 +45,7 @@
     <tr>
       <td><code>torchkit.<strong>utils</strong></code></td>
       <td>
-        A bunch of useful methods for file/folder manipulation, video frame and audio processing as well as PyTorch-related helper functions.
+        A growing list of PyTorch-related helper functions.
       </td>
     </tr>
   </tbody>
