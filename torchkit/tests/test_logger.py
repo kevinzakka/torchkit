@@ -15,7 +15,7 @@ class TestLogger:
         log_dir = tmp_path / "logs"
         logger = Logger(log_dir)
         scalars = {
-            'scalar1': torch.randn(2, 4).mean(),
-            'scalar2': torch.randn(2, 4).mean(),
+            "scalar1": torch.randn(2, 4).mean(),
+            "scalar2": torch.randn(2, 4).mean(),
         }
         logger.log_dict_scalars(scalars, 5, "train")

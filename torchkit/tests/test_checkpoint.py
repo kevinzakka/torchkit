@@ -17,6 +17,7 @@ def init_model_and_optimizer():
         def forward(self, x):
             out = F.relu(self.fc1(x))
             return self.fc2(out)
+
     model = SimpleMLP()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     return model, optimizer

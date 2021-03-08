@@ -4,11 +4,7 @@ import torch.nn.functional as F
 TensorType = torch.Tensor
 
 
-def one_hot(
-    y: TensorType,
-    K: int,
-    smooth_eps: float = 0,
-) -> TensorType:
+def one_hot(y: TensorType, K: int, smooth_eps: float = 0,) -> TensorType:
     """One-hot encodes a tensor with optional label smoothing.
 
     Args:
@@ -46,8 +42,11 @@ def cross_entropy(
     """
     assert isinstance(logits, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(labels, (torch.LongTensor, torch.cuda.LongTensor))
-    assert reduction in ["none", "mean", "sum"], (
-        "reduction method is not supported")
+    assert reduction in [
+        "none",
+        "mean",
+        "sum",
+    ], "reduction method is not supported"
 
     # Ensure logits are not 1-hot encoded.
     assert labels.ndim == 1, "[!] Labels are NOT expected to be 1-hot encoded."
@@ -101,8 +100,11 @@ def huber_loss(
     """
     assert isinstance(input, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(target, (torch.FloatTensor, torch.cuda.FloatTensor))
-    assert reduction in ["none", "mean", "sum"], (
-        "reduction method is not supported")
+    assert reduction in [
+        "none",
+        "mean",
+        "sum",
+    ], "reduction method is not supported"
 
     diff = target - input
     diff_abs = torch.abs(target - input)

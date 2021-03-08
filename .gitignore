@@ -1,5 +1,6 @@
 .pytest_cache/
 .pytype
+.vscode
 .ipynb_checkpoints
 playground.ipynb
 

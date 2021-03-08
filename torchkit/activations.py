@@ -4,6 +4,7 @@ import torch.nn as nn
 TensorType = torch.Tensor
 
 
+# TODO(kevin): This should be deprecated since it now exists as `torch.nn.SiLU`.
 def swish(x: TensorType, inplace: bool = False) -> TensorType:
     if inplace:
         # Note the use of `sigmoid` as opposed to `sigmoid_`.

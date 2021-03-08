@@ -1,13 +1,46 @@
-from typing import Optional
-
 import logging
-import numpy as np
 import os
 import os.path as osp
 import signal
+from glob import glob
+from typing import Callable, List, Optional
+
+import numpy as np
 import torch
 
-from torchkit.utils.file_utils import get_files, mkdir
+
+def get_files(
+    d: str,
+    pattern: str,
+    sort: bool = False,
+    lexicographical: bool = False,
+    sortfunc: Optional[Callable] = None,
+) -> List[str]:
+    """Return a list of files in a given directory.
+
+    Args:
+        d: The path to the directory.
+        pattern: The wildcard to filter files with.
+        sort: Whether to sort the returned list.
+        lexicographical: If sort, use lexicographical order. Set to `False` for
+            numerical ordering.
+        sortfunc : An optional sorting Callable to use if sort is set to `True`.
+            Ignores the value of `lexicographical`.
+    """
+    assert (
+        sortfunc is not None and not sort
+    ), "`sort` must be True when `sortfunc` is provided."
+    files = glob(osp.join(d, pattern))
+    files = [f for f in files if osp.isfile(f)]
+    if sort:
+        if sortfunc is not None:
+            files.sort(key=sortfunc)
+        else:
+            if lexicographical:
+                files.sort(key=lambda x: osp.basename(x))
+            else:
+                files.sort(key=lambda x: int(x.split("/")[-1].split(".")[0]))
+    return files
 
 
 class Checkpoint:
@@ -54,7 +87,7 @@ class Checkpoint:
         """
         for k, v in sorted(kwargs.items()):
             if not getattr(v, "state_dict"):
-                raise ValueError(f'{k} does not have a state_dict attribute.')
+                raise ValueError(f"{k} does not have a state_dict attribute.")
             setattr(self, k, v)
 
     def save(self, save_path: str) -> None:
@@ -77,7 +110,8 @@ class Checkpoint:
         save_dir = osp.dirname(save_path)
         tmp_path = osp.join(save_dir, f"tmp-{np.random.randint(1e10)}.ckpt")
         torch.save(
-            {k: v.state_dict() for k, v in self.__dict__.items()}, tmp_path)
+            {k: v.state_dict() for k, v in self.__dict__.items()}, tmp_path
+        )
         # Rename is POSIX-compliant and as such, is an atomic operation
         # according to the Python docs:
         # https://docs.python.org/3/library/os.html#os.rename
@@ -89,9 +123,7 @@ class Checkpoint:
             signal.signal(signal.SIGINT, orig_handler)
 
     def restore(
-        self,
-        save_path: str,
-        device: Optional[torch.device] = None,
+        self, save_path: str, device: Optional[torch.device] = None,
     ) -> bool:
         """Restore a state from a saved checkpoint.
 
@@ -105,7 +137,8 @@ class Checkpoint:
                 for name, state_dict in state.items():
                     getattr(self, name).load_state_dict(state_dict)
                 logging.info(
-                    f"Successfully loaded model weights from {save_path}.")
+                    f"Successfully loaded model weights from {save_path}."
+                )
                 return True
             except Exception as e:
                 # There was an issue loading the state which means either the
@@ -175,7 +208,8 @@ class CheckpointManager:
         self.latest_checkpoint = None
 
         # Create checkpoint directory if it doesn't already exist.
-        mkdir(self.directory)
+        if not osp.exists(self.directory):
+            os.makedirs(self.directory)
 
     def restore_or_initialize(self) -> int:
         """Restore items in checkpoint from the latest checkpoint file.
@@ -184,7 +218,7 @@ class CheckpointManager:
             The global iteration step. This is parsed from the latest checkpoint
             file if one is found, else 0 is returned.
         """
-        ckpts = get_files(self.directory, "*.ckpt")
+        ckpts = CheckpointManager.list_checkpoints(self.directory)
         if ckpts:
             last_ckpt = ckpts[-1]
             status = self.checkpoint.restore(last_ckpt, self.device)
@@ -202,9 +236,7 @@ class CheckpointManager:
             global_step: The iteration number which will be used to name the
                 checkpoint.
         """
-        save_path = osp.join(
-            self.directory, "{:016d}.ckpt".format(global_step)
-        )
+        save_path = osp.join(self.directory, "{:016d}.ckpt".format(global_step))
         self.checkpoint.save(save_path)
         self.latest_checkpoint = save_path
         self._trim_checkpoints()
@@ -212,7 +244,7 @@ class CheckpointManager:
     def _trim_checkpoints(self):
         """Trim older checkpoints until `max_to_keep` remain."""
         # Get a list of checkpoints in reverse chronological order.
-        ckpts = get_files(self.directory, "*.ckpt")[::-1]
+        ckpts = CheckpointManager.list_checkpoints(self.directory)
 
         # Remove until `max_to_keep` remain.
         num_remove = len(ckpts) - self.max_to_keep
@@ -223,13 +255,32 @@ class CheckpointManager:
 
     @staticmethod
     def load_latest_checkpoint(
-        checkpoint: Checkpoint,
-        directory: str,
-        device: torch.device,
+        checkpoint: Checkpoint, directory: str, device: torch.device,
     ) -> None:
-        ckpts = get_files(directory, "*.ckpt")
+        """Load the last saved checkpoint."""
+        ckpts = CheckpointManager.list_checkpoints(directory)
         if ckpts:
             last_ckpt = ckpts[-1]
             checkpoint.restore(last_ckpt, device)
         else:
             raise ValueError(f"No checkpoints found in {directory}.")
+
+    @staticmethod
+    def list_checkpoints(directory: str) -> List[str]:
+        """List all checkpoints in a checkpoint directory."""
+        return get_files(
+            directory,
+            "*.ckpt",
+            sort=True,
+            sortfunc=lambda x: int(osp.splitext(osp.basename(x))[0]),
+        )
+
+    @staticmethod
+    def load_specific_checkpoint(
+        checkpoint: Checkpoint, checkpoint_filename: str, device: torch.device,
+    ) -> None:
+        """Load a specific checkpoint."""
+        try:
+            checkpoint.restore(checkpoint_filename, device)
+        except Exception as e:
+            raise e

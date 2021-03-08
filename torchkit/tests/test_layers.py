@@ -1,7 +1,7 @@
 import pytest
 import torch
-
 from torch.testing import assert_allclose
+
 from torchkit import layers
 
 
@@ -20,8 +20,7 @@ class TestLayers:
         for i in range(b):
             for j in range(c):
                 x[i, j, true_max[i, j, 0], true_max[i, j, 1]] = 1000
-        soft_max = layers.SpatialSoftArgmax(normalize=False)(x).reshape(
-            b, c, 2)
+        soft_max = layers.SpatialSoftArgmax(normalize=False)(x).reshape(b, c, 2)
         assert_allclose(true_max.float(), soft_max)
 
     def test_global_max_pool_1d(self):

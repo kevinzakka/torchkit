@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 import torch
-
 from torch.testing import assert_allclose
+
 from torchkit import losses
 
 
@@ -43,8 +43,9 @@ class TestLayers:
         actual = losses.cross_entropy(logits, labels, smooth_eps, reduction)
         logits_np = logits.numpy()
         labels_np = labels.numpy()
-        labels_np_one_hot = np.eye(K)[labels_np] * (1 - smooth_eps) \
-            + (smooth_eps / (K - 1))
+        labels_np_one_hot = np.eye(K)[labels_np] * (1 - smooth_eps) + (
+            smooth_eps / (K - 1)
+        )
         # Compute log softmax of logits.
         log_probs_np = log_softmax(logits_np)
         loss_np = (-labels_np_one_hot * log_probs_np).sum(axis=-1)
@@ -81,10 +82,12 @@ class TestLayers:
         input_np = input.numpy()
         actual = losses.huber_loss(input, target, delta, reduction)
         diff_abs_np = np.abs(target_np - input_np)
-        diff_abs_np[diff_abs_np < delta] = 0.5 * diff_abs_np[
-            diff_abs_np < delta] ** 2
+        diff_abs_np[diff_abs_np < delta] = (
+            0.5 * diff_abs_np[diff_abs_np < delta] ** 2
+        )
         diff_abs_np[diff_abs_np >= delta] = delta * (
-            diff_abs_np[diff_abs_np >= delta]  - 0.5 * delta)
+            diff_abs_np[diff_abs_np >= delta] - 0.5 * delta
+        )
         if reduction == "mean":
             expected = diff_abs_np.mean()
         elif reduction == "sum":

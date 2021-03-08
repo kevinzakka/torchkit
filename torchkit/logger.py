@@ -1,11 +1,11 @@
-from typing import cast, Any, Union, Mapping, Type
+import os.path as osp
+from typing import Any, Mapping, Type, Union, cast
 
 import numpy as np
-import os.path as osp
 import torch
 import torchvision
-
 from torch.utils.tensorboard import SummaryWriter
+
 from torchkit.utils.torch_utils import UnNormalize
 
 TensorType = torch.Tensor
@@ -54,17 +54,14 @@ class Logger:
         """
         if isinstance(scalar, torch.Tensor):
             if cast(torch.Tensor, scalar).ndim != 0:
-                raise ValueError('Tensor must be scalar-valued.')
+                raise ValueError("Tensor must be scalar-valued.")
             scalar = cast(torch.Tensor, scalar).item()
         assert np.isscalar(scalar), "Not a scalar."
         msg = "/".join([prefix, name]) if name else prefix
         self._writer.add_scalar(msg, scalar, global_step)
 
     def log_dict_scalars(
-        self,
-        dict_scalars: Mapping[str, float],
-        global_step: int,
-        prefix: str,
+        self, dict_scalars: Mapping[str, float], global_step: int, prefix: str,
     ) -> None:
         """Log a dictionary of scalars.
 
@@ -102,8 +99,10 @@ class Logger:
             denormalize: Whether to revert the ImageNet per-channel
                 normalization that was applied in the dataloader.
         """
-        assert image.ndim in [3, 4], (
-            "Only a single image or batch of images is currently supported.")
+        assert image.ndim in [
+            3,
+            4,
+        ], "Only a single image or batch of images is currently supported."
         if isinstance(image, np.ndarray):
             image = torch.from_numpy(image).float()
             if image.ndim == 3:
@@ -118,9 +117,7 @@ class Logger:
         self._writer.add_image(msg, image, global_step, dataformats=dataformat)
 
     def log_learning_rate(
-        self,
-        optimizer: Type[torch.optim.Optimizer],
-        global_step: int,
+        self, optimizer: Type[torch.optim.Optimizer], global_step: int,
     ) -> None:
         """Log the learning rate.
 
@@ -134,9 +131,7 @@ class Logger:
         self.log_scalar(lr, global_step, "learning_rate")
 
     def log_loss(
-        self,
-        losses: Union[Mapping[str, float], float],
-        global_step: int,
+        self, losses: Union[Mapping[str, float], float], global_step: int,
     ) -> None:
         """Log a loss.
 
@@ -149,10 +144,7 @@ class Logger:
         self.log_dict_scalars(losses, global_step, "loss")
 
     def log_metric(
-        self,
-        metrics: Mapping[str, Any],
-        global_step: int,
-        metric_name: str,
+        self, metrics: Mapping[str, Any], global_step: int, metric_name: str,
     ) -> None:
         """Log a metric.
 

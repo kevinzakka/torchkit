@@ -1,8 +1,7 @@
-"""A PyTorch toolkit for research.
-"""
+"""A PyTorch toolkit for research."""
 
-import sys
 import logging
+import sys
 
 from torchkit.logger import Logger  # noqa: F401
 

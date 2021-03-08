@@ -1,11 +1,9 @@
-"""Pytorch-related utils.
-"""
+"""Pytorch-related utils."""
 
 from typing import AbstractSet
 
 import numpy as np
 import torch
-
 from prettytable import PrettyTable
 
 IMAGENET_MEANS = (0.485, 0.456, 0.406)
@@ -41,10 +39,7 @@ def freeze_model(
                 m.eval()
 
 
-def get_total_params(
-    model: torch.nn.Module,
-    trainable: bool = True,
-) -> int:
+def get_total_params(model: torch.nn.Module, trainable: bool = True,) -> int:
     """Get the total number of parameters in a PyTorch model [1].
 
     Example usage:

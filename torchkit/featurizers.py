@@ -58,8 +58,10 @@ class BaseFeaturizer(abc.ABC, nn.Module):
                 logging.info("Freezing all featurizer layers.")
                 bn_freeze_affine = True
             elif layers_train == "bn_only":
-                logging.info("Freezing all featurizer layers except for "
-                             "batch norm layers.")
+                logging.info(
+                    "Freezing all featurizer layers except for "
+                    "batch norm layers."
+                )
                 bn_freeze_affine = False
             else:
                 raise ValueError(
@@ -160,7 +162,8 @@ class ResNetFeaturizer(BaseFeaturizer):
 
     def _build_featurizer(self):
         resnet = getattr(torchvision.models, self._model_type)(
-            pretrained=self._pretrained)
+            pretrained=self._pretrained
+        )
         layers_ = list(resnet.children())
         assert self._out_layer_idx < len(
             layers_

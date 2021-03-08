@@ -1,6 +1,5 @@
-from typing import Any, Dict, Mapping, Sequence
-
 import time
+from typing import Any, Dict, Mapping, Sequence
 
 import numpy as np
 

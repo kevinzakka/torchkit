@@ -131,12 +131,7 @@ class SpatialSoftArgmax(nn.Module):
 
         self.normalize = normalize
 
-    def _coord_grid(
-        self,
-        h: int,
-        w: int,
-        device: torch.device,
-    ) -> TensorType:
+    def _coord_grid(self, h: int, w: int, device: torch.device,) -> TensorType:
         if self.normalize:
             return torch.stack(
                 torch.meshgrid(
