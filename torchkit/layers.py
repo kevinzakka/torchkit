@@ -186,7 +186,9 @@ class _GlobalMaxPool(nn.Module):
 
     def forward(self, x: TensorType) -> TensorType:
         out = self._pool(x, kernel_size=x.size()[2:])
-        return out.squeeze(dim=-1).squeeze(dim=-1)
+        for _ in range(len(out.shape[2:])):
+            out.squeeze_(dim=-1)
+        return out
 
 
 class GlobalMaxPool1d(_GlobalMaxPool):
@@ -227,7 +229,9 @@ class _GlobalAvgPool(nn.Module):
 
     def forward(self, x: TensorType) -> TensorType:
         out = self._pool(x, kernel_size=x.size()[2:])
-        return out.squeeze(dim=-1).squeeze(dim=-1)
+        for _ in range(len(out.shape[2:])):
+            out.squeeze_(dim=-1)
+        return out
 
 
 class GlobalAvgPool1d(_GlobalAvgPool):

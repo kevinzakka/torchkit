@@ -55,17 +55,11 @@ For more details about each module, see the [documentation](https://kevinzakka.g
 
 ### Installation
 
-Clone the repo and install it in editable mode:
+Use the following command to install directly with pip:
 
 ```bash
-git clone https://github.com/kevinzakka/torchkit.git
-cd torchkit
-pip install -e .
+pip install git+https://github.com/kevinzakka/torchkit.git
 ```
-
-### Examples
-
-Coming soon...
 
 ### Acknowledgments
 
