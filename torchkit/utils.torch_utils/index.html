@@ -92,7 +92,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../featurizers/">torchkit.featurizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../activations/">torchkit.activations</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../utils/">torchkit.utils</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.utils.torch_utils</a></li>
@@ -170,59 +169,6 @@
   <div class="section" id="module-torchkit.utils.torch_utils">
 <span id="torchkit-utils-torch-utils"></span><h1>torchkit.utils.torch_utils<a class="headerlink" href="#module-torchkit.utils.torch_utils" title="Permalink to this headline">¶</a></h1>
 <p>Pytorch-related utils.</p>
-<dl class="py class">
-<dt id="torchkit.utils.torch_utils.Normalize">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">Normalize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalize a batch of images.</p>
-<p>Default values are taken from [1].</p>
-<p class="rubric">References</p>
-<p>[1]: GitHub discussion,
-<a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
-<dl class="py method">
-<dt id="torchkit.utils.torch_utils.Normalize.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.Normalize.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mean</strong> – The color channel means. By default, ImageNet channel means
-are used.</p></li>
-<li><p><strong>std</strong> – The color channel standard deviation. By default, ImageNet
-channel standard deviations are used.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="torchkit.utils.torch_utils.UnNormalize">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">UnNormalize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unnormalize a batch of images that have been normalized.</p>
-<p>Speficially, re-multiply by the standard deviation and
-shift by the mean. Default values are taken from [1].</p>
-<p class="rubric">References</p>
-<p>[1]: GitHub discussion,
-<a class="reference external" href="https://github.com/pytorch/vision/issues/1439">https://github.com/pytorch/vision/issues/1439</a></p>
-<dl class="py method">
-<dt id="torchkit.utils.torch_utils.UnNormalize.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AbstractSet</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">(0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.utils.torch_utils.UnNormalize.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mean</strong> – The color channel means. By default, ImageNet channel means
-are used.</p></li>
-<li><p><strong>std</strong> – The color channel standard deviation. By default, ImageNet
-channel standard deviations are used.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt id="torchkit.utils.torch_utils.freeze_model">
 <code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">freeze_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_freeze_affine</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_use_running_stats</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>

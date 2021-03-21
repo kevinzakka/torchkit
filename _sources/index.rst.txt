@@ -16,7 +16,6 @@
     torchkit/expm
     torchkit/layers
     torchkit/losses
-    torchkit/featurizers
     torchkit/activations
     torchkit/utils
 

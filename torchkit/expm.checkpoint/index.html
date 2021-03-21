@@ -98,7 +98,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../featurizers/">torchkit.featurizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../activations/">torchkit.activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utils/">torchkit.utils</a></li>
 </ul>
@@ -202,10 +201,9 @@
 <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attribute and thus can be serialized to disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – <p>Keyword arguments are set as attributes of this object,
+<dd class="field-odd"><p><strong>kwargs</strong> – Keyword arguments are set as attributes of this object,
 and are saved with the checkpoint. Values must have a
 <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attribute.</p>
-</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If objects in <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> do not have a <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>
