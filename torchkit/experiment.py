@@ -1,4 +1,3 @@
-import logging
 import random
 
 import numpy as np
@@ -6,7 +5,7 @@ import torch
 
 
 def seed_rng(
-    seed: int, cudnn_deterministic: bool = True, cudnn_benchmark: bool = False,
+    seed: int, cudnn_deterministic: bool = False, cudnn_benchmark: bool = True,
 ) -> None:
     """Seeds python, numpy, pytorch and CUDA/cudNN RNGs [1].
 
@@ -23,7 +22,6 @@ def seed_rng(
     References:
         [1]: https://pytorch.org/docs/stable/notes/randomness.html
     """
-    logging.info(f"Seeding RNGs with seed {seed}.")
     # Seed for Python libraries.
     random.seed(seed)
     np.random.seed(seed)

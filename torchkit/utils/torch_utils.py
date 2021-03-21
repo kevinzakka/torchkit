@@ -1,13 +1,7 @@
 """Pytorch-related utils."""
 
-from typing import AbstractSet
-
-import numpy as np
 import torch
 from prettytable import PrettyTable
-
-IMAGENET_MEANS = (0.485, 0.456, 0.406)
-IMAGENET_STDS = (0.229, 0.224, 0.225)
 
 
 def freeze_model(
@@ -91,68 +85,3 @@ def get_total_params(model: torch.nn.Module, trainable: bool = True,) -> int:
     print("Total Trainable Params: {:,}".format(total_params))
 
     return total_params
-
-
-class Normalize:
-    """Normalize a batch of images.
-
-    Default values are taken from [1].
-
-    References:
-        [1]: GitHub discussion,
-        https://github.com/pytorch/vision/issues/1439
-    """
-
-    def __init__(
-        self,
-        mean: AbstractSet = IMAGENET_MEANS,
-        std: AbstractSet = IMAGENET_STDS,
-    ):
-        """Constructor.
-
-        Args:
-            mean: The color channel means. By default, ImageNet channel means
-                are used.
-            std: The color channel standard deviation. By default, ImageNet
-                channel standard deviations are used.
-        """
-        if np.asarray(mean).shape:
-            self.mean = torch.tensor(mean)[..., None, None]
-        if np.asarray(std).shape:
-            self.std = torch.tensor(std)[..., None, None]
-
-    def __call__(self, tensor):
-        return (tensor - self.mean) / self.std
-
-
-class UnNormalize:
-    """Unnormalize a batch of images that have been normalized.
-
-    Speficially, re-multiply by the standard deviation and
-    shift by the mean. Default values are taken from [1].
-
-    References:
-        [1]: GitHub discussion,
-        https://github.com/pytorch/vision/issues/1439
-    """
-
-    def __init__(
-        self,
-        mean: AbstractSet = IMAGENET_MEANS,
-        std: AbstractSet = IMAGENET_STDS,
-    ):
-        """Constructor.
-
-        Args:
-            mean: The color channel means. By default, ImageNet channel means
-                are used.
-            std: The color channel standard deviation. By default, ImageNet
-                channel standard deviations are used.
-        """
-        if np.asarray(mean).shape:
-            self.mean = torch.tensor(mean)[..., None, None]
-        if np.asarray(std).shape:
-            self.std = torch.tensor(std)[..., None, None]
-
-    def __call__(self, tensor):
-        return (tensor * self.std) + self.mean

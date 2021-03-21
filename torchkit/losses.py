@@ -107,10 +107,10 @@ def huber_loss(
     ], "reduction method is not supported"
 
     diff = target - input
-    diff_abs = torch.abs(target - input)
+    diff_abs = torch.abs(diff)
     cond = diff_abs <= delta
     loss = torch.where(
-        cond, 0.5 * diff ** 2, delta * diff_abs - (0.5 * delta ** 2)
+        cond, 0.5 * diff ** 2, (delta * diff_abs) - (0.5 * delta ** 2)
     )
     if reduction == "none":
         return loss

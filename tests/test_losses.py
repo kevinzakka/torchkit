@@ -36,8 +36,8 @@ class TestLayers:
     @pytest.mark.parametrize("smooth_eps", [0, 0.5, 1])
     @pytest.mark.parametrize("reduction", ["none", "mean", "sum"])
     def test_cross_entropy(self, smooth_eps, reduction):
-        batch_size = 2
-        K = 5
+        batch_size = 200
+        K = 50
         labels = torch.randint(K, (batch_size,))
         logits = torch.randn(batch_size, K)
         actual = losses.cross_entropy(logits, labels, smooth_eps, reduction)
@@ -58,40 +58,41 @@ class TestLayers:
         assert_allclose(actual, expected)
 
     def test_cross_entropy_unsupported_reduction(self):
-        K, batch_size = 5, 2
+        K, batch_size = 50, 200
         with pytest.raises(AssertionError):
             labels = torch.randint(K, (batch_size,))
             logits = torch.randn(batch_size, K)
             losses.cross_entropy(logits, labels, reduction="average")
 
     def test_cross_entropy_labels_dim(self):
-        K, batch_size = 5, 2
+        K, batch_size = 50, 200
         with pytest.raises(AssertionError):
             labels = torch.randint(K, (batch_size, 2))
             logits = torch.randn(batch_size, K)
             losses.cross_entropy(logits, labels, reduction="average")
 
-    @pytest.mark.parametrize("delta", [1, 2, 10])
+    @pytest.mark.parametrize("delta", [1.0, 2.0, 10.0])
     @pytest.mark.parametrize("reduction", ["none", "mean", "sum"])
     def test_huber_loss(self, delta, reduction):
-        batch_size = 2
-        num_dims = 5
+        batch_size = 200
+        num_dims = 50
         target = torch.randn(batch_size, num_dims)
         input = torch.randn(batch_size, num_dims)
         target_np = target.numpy()
         input_np = input.numpy()
         actual = losses.huber_loss(input, target, delta, reduction)
-        diff_abs_np = np.abs(target_np - input_np)
-        diff_abs_np[diff_abs_np < delta] = (
-            0.5 * diff_abs_np[diff_abs_np < delta] ** 2
-        )
-        diff_abs_np[diff_abs_np >= delta] = delta * (
-            diff_abs_np[diff_abs_np >= delta] - 0.5 * delta
+        diff_np = target_np - input_np
+        diff_abs_np = np.abs(diff_np)
+        cond = diff_abs_np <= delta
+        out = np.where(
+            cond,
+            0.5 * diff_np ** 2,
+            (delta * diff_abs_np) - (0.5 * delta ** 2)
         )
         if reduction == "mean":
-            expected = diff_abs_np.mean()
+            expected = out.mean()
         elif reduction == "sum":
-            expected = diff_abs_np.sum(axis=-1)
+            expected = out.sum(axis=-1)
         else:  # none
-            expected = diff_abs_np
+            expected = out
         assert_allclose(actual, expected)

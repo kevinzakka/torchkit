@@ -1,6 +1,7 @@
 # torchkit
 
 ![documentation](https://github.com/kevinzakka/torchkit/workflows/docs/badge.svg)
+![build](https://github.com/kevinzakka/torchkit/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/kevinzakka/torchkit?color=blue)
 
 **`torchkit`** is a *lightweight* library containing PyTorch utilities useful for day-to-day research. Its main goal is to abstract away a lot of the redundant boilerplate associated with research projects like experimental configurations, logging and model checkpointing. It consists of:
@@ -31,12 +32,6 @@
       </td>
     </tr>
     <tr>
-      <td><code>torchkit.<strong>featurizers</strong></code></td>
-      <td>
-        Featurizers are convenience wrappers around PyTorch ResNets and InceptionNets, giving you fine-grained control over what layer to use as output, how to fine-tune them and how to update batch norm statistics. Featurizers can be easily extended to any model of choice.
-      </td>
-    </tr>
-    <tr>
       <td><code>torchkit.<strong>losses</strong></code></td>
       <td>
         Some useful loss functions also unavailable in vanilla PyTorch like cross entropy with label smoothing and Huber loss.
@@ -63,6 +58,5 @@ pip install git+https://github.com/kevinzakka/torchkit.git
 
 ### Acknowledgments
 
-* I learned a ton about experiment management by re-implementing Debidatta Dwibedi's open-source implementation of [Temporal Cycle Consistency Learning](https://github.com/google-research/google-research/tree/master/tcc).
 * Thanks to Karan Desai's [VirTex](https://github.com/kdexd/virtex) which I used to figure out documentation-related setup for torchkit and for just being an excellent example of stellar open-source research release.
 * Thanks to Brent Yi for encouraging me to use type hinting and for letting me use his awesome [Bayesian filtering library](https://github.com/stanford-iprl-lab/torchfilter)'s README as a template.

@@ -1,11 +1,8 @@
 Installation
 ============
 
-**torchkit** requires Python 3.6+ or higher. To install it, clone the repo and
-install it in editable mode:
+**torchkit** requires Python 3.8+ or higher. You can install it with a single pip command:
 
     .. code-block:: shell
 
-        git clone https://github.com/kevinzakka/torchkit.git
-        cd torchkit
-        pip install -e .
+        pip install git+https://github.com/kevinzakka/torchkit.git

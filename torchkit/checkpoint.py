@@ -27,9 +27,8 @@ def get_files(
         sortfunc : An optional sorting Callable to use if sort is set to `True`.
             Ignores the value of `lexicographical`.
     """
-    assert (
-        sortfunc is not None and not sort
-    ), "`sort` must be True when `sortfunc` is provided."
+    if sortfunc is not None and not sort:
+        raise ValueError("`sort` must be True when `sortfunc` is provided.")
     files = glob(osp.join(d, pattern))
     files = [f for f in files if osp.isfile(f)]
     if sort:
@@ -77,7 +76,7 @@ class Checkpoint:
         `state_dict` attribute and thus can be serialized to disk.
 
         Args:
-            **kwargs: Keyword arguments are set as attributes of this object,
+            kwargs: Keyword arguments are set as attributes of this object,
                 and are saved with the checkpoint. Values must have a
                 `state_dict` attribute.
 
@@ -244,7 +243,7 @@ class CheckpointManager:
     def _trim_checkpoints(self):
         """Trim older checkpoints until `max_to_keep` remain."""
         # Get a list of checkpoints in reverse chronological order.
-        ckpts = CheckpointManager.list_checkpoints(self.directory)
+        ckpts = CheckpointManager.list_checkpoints(self.directory)[::-1]
 
         # Remove until `max_to_keep` remain.
         num_remove = len(ckpts) - self.max_to_keep

@@ -6,8 +6,6 @@ import torch
 import torchvision
 from torch.utils.tensorboard import SummaryWriter
 
-from torchkit.utils.torch_utils import UnNormalize
-
 TensorType = torch.Tensor
 
 
@@ -81,7 +79,6 @@ class Logger:
         prefix: str,
         name: str = "",
         dataformat: str = "CHW",
-        denormalize: bool = False,
     ) -> None:
         """Log an image or batch of images.
 
@@ -96,8 +93,6 @@ class Logger:
             dataformat: How the image data is stored. The default value
                 is `CHW` assuming the input is a `torch.Tensor`. If feeding
                 numpy arrays, set it to `HWC`.
-            denormalize: Whether to revert the ImageNet per-channel
-                normalization that was applied in the dataloader.
         """
         assert image.ndim in [
             3,
@@ -111,8 +106,6 @@ class Logger:
                 image = image.permute(0, 3, 1, 2)
         if image.ndim == 4:
             image = torchvision.utils.make_grid(image, nrow=5)
-        if denormalize:
-            image = UnNormalize()(image)
         msg = "/".join([prefix, name]) if name else prefix
         self._writer.add_image(msg, image, global_step, dataformats=dataformat)
 
