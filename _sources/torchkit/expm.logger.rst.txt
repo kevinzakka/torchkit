@@ -2,10 +2,7 @@ torchkit.logger
 ===============
 
 
-The `Logger` class is a simple wrapper over Pytorch's ``SummaryWriter``. You can
-use it to log losses, learning rates and metrics. For more fine-grained control,
-you should use the ``log_scalar``, ``log_dict_scalars`` and ``log_image``
-methods.
+The `Logger` class is a simple wrapper over Pytorch's ``SummaryWriter``. You can use it to log scalars, images and videos in numpy ndarray or torch Tensor format.
 
 .. autoclass:: torchkit.logger.Logger
     :members:
