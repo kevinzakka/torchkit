@@ -3,9 +3,7 @@ import os
 from setuptools import find_packages, setup
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-DESCRIPTION = (
-    "torchkit is a lightweight library containing PyTorch utilities useful for day-to-day research."
-)
+DESCRIPTION = "torchkit is a lightweight library containing PyTorch utilities useful for day-to-day research."
 
 
 def readme():
@@ -37,6 +35,7 @@ setup(
         "tensorboard",
         "prettytable",
         "opencv-python",
+        "moviepy",
     ],
     url="https://github.com/kevinzakka/torchkit/",
 )

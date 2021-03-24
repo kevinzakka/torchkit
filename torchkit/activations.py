@@ -22,7 +22,7 @@ class Swish(nn.Module):
         https://arxiv.org/abs/1710.05941
     """
 
-    def __init__(self, inplace: bool = False):
+    def __init__(self, inplace: bool = False) -> None:
         """Constructor.
 
         Args:

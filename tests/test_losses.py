@@ -85,9 +85,7 @@ class TestLayers:
         diff_abs_np = np.abs(diff_np)
         cond = diff_abs_np <= delta
         out = np.where(
-            cond,
-            0.5 * diff_np ** 2,
-            (delta * diff_abs_np) - (0.5 * delta ** 2)
+            cond, 0.5 * diff_np ** 2, (delta * diff_abs_np) - (0.5 * delta ** 2)
         )
         if reduction == "mean":
             expected = out.mean()
