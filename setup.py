@@ -25,7 +25,7 @@ setup(
     author="Kevin Zakka",
     license="MIT",
     description=DESCRIPTION,
-    python_requires=">=3.8",
+    python_requires=">=3.6",
     long_description=readme(),
     long_description_content_type="text/markdown",
     packages=find_packages(),
