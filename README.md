@@ -50,13 +50,7 @@ For more details about each module, see the [documentation](https://kevinzakka.g
 
 ### Installation
 
-To install the latest release from PyPi, run:
-
-```bash
-pip install torchkit
-```
-
-If you wish to use the latest release, you can install directly from Git master:
+To install the latest release, run:
 
 ```bash
 pip install git+https://github.com/kevinzakka/torchkit.git
