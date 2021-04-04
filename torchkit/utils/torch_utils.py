@@ -33,7 +33,10 @@ def freeze_model(
                 m.eval()
 
 
-def get_total_params(model: torch.nn.Module, trainable: bool = True,) -> int:
+def get_total_params(
+    model: torch.nn.Module,
+    trainable: bool = True,
+) -> int:
     """Get the total number of parameters in a PyTorch model [1].
 
     Example usage:

@@ -49,9 +49,7 @@ class TestCheckpoint:
             checkpoint_manager.save(i)
         available_ckpts = checkpoint_manager.list_checkpoints(checkpoint_dir)
         assert len(available_ckpts) == 5
-        ckpts = [
-            int(os.path.basename(d).split(".")[0]) for d in available_ckpts
-        ]
+        ckpts = [int(os.path.basename(d).split(".")[0]) for d in available_ckpts]
         expected = list(range(5, 10))
         assert all([a == b for a, b in zip(ckpts, expected)])
         global_step = checkpoint_manager.restore_or_initialize()

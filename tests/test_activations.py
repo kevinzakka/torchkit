@@ -21,7 +21,5 @@ class TestActivations:
     @pytest.mark.parametrize("batch_size", [1, 2])
     def test_grad(self, batch_size):
         c, h, w = 3, 16, 16
-        x = torch.zeros(
-            batch_size, c, h, w, dtype=torch.double, requires_grad=True
-        )
+        x = torch.zeros(batch_size, c, h, w, dtype=torch.double, requires_grad=True)
         assert gradcheck(activations.swish, x, eps=1e-6, atol=1e-4)

@@ -1,8 +1,10 @@
 Installation
 ============
 
-**torchkit** requires Python 3.8+ or higher. You can install it with a single pip command:
+**torchkit** requires Python 3.8+ or higher. To install the latest release from PyPi, run::
 
-    .. code-block:: shell
+    pip install torchkit
 
-        pip install git+https://github.com/kevinzakka/torchkit.git
+If you wish to use the latest release, you can install directly from Git master::
+
+    pip install git+https://github.com/kevinzakka/torchkit.git

@@ -108,9 +108,7 @@ class Checkpoint:
         # Atomic save.
         save_dir = osp.dirname(save_path)
         tmp_path = osp.join(save_dir, f"tmp-{np.random.randint(1e10)}.ckpt")
-        torch.save(
-            {k: v.state_dict() for k, v in self.__dict__.items()}, tmp_path
-        )
+        torch.save({k: v.state_dict() for k, v in self.__dict__.items()}, tmp_path)
         # Rename is POSIX-compliant and as such, is an atomic operation
         # according to the Python docs:
         # https://docs.python.org/3/library/os.html#os.rename
@@ -122,7 +120,9 @@ class Checkpoint:
             signal.signal(signal.SIGINT, orig_handler)
 
     def restore(
-        self, save_path: str, device: Optional[torch.device] = None,
+        self,
+        save_path: str,
+        device: Optional[torch.device] = None,
     ) -> bool:
         """Restore a state from a saved checkpoint.
 
@@ -135,9 +135,7 @@ class Checkpoint:
             try:
                 for name, state_dict in state.items():
                     getattr(self, name).load_state_dict(state_dict)
-                logging.info(
-                    f"Successfully loaded model weights from {save_path}."
-                )
+                logging.info(f"Successfully loaded model weights from {save_path}.")
                 return True
             except Exception as e:
                 # There was an issue loading the state which means either the
@@ -254,7 +252,9 @@ class CheckpointManager:
 
     @staticmethod
     def load_latest_checkpoint(
-        checkpoint: Checkpoint, directory: str, device: torch.device,
+        checkpoint: Checkpoint,
+        directory: str,
+        device: torch.device,
     ) -> None:
         """Load the last saved checkpoint."""
         ckpts = CheckpointManager.list_checkpoints(directory)
@@ -276,7 +276,9 @@ class CheckpointManager:
 
     @staticmethod
     def load_specific_checkpoint(
-        checkpoint: Checkpoint, checkpoint_filename: str, device: torch.device,
+        checkpoint: Checkpoint,
+        checkpoint_filename: str,
+        device: torch.device,
     ) -> None:
         """Load a specific checkpoint."""
         try:
