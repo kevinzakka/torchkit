@@ -9,6 +9,7 @@ TESTS_REQUIRE = [
     "black",
     "isort",
     "pytype",
+    "flake8",
 ]
 DOCS_REQUIRE = [
     "sphinx",
