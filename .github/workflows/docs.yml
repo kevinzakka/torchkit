@@ -3,6 +3,8 @@ name: docs
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   docs:
@@ -24,7 +26,7 @@ jobs:
 
       # Deploy
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build
