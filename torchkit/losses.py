@@ -12,10 +12,10 @@ def one_hot(
     """One-hot encodes a tensor with optional label smoothing.
 
     Args:
-        y: A tensor containing the ground-truth labels of shape (N,), i.e. one
+        y: A tensor containing the ground-truth labels of shape `(N,)`, i.e. one
             label for each element in the batch.
         K: The number of classes.
-        smooth_eps: Label smoothing factor in [0, 1] range.
+        smooth_eps: Label smoothing factor in `[0, 1]` range.
     """
     assert 0 <= smooth_eps <= 1
     assert y.ndim == 1, "Label tensor must be rank 1."
@@ -36,7 +36,7 @@ def cross_entropy(
             been applied to the model output. The tensor should be of shape
             `(N, K)` where K is the number of classes.
         labels: A rank-1 `LongTensor` containing the ground truth labels.
-        smooth_eps: The label smoothing factor in [0, 1] range.
+        smooth_eps: The label smoothing factor in `[0, 1]` range.
         reduction: The reduction strategy on the final loss tensor.
 
     Returns:
@@ -46,11 +46,7 @@ def cross_entropy(
     """
     assert isinstance(logits, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(labels, (torch.LongTensor, torch.cuda.LongTensor))
-    assert reduction in [
-        "none",
-        "mean",
-        "sum",
-    ], "reduction method is not supported"
+    assert reduction in ["none", "mean", "sum"], "reduction method is not supported"
 
     # Ensure logits are not 1-hot encoded.
     assert labels.ndim == 1, "[!] Labels are NOT expected to be 1-hot encoded."
@@ -79,7 +75,7 @@ def huber_loss(
     delta: float,
     reduction: str = "mean",
 ) -> TensorType:
-    """Huber loss with tunable margin [1].
+    """Huber loss with tunable margin, as defined in `1`_.
 
     This is a more general version of PyTorch's
     `torch.nn.functional.smooth_l1_loss` that allows the user to change the
@@ -98,17 +94,11 @@ def huber_loss(
         If reduction is `sum`, a 1D tensor.
         If reduction is `mean`, a scalar 1D tensor.
 
-    References:
-        [1]: Wikipedia Huber Loss,
-        https://en.wikipedia.org/wiki/Huber_loss
+    .. _1: https://en.wikipedia.org/wiki/Huber_loss
     """
     assert isinstance(input, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(target, (torch.FloatTensor, torch.cuda.FloatTensor))
-    assert reduction in [
-        "none",
-        "mean",
-        "sum",
-    ], "reduction method is not supported"
+    assert reduction in ["none", "mean", "sum"], "reduction method is not supported"
 
     diff = target - input
     diff_abs = torch.abs(diff)

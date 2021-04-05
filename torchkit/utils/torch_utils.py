@@ -37,11 +37,10 @@ def get_total_params(
     model: torch.nn.Module,
     trainable: bool = True,
 ) -> int:
-    """Get the total number of parameters in a PyTorch model [1].
+    """Get the total number of parameters in a PyTorch model, from `1`_.
 
-    Example usage:
+    Example usage::
 
-    ```python
         class SimpleMLP(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -65,14 +64,15 @@ def get_total_params(
         |  fc2.bias  |     2      |
         +------------+------------+
         Total Trainable Params: 98
-    ```
 
     Args:
         model: The model, a subclass of `torch.nn.Module`.
         trainable: Only return trainable parameters.
 
-    References:
-        [1]: https://stackoverflow.com/a/62508086
+    Returns:
+        Either all model parameters or solely the trainable parameters.
+
+    .. _1: https://stackoverflow.com/a/62508086
     """
     table = PrettyTable(["Modules", "Parameters"])
 

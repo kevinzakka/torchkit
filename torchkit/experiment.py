@@ -9,7 +9,9 @@ def seed_rng(
     cudnn_deterministic: bool = False,
     cudnn_benchmark: bool = True,
 ) -> None:
-    """Seeds python, numpy, pytorch and CUDA/cudNN RNGs [1].
+    """Seeds python, numpy, pytorch and CUDA/cudNN RNGs.
+
+    See the `PyTorch Reproducibility Guide`_ for more information.
 
     Args:
         seed: The seed to use.
@@ -21,8 +23,8 @@ def seed_rng(
             cuDNN will deterministically select the same algorithm at a possible
             cost in performance.
 
-    References:
-        [1]: https://pytorch.org/docs/stable/notes/randomness.html
+    .. _PyTorch Reproducibility Guide:
+        https://pytorch.org/docs/stable/notes/randomness.html
     """
     # Seed for Python libraries.
     random.seed(seed)

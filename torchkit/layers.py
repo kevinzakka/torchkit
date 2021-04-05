@@ -81,9 +81,8 @@ class Flatten(nn.Module):
     This is a convenience module meant to be plugged into a
     `torch.nn.Sequential` model.
 
-    Example usage:
+    Example usage::
 
-    ```python
         import torch.nn as nn
         from torchkit import layers
 
@@ -98,7 +97,6 @@ class Flatten(nn.Module):
             nn.ReLU(),
             nn.Linear(256, 2),
         )
-    ```
     """
 
     def __init__(self):
@@ -109,15 +107,13 @@ class Flatten(nn.Module):
 
 
 class SpatialSoftArgmax(nn.Module):
-    """Spatial softmax as defined in [1].
+    """Spatial softmax as defined in `1`_.
 
     Concretely, the spatial softmax of each feature map is used to compute a
     weighted mean of the pixel locations, effectively performing a soft arg-max
     over the feature dimension.
 
-     References:
-         [1]: End-to-End Training of Deep Visuomotor Policies,
-         https://arxiv.org/abs/1504.00702
+    .. _1: https://arxiv.org/abs/1504.00702
     """
 
     def __init__(self, normalize: bool = False):
@@ -281,8 +277,6 @@ class CausalConv1d(nn.Conv1d):
             stride: The filter stride.
             dilation: The filter dilation factor.
             bias: Whether to add the bias term or not.
-
-        :meta public:
         """
         self.__padding = (kernel_size - 1) * dilation
 

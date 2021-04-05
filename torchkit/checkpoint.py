@@ -45,11 +45,13 @@ def get_files(
 class Checkpoint:
     """Save and restore PyTorch objects implementing `state_dict` attributes.
 
-    A Checkpoint object should be used in conjunction with a CheckpointManager.
+    A `Checkpoint` object should be used in conjunction with a
+    :class:`~torchkit.checkpoint.CheckpointManager`.
 
-    Example usage:
+    Note: This is a re-implementation of `1`_.
 
-    ```python
+    Example usage::
+
         import os
         from torchkit.checkpoint import Checkpoint
 
@@ -60,13 +62,8 @@ class Checkpoint:
         checkpoint = Checkpoint(model=model, optimizer=optimizer)
         checkpoint.save(checkpoint_path)
         status = checkpoint.restore(checkpoint_path)
-    ```
 
-    Note: This is a re-implementation of [1].
-
-    References:
-        [1]: Tensorflow's `tf.train.Checkpoint`,
-        https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint
+    .. _1: https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint
     """
 
     def __init__(self, **kwargs):
@@ -152,9 +149,10 @@ class Checkpoint:
 class CheckpointManager:
     """Manages multiple checkpoints by keeping some and deleting unneeded ones.
 
-    Example usage:
+    Note: This is a re-implementation of `2`_.
 
-    ```python
+    Example usage::
+
         from torchkit.checkpoint import Checkpoint, CheckpointManager
 
         # Create a checkpoint manager instance.
@@ -170,13 +168,8 @@ class CheckpointManager:
             # Save a checkpoint every N iters.
             if not global_step % N:
                 checkpoint_manager.save(global_step)
-    ```
 
-    Note: This is a re-implementation of [1].
-
-    References:
-        [1]: Tensorflow's `tf.train.CheckpointManager`,
-        https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager
+    .. _2: https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager/
     """
 
     def __init__(
