@@ -1,6 +1,6 @@
 # torchkit
 
-![documentation](https://github.com/kevinzakka/torchkit/workflows/docs/badge.svg)
+[![documentation](https://github.com/kevinzakka/torchkit/workflows/docs/badge.svg)](https://kevinzakka.github.io/torchkit/)
 ![build](https://github.com/kevinzakka/torchkit/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/kevinzakka/torchkit?color=blue)
 
@@ -50,10 +50,20 @@ For more details about each module, see the [documentation](https://kevinzakka.g
 
 ### Installation
 
-Use the following command to install directly with pip:
+To install the latest release, run:
 
 ```bash
 pip install git+https://github.com/kevinzakka/torchkit.git
+```
+
+### Contributing
+
+For development, clone the source code and create a virtual environment for this project:
+
+```bash
+git clone https://github.com/kevinzakka/torchkit.git
+cd torchkit
+pip install -e .[dev]
 ```
 
 ### Acknowledgments

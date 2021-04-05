@@ -5,7 +5,9 @@ import torch
 
 
 def seed_rng(
-    seed: int, cudnn_deterministic: bool = False, cudnn_benchmark: bool = True,
+    seed: int,
+    cudnn_deterministic: bool = False,
+    cudnn_benchmark: bool = True,
 ) -> None:
     """Seeds python, numpy, pytorch and CUDA/cudNN RNGs [1].
 

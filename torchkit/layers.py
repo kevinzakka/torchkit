@@ -111,13 +111,13 @@ class Flatten(nn.Module):
 class SpatialSoftArgmax(nn.Module):
     """Spatial softmax as defined in [1].
 
-   Concretely, the spatial softmax of each feature map is used to compute a
-   weighted mean of the pixel locations, effectively performing a soft arg-max
-   over the feature dimension.
+    Concretely, the spatial softmax of each feature map is used to compute a
+    weighted mean of the pixel locations, effectively performing a soft arg-max
+    over the feature dimension.
 
-    References:
-        [1]: End-to-End Training of Deep Visuomotor Policies,
-        https://arxiv.org/abs/1504.00702
+     References:
+         [1]: End-to-End Training of Deep Visuomotor Policies,
+         https://arxiv.org/abs/1504.00702
     """
 
     def __init__(self, normalize: bool = False):
@@ -131,7 +131,12 @@ class SpatialSoftArgmax(nn.Module):
 
         self.normalize = normalize
 
-    def _coord_grid(self, h: int, w: int, device: torch.device,) -> TensorType:
+    def _coord_grid(
+        self,
+        h: int,
+        w: int,
+        device: torch.device,
+    ) -> TensorType:
         if self.normalize:
             return torch.stack(
                 torch.meshgrid(

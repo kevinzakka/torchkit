@@ -45,9 +45,6 @@ class Logger:
     ) -> None:
         """Log a scalar value.
 
-        e.g. `logger.log_scalar(0.1, global_step, 'loss', 'training') will be
-            logged as `training/loss`.
-
         Args:
             scalar: A scalar `torch.Tensor` or float.
             global_step: The training iteration step.
@@ -55,8 +52,11 @@ class Logger:
             prefix: A prefix to prepend to the logged scalar.
         """
         if isinstance(scalar, torch.Tensor):
-            if cast(torch.Tensor, scalar).ndim != 0:
+            if cast(torch.Tensor, scalar).ndim > 1:
                 raise ValueError("Tensor must be scalar-valued.")
+            if cast(torch.Tensor, scalar).ndim == 1:
+                if cast(torch.Tensor, scalar).shape != torch.Size([1]):
+                    raise ValueError("Tensor must be scalar-valued.")
             scalar = cast(torch.Tensor, scalar).item()
         assert np.isscalar(scalar), "Not a scalar."
         msg = "/".join([prefix, name]) if prefix else name
@@ -117,16 +117,27 @@ class Logger:
             fps: The frames per second.
         """
         msg = f"{prefix}/image/{name}"
-        assert video.ndim in [4, 5], "Must be a video or batch of videos."
+        if video.ndim not in [4, 5]:
+            raise ValueError("Must be a video or batch of videos.")
         if video.ndim == 4:
             if isinstance(video, np.ndarray):
+                if video.shape[-1] != 3:
+                    raise TypeError("Numpy array should have THWC format.")
                 # (T, H, W, C) -> (T, C, H, W).
                 video = torch.from_numpy(video).permute(0, 3, 1, 2)
+            elif isinstance(video, torch.Tensor):
+                if video.shape[1] != 3:
+                    raise TypeError("Torch tensor should have TCHW format.")
             video = video.unsqueeze(0)  # (T, C, H, W) -> (1, T, C, H, W).
         else:
             if isinstance(video, np.ndarray):
+                if video.shape[-1] != 3:
+                    raise TypeError("Numpy array should have BTHWC format.")
                 # (B, T, H, W, C) -> (B, T, C, H, W).
                 video = torch.from_numpy(video).permute(0, 1, 4, 2, 3)
+            elif isinstance(video, torch.Tensor):
+                if video.shape[2] != 3:
+                    raise TypeError("Torch tensor should have BTCHW format.")
         self._writer.add_video(msg, video, global_step, fps=fps)
 
     def log_learning_rate(
@@ -141,7 +152,8 @@ class Logger:
             optimizer: An optimizer.
             global_step: The training iteration step.
         """
-        assert isinstance(optimizer, torch.optim.Optimizer)
+        if not isinstance(optimizer, torch.optim.Optimizer):
+            raise TypeError("Optimizer must be an instance of torch.optim.Optimizer.")
         for param_group in optimizer.param_groups:
             lr = param_group["lr"]
         self.log_scalar(lr, global_step, "learning_rate", prefix)

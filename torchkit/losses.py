@@ -4,7 +4,11 @@ import torch.nn.functional as F
 TensorType = torch.Tensor
 
 
-def one_hot(y: TensorType, K: int, smooth_eps: float = 0,) -> TensorType:
+def one_hot(
+    y: TensorType,
+    K: int,
+    smooth_eps: float = 0,
+) -> TensorType:
     """One-hot encodes a tensor with optional label smoothing.
 
     Args:
@@ -109,9 +113,7 @@ def huber_loss(
     diff = target - input
     diff_abs = torch.abs(diff)
     cond = diff_abs <= delta
-    loss = torch.where(
-        cond, 0.5 * diff ** 2, (delta * diff_abs) - (0.5 * delta ** 2)
-    )
+    loss = torch.where(cond, 0.5 * diff ** 2, (delta * diff_abs) - (0.5 * delta ** 2))
     if reduction == "none":
         return loss
     elif reduction == "mean":
