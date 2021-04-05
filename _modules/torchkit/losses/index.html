@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>torchkit.losses &mdash; torchkit 0.0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #06203A" >
+          
+
+          
+            <a href="../../../" class="icon icon-home"> torchkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/installation/">Installation</a></li>
+</ul>
+<p><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/activations/">torchkit.activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">torchkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../">Module code</a> &raquo;</li>
+        
+      <li>torchkit.losses</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for torchkit.losses</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="n">TensorType</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+
+
+<div class="viewcode-block" id="one_hot"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.one_hot">[docs]</a><span class="k">def</span> <span class="nf">one_hot</span><span class="p">(</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">smooth_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;One-hot encodes a tensor with optional label smoothing.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y: A tensor containing the ground-truth labels of shape (N,), i.e. one</span>
+<span class="sd">            label for each element in the batch.</span>
+<span class="sd">        K: The number of classes.</span>
+<span class="sd">        smooth_eps: Label smoothing factor in [0, 1] range.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">smooth_eps</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Label tensor must be rank 1.&quot;</span>
+    <span class="n">y_hot</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">K</span><span class="p">)[</span><span class="n">y</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">smooth_eps</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">smooth_eps</span> <span class="o">/</span> <span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y_hot</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cross_entropy"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.cross_entropy">[docs]</a><span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span>
+    <span class="n">logits</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">smooth_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Cross-entropy loss with support for label smoothing.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        logits: A `FloatTensor` containing the raw logits, i.e. no softmax has</span>
+<span class="sd">            been applied to the model output. The tensor should be of shape</span>
+<span class="sd">            `(N, K)` where K is the number of classes.</span>
+<span class="sd">        labels: A rank-1 `LongTensor` containing the ground truth labels.</span>
+<span class="sd">        smooth_eps: The label smoothing factor in [0, 1] range.</span>
+<span class="sd">        reduction: The reduction strategy on the final loss tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        If reduction is `none`, a 2D tensor.</span>
+<span class="sd">        If reduction is `sum`, a 1D tensor.</span>
+<span class="sd">        If reduction is `mean`, a scalar 1D tensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">reduction</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sum&quot;</span><span class="p">,</span>
+    <span class="p">],</span> <span class="s2">&quot;reduction method is not supported&quot;</span>
+
+    <span class="c1"># Ensure logits are not 1-hot encoded.</span>
+    <span class="k">assert</span> <span class="n">labels</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;[!] Labels are NOT expected to be 1-hot encoded.&quot;</span>
+
+    <span class="k">if</span> <span class="n">smooth_eps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="n">reduction</span><span class="p">)</span>
+
+    <span class="c1"># One-hot encode targets.</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">one_hot</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">smooth_eps</span><span class="p">)</span>
+
+    <span class="c1"># Convert logits to log probabilities.</span>
+    <span class="n">log_probs</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">labels</span> <span class="o">*</span> <span class="n">log_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">loss</span>
+    <span class="k">elif</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># sum</span></div>
+
+
+<div class="viewcode-block" id="huber_loss"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.huber_loss">[docs]</a><span class="k">def</span> <span class="nf">huber_loss</span><span class="p">(</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Huber loss with tunable margin [1].</span>
+
+<span class="sd">    This is a more general version of PyTorch&#39;s</span>
+<span class="sd">    `torch.nn.functional.smooth_l1_loss` that allows the user to change the</span>
+<span class="sd">    margin parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input: A `FloatTensor` representing the model output.</span>
+<span class="sd">        target: A `FloatTensor` representing the target values.</span>
+<span class="sd">        delta: Given the tensor difference `diff`, delta is the value at which</span>
+<span class="sd">            we incur a quadratic penalty if `diff` is at least delta and a</span>
+<span class="sd">            linear penalty otherwise.</span>
+<span class="sd">        reduction: The reduction strategy on the final loss tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        If reduction is `none`, a 2D tensor.</span>
+<span class="sd">        If reduction is `sum`, a 1D tensor.</span>
+<span class="sd">        If reduction is `mean`, a scalar 1D tensor.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1]: Wikipedia Huber Loss,</span>
+<span class="sd">        https://en.wikipedia.org/wiki/Huber_loss</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">reduction</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sum&quot;</span><span class="p">,</span>
+    <span class="p">],</span> <span class="s2">&quot;reduction method is not supported&quot;</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="nb">input</span>
+    <span class="n">diff_abs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+    <span class="n">cond</span> <span class="o">=</span> <span class="n">diff_abs</span> <span class="o">&lt;=</span> <span class="n">delta</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">diff</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">diff_abs</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">loss</span>
+    <span class="k">elif</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># sum</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Kevin Zakka.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>torchkit.logger &mdash; torchkit  documentation</title>
+  <title>torchkit.logger &mdash; torchkit 0.0.2 documentation</title>
   
 
   
@@ -49,7 +50,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #06203A" >
           
 
           
@@ -84,11 +85,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../expm/">Experiment Management</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../expm.experiment/">torchkit.experiment</a></li>
@@ -169,22 +170,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="torchkit-logger">
+  <section id="torchkit-logger">
 <h1>torchkit.logger<a class="headerlink" href="#torchkit-logger" title="Permalink to this headline">¶</a></h1>
 <p>The <cite>Logger</cite> class is a simple wrapper over Pytorch’s <code class="docutils literal notranslate"><span class="pre">SummaryWriter</span></code>. You can use it to log scalars, images and videos in numpy ndarray or torch Tensor format.</p>
 <dl class="py class">
 <dt id="torchkit.logger.Logger">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.logger.</span></code><code class="sig-name descname"><span class="pre">Logger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_write</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.logger.Logger" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Tensorboard-based logger.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.logger.</span></code><code class="sig-name descname"><span class="pre">Logger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Tensorboard-based logger.</p>
 <dl class="py method">
 <dt id="torchkit.logger.Logger.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_write</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.logger.Logger.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>log_dir</strong> – The directory in which to store Tensorboard logs.</p></li>
-<li><p><strong>force_write</strong> – Whether to force write to an already existing log dir.
+<li><p><strong>log_dir</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The directory in which to store Tensorboard logs.</p></li>
+<li><p><strong>force_write</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Whether to force write to an already existing log dir.
 Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> if resuming training.</p></li>
 </ul>
 </dd>
@@ -192,63 +194,73 @@ Set to <code class="docutils literal notranslate"><span class="pre">True</span><
 </dd></dl>
 
 <dl class="py method">
+<dt id="torchkit.logger.Logger.close">
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="torchkit.logger.Logger.log_image">
-<code class="sig-name descname"><span class="pre">log_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrow</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.logger.Logger.log_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">log_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.log_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.log_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log an image or batch of images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> – A numpy ndarray or a torch Tensor. If the image is 4D (i.e.
+<li><p><strong>image</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]) – A numpy ndarray or a torch Tensor. If the image is 4D (i.e.
 batched), it will be converted to a 3D image using make_grid.
 The numpy array should be in channel-last format while the torch
 Tensor should be in channel-first format.</p></li>
-<li><p><strong>global_step</strong> – The training iteration step.</p></li>
-<li><p><strong>name</strong> – The name of the logged image(s).</p></li>
-<li><p><strong>prefix</strong> – A prefix to prepend to the logged image(s).</p></li>
-<li><p><strong>nrow</strong> – The number of images displayed in each row of the grid if the
+<li><p><strong>global_step</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The training iteration step.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the logged image(s).</p></li>
+<li><p><strong>prefix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A prefix to prepend to the logged image(s).</p></li>
+<li><p><strong>nrow</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The number of images displayed in each row of the grid if the
 input image is 4D.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="torchkit.logger.Logger.log_learning_rate">
-<code class="sig-name descname"><span class="pre">log_learning_rate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.optim.optimizer.Optimizer</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.logger.Logger.log_learning_rate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">log_learning_rate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.log_learning_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.log_learning_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log the learning rate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optimizer</strong> – An optimizer.</p></li>
-<li><p><strong>global_step</strong> – The training iteration step.</p></li>
+<li><p><strong>optimizer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code>]) – An optimizer.</p></li>
+<li><p><strong>global_step</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The training iteration step.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="torchkit.logger.Logger.log_scalar">
-<code class="sig-name descname"><span class="pre">log_scalar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.logger.Logger.log_scalar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">log_scalar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scalar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.log_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.log_scalar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a scalar value.</p>
-<dl class="simple">
-<dt>e.g. <a href="#id1"><span class="problematic" id="id2">``</span></a>logger.log_scalar(0.1, global_step, ‘loss’, ‘training’) will be</dt><dd><p>logged as``training/loss`.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scalar</strong> – A scalar <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> or float.</p></li>
-<li><p><strong>global_step</strong> – The training iteration step.</p></li>
-<li><p><strong>name</strong> – The name of the logged scalar.</p></li>
-<li><p><strong>prefix</strong> – A prefix to prepend to the logged scalar.</p></li>
+<li><p><strong>scalar</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – A scalar <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> or float.</p></li>
+<li><p><strong>global_step</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The training iteration step.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the logged scalar.</p></li>
+<li><p><strong>prefix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A prefix to prepend to the logged scalar.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="torchkit.logger.Logger.log_video">
-<code class="sig-name descname"><span class="pre">log_video</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.logger.Logger.log_video" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">log_video</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/logger/#Logger.log_video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.logger.Logger.log_video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a sequence of images or a batch of sequence of images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -259,18 +271,21 @@ channel-first format. Should be either a single sequence of
 images of shape (T, CHW/HWC) or a batch of sequences of shape
 (B, T, CHW/HWC). The batch of sequences will get converted to
 one grid sequence of images.</p></li>
-<li><p><strong>global_step</strong> – The training iteration step.</p></li>
-<li><p><strong>name</strong> – The name of the logged video(s).</p></li>
-<li><p><strong>prefix</strong> – A prefix to prepend to the logged video(s).</p></li>
-<li><p><strong>fps</strong> – The frames per second.</p></li>
+<li><p><strong>global_step</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The training iteration step.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the logged video(s).</p></li>
+<li><p><strong>prefix</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A prefix to prepend to the logged video(s).</p></li>
+<li><p><strong>fps</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The frames per second.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -286,7 +301,7 @@ one grid sequence of images.</p></li>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Kevin Zakka.
+        &#169; Copyright 2021, Kevin Zakka.
 
     </p>
   </div>

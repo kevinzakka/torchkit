@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>torchkit.layers &mdash; torchkit 0.0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #06203A" >
+          
+
+          
+            <a href="../../../" class="icon icon-home"> torchkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/installation/">Installation</a></li>
+</ul>
+<p><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/activations/">torchkit.activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">torchkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../">Module code</a> &raquo;</li>
+        
+      <li>torchkit.layers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for torchkit.layers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="n">ConvType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">Conv3d</span><span class="p">]</span>
+<span class="n">TensorType</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+
+
+<span class="k">def</span> <span class="nf">_conv</span><span class="p">(</span>
+    <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConvType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;`same` convolution, i.e. output shape equals input shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dim: The dimension of the convolution: 2 is conv2d, 3 is conv3d.</span>
+<span class="sd">        in_planes: The number of input feature maps.</span>
+<span class="sd">        out_planes: The number of output feature maps.</span>
+<span class="sd">        kernel_size: The filter size.</span>
+<span class="sd">        stride: The filter stride.</span>
+<span class="sd">        dilation: The filter dilation factor.</span>
+<span class="sd">        bias: Whether to add a bias.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">dim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;[!] Only 2D and 3D convolution supported.&quot;</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span> <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv3d</span>
+
+    <span class="c1"># Compute new filter size after dilation and necessary padding for `same`</span>
+    <span class="c1"># output size.</span>
+    <span class="n">dilated_kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">dilation</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">kernel_size</span>
+    <span class="n">same_padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">dilated_kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">conv</span><span class="p">(</span>
+        <span class="n">in_channels</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">,</span>
+        <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="n">same_padding</span><span class="p">,</span>
+        <span class="n">dilation</span><span class="o">=</span><span class="n">dilation</span><span class="p">,</span>
+        <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="conv2d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.conv2d">[docs]</a><span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;`same` 2D convolution, i.e. output shape equals input shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        in_planes: The number of input feature maps.</span>
+<span class="sd">        out_planes: The number of output feature maps.</span>
+<span class="sd">        kernel_size: The filter size.</span>
+<span class="sd">        stride: The filter stride.</span>
+<span class="sd">        dilation: The filter dilation factor.</span>
+<span class="sd">        bias: Whether to add a bias.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_conv</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="conv3d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.conv3d">[docs]</a><span class="k">def</span> <span class="nf">conv3d</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">Conv3d</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;`same` 3D convolution, i.e. output shape equals input shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        in_planes: The number of input feature maps.</span>
+<span class="sd">        out_planes: The number of output feature maps.</span>
+<span class="sd">        kernel_size: The filter size.</span>
+<span class="sd">        stride: The filter stride.</span>
+<span class="sd">        dilation: The filter dilation factor.</span>
+<span class="sd">        bias: Whether to add a bias.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_conv</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Flatten"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.Flatten">[docs]</a><span class="k">class</span> <span class="nc">Flatten</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Flattens convolutional feature maps for fully-connected layers.</span>
+
+<span class="sd">    This is a convenience module meant to be plugged into a</span>
+<span class="sd">    `torch.nn.Sequential` model.</span>
+
+<span class="sd">    Example usage:</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">        import torch.nn as nn</span>
+<span class="sd">        from torchkit import layers</span>
+
+<span class="sd">        # Assume an input of shape (3, 28, 28).</span>
+<span class="sd">        net = nn.Sequential(</span>
+<span class="sd">            layers.conv2d(3, 8, kernel_size=3),</span>
+<span class="sd">            nn.ReLU(),</span>
+<span class="sd">            layers.conv2d(8, 16, kernel_size=3),</span>
+<span class="sd">            nn.ReLU(),</span>
+<span class="sd">            layers.Flatten(),</span>
+<span class="sd">            nn.Linear(28*28*16, 256),</span>
+<span class="sd">            nn.ReLU(),</span>
+<span class="sd">            nn.Linear(256, 2),</span>
+<span class="sd">        )</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Flatten.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.Flatten.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SpatialSoftArgmax"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.SpatialSoftArgmax">[docs]</a><span class="k">class</span> <span class="nc">SpatialSoftArgmax</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spatial softmax as defined in [1].</span>
+
+<span class="sd">    Concretely, the spatial softmax of each feature map is used to compute a</span>
+<span class="sd">    weighted mean of the pixel locations, effectively performing a soft arg-max</span>
+<span class="sd">    over the feature dimension.</span>
+
+<span class="sd">     References:</span>
+<span class="sd">         [1]: End-to-End Training of Deep Visuomotor Policies,</span>
+<span class="sd">         https://arxiv.org/abs/1504.00702</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpatialSoftArgmax.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.SpatialSoftArgmax.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            normalize: Whether to use normalized image coordinates, i.e.</span>
+<span class="sd">                coordinates in the range `[-1, 1]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span></div>
+
+    <span class="k">def</span> <span class="nf">_coord_grid</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Expecting a tensor of shape (B, C, H, W).&quot;</span>
+
+        <span class="c1"># Compute a spatial softmax over the input:</span>
+        <span class="c1"># Given an input of shape (B, C, H, W), reshape it to (B*C, H*W) then</span>
+        <span class="c1"># apply the softmax operator over the last dimension.</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">softmax</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Create a meshgrid of normalized pixel coordinates.</span>
+        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coord_grid</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># Element-wise multiply the x and y coordinates with the softmax, then</span>
+        <span class="c1"># sum over the h*w dimension. This effectively computes the weighted</span>
+        <span class="c1"># mean x and y locations.</span>
+        <span class="n">x_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">softmax</span> <span class="o">*</span> <span class="n">xc</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">softmax</span> <span class="o">*</span> <span class="n">yc</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Concatenate and reshape the result to (B, C*2) where for every feature</span>
+        <span class="c1"># we have the expected x and y pixel locations.</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x_mean</span><span class="p">,</span> <span class="n">y_mean</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_GlobalMaxPool</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global max pooling layer.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool1d</span>
+        <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span>
+        <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool3d</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">D is not supported.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:])):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">squeeze_</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="GlobalMaxPool1d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool1d">[docs]</a><span class="k">class</span> <span class="nc">GlobalMaxPool1d</span><span class="p">(</span><span class="n">_GlobalMaxPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global max pooling operation for temporal or 1D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalMaxPool1d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool1d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GlobalMaxPool2d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool2d">[docs]</a><span class="k">class</span> <span class="nc">GlobalMaxPool2d</span><span class="p">(</span><span class="n">_GlobalMaxPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global max pooling operation for spatial or 2D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalMaxPool2d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool2d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GlobalMaxPool3d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool3d">[docs]</a><span class="k">class</span> <span class="nc">GlobalMaxPool3d</span><span class="p">(</span><span class="n">_GlobalMaxPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global max pooling operation for 3D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalMaxPool3d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalMaxPool3d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_GlobalAvgPool</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global average pooling layer.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">avg_pool1d</span>
+        <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">avg_pool2d</span>
+        <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">avg_pool3d</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">D is not supported.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:])):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">squeeze_</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="GlobalAvgPool1d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool1d">[docs]</a><span class="k">class</span> <span class="nc">GlobalAvgPool1d</span><span class="p">(</span><span class="n">_GlobalAvgPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global average pooling operation for temporal or 1D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalAvgPool1d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool1d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GlobalAvgPool2d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool2d">[docs]</a><span class="k">class</span> <span class="nc">GlobalAvgPool2d</span><span class="p">(</span><span class="n">_GlobalAvgPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global average pooling operation for spatial or 2D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalAvgPool2d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool2d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GlobalAvgPool3d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool3d">[docs]</a><span class="k">class</span> <span class="nc">GlobalAvgPool3d</span><span class="p">(</span><span class="n">_GlobalAvgPool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Global average pooling operation for 3D data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GlobalAvgPool3d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.GlobalAvgPool3d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CausalConv1d"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.CausalConv1d">[docs]</a><span class="k">class</span> <span class="nc">CausalConv1d</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A causal a.k.a. masked 1D convolution.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CausalConv1d.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.CausalConv1d.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            in_channels: The number of input channels.</span>
+<span class="sd">            out_channels: The number of output channels.</span>
+<span class="sd">            kernel_size: The filter size.</span>
+<span class="sd">            stride: The filter stride.</span>
+<span class="sd">            dilation: The filter dilation factor.</span>
+<span class="sd">            bias: Whether to add the bias term or not.</span>
+
+<span class="sd">        :meta public:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dilation</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">in_channels</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="p">,</span>
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+            <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__padding</span><span class="p">,</span>
+            <span class="n">dilation</span><span class="o">=</span><span class="n">dilation</span><span class="p">,</span>
+            <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__padding</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">__padding</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Kevin Zakka.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

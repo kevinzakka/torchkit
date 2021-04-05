@@ -1,10 +1,12 @@
-.. raw:: html
+torchkit User Guide
+===================
 
-    <h1 style="text-align: center">TorchKit: A PyTorch Toolkit for Research</h1>
-    <br>
+**torchkit** is a *lightweight* library containing PyTorch utilities useful for day-to-day research.
+Its main goal is to abstract away a lot of the redundant boilerplate associated with research projects
+like experimental configurations, logging and model checkpointing.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: User Guide
 
     torchkit/installation
@@ -19,8 +21,8 @@
     torchkit/activations
     torchkit/utils
 
-Indices and Tables
-------------------
+Indices and tables
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`

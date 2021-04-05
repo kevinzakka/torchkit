@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>torchkit.losses &mdash; torchkit  documentation</title>
+  <title>torchkit.losses &mdash; torchkit 0.0.2 documentation</title>
   
 
   
@@ -49,7 +50,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #06203A" >
           
 
           
@@ -84,11 +85,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
@@ -162,41 +163,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-torchkit.losses">
+  <section id="module-torchkit.losses">
 <span id="torchkit-losses"></span><h1>torchkit.losses<a class="headerlink" href="#module-torchkit.losses" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="torchkit.losses.one_hot">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">one_hot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="headerlink" href="#torchkit.losses.one_hot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">one_hot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#one_hot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.one_hot" title="Permalink to this definition">¶</a></dt>
 <dd><p>One-hot encodes a tensor with optional label smoothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>y</strong> – A tensor containing the ground-truth labels of shape (N,), i.e. one
+<li><p><strong>y</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – A tensor containing the ground-truth labels of shape (N,), i.e. one
 label for each element in the batch.</p></li>
-<li><p><strong>K</strong> – The number of classes.</p></li>
-<li><p><strong>smooth_eps</strong> – Label smoothing factor in [0, 1] range.</p></li>
+<li><p><strong>K</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The number of classes.</p></li>
+<li><p><strong>smooth_eps</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Label smoothing factor in [0, 1] range.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="torchkit.losses.cross_entropy">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="headerlink" href="#torchkit.losses.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#cross_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.cross_entropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cross-entropy loss with support for label smoothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>logits</strong> – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> containing the raw logits, i.e. no softmax has
+<li><p><strong>logits</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> containing the raw logits, i.e. no softmax has
 been applied to the model output. The tensor should be of shape
 <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">K)</span></code> where K is the number of classes.</p></li>
-<li><p><strong>labels</strong> – A rank-1 <code class="docutils literal notranslate"><span class="pre">LongTensor</span></code> containing the ground truth labels.</p></li>
-<li><p><strong>smooth_eps</strong> – The label smoothing factor in [0, 1] range.</p></li>
-<li><p><strong>reduction</strong> – The reduction strategy on the final loss tensor.</p></li>
+<li><p><strong>labels</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – A rank-1 <code class="docutils literal notranslate"><span class="pre">LongTensor</span></code> containing the ground truth labels.</p></li>
+<li><p><strong>smooth_eps</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The label smoothing factor in [0, 1] range.</p></li>
+<li><p><strong>reduction</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The reduction strategy on the final loss tensor.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If reduction is <code class="docutils literal notranslate"><span class="pre">none</span></code>, a 2D tensor.
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If reduction is <code class="docutils literal notranslate"><span class="pre">none</span></code>, a 2D tensor.
 If reduction is <code class="docutils literal notranslate"><span class="pre">sum</span></code>, a 1D tensor.
 If reduction is <code class="docutils literal notranslate"><span class="pre">mean</span></code>, a scalar 1D tensor.</p>
 </dd>
@@ -205,7 +212,7 @@ If reduction is <code class="docutils literal notranslate"><span class="pre">mea
 
 <dl class="py function">
 <dt id="torchkit.losses.huber_loss">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">huber_loss</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="headerlink" href="#torchkit.losses.huber_loss" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">huber_loss</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#huber_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.huber_loss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Huber loss with tunable margin [1].</p>
 <p>This is a more general version of PyTorch’s
 <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.smooth_l1_loss</span></code> that allows the user to change the
@@ -213,16 +220,19 @@ margin parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> representing the model output.</p></li>
-<li><p><strong>target</strong> – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> representing the target values.</p></li>
-<li><p><strong>delta</strong> – Given the tensor difference <code class="docutils literal notranslate"><span class="pre">diff</span></code>, delta is the value at which
+<li><p><strong>input</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> representing the model output.</p></li>
+<li><p><strong>target</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>) – A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> representing the target values.</p></li>
+<li><p><strong>delta</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Given the tensor difference <code class="docutils literal notranslate"><span class="pre">diff</span></code>, delta is the value at which
 we incur a quadratic penalty if <code class="docutils literal notranslate"><span class="pre">diff</span></code> is at least delta and a
 linear penalty otherwise.</p></li>
-<li><p><strong>reduction</strong> – The reduction strategy on the final loss tensor.</p></li>
+<li><p><strong>reduction</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The reduction strategy on the final loss tensor.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If reduction is <code class="docutils literal notranslate"><span class="pre">none</span></code>, a 2D tensor.
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If reduction is <code class="docutils literal notranslate"><span class="pre">none</span></code>, a 2D tensor.
 If reduction is <code class="docutils literal notranslate"><span class="pre">sum</span></code>, a 1D tensor.
 If reduction is <code class="docutils literal notranslate"><span class="pre">mean</span></code>, a scalar 1D tensor.</p>
 </dd>
@@ -232,7 +242,7 @@ If reduction is <code class="docutils literal notranslate"><span class="pre">mea
 <a class="reference external" href="https://en.wikipedia.org/wiki/Huber_loss">https://en.wikipedia.org/wiki/Huber_loss</a></p>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -248,7 +258,7 @@ If reduction is <code class="docutils literal notranslate"><span class="pre">mea
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Kevin Zakka.
+        &#169; Copyright 2021, Kevin Zakka.
 
     </p>
   </div>

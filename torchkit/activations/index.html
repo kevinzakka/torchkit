@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>torchkit.activations &mdash; torchkit  documentation</title>
+  <title>torchkit.activations &mdash; torchkit 0.0.2 documentation</title>
   
 
   
@@ -49,7 +50,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #06203A" >
           
 
           
@@ -84,11 +85,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
@@ -162,29 +163,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-torchkit.activations">
+  <section id="module-torchkit.activations">
 <span id="torchkit-activations"></span><h1>torchkit.activations<a class="headerlink" href="#module-torchkit.activations" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="torchkit.activations.swish">
+<code class="sig-prename descclassname"><span class="pre">torchkit.activations.</span></code><code class="sig-name descname"><span class="pre">swish</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/activations/#swish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.activations.swish" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt id="torchkit.activations.Swish">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.activations.</span></code><code class="sig-name descname"><span class="pre">Swish</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.activations.Swish" title="Permalink to this definition">¶</a></dt>
-<dd><p>Swish activation function [1].</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.activations.</span></code><code class="sig-name descname"><span class="pre">Swish</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/activations/#Swish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.activations.Swish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Swish activation function [1].</p>
 <p class="rubric">References</p>
 <p>[1]: Searching for Activation Functions,
 <a class="reference external" href="https://arxiv.org/abs/1710.05941">https://arxiv.org/abs/1710.05941</a></p>
 <dl class="py method">
 <dt id="torchkit.activations.Swish.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.activations.Swish.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/activations/#Swish.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.activations.Swish.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>inplace</strong> – Perform the activation inplace.</p>
+<dd class="field-odd"><p><strong>inplace</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Perform the activation inplace.</p>
 </dd>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="torchkit.activations.Swish.training">
+<code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#torchkit.activations.Swish.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -200,7 +217,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Kevin Zakka.
+        &#169; Copyright 2021, Kevin Zakka.
 
     </p>
   </div>

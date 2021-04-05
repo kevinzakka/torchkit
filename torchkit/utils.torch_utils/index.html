@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>torchkit.utils.torch_utils &mdash; torchkit  documentation</title>
+  <title>torchkit.utils.torch_utils &mdash; torchkit 0.0.2 documentation</title>
   
 
   
@@ -48,7 +49,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #06203A" >
           
 
           
@@ -83,11 +84,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
@@ -166,28 +167,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-torchkit.utils.torch_utils">
+  <section id="module-torchkit.utils.torch_utils">
 <span id="torchkit-utils-torch-utils"></span><h1>torchkit.utils.torch_utils<a class="headerlink" href="#module-torchkit.utils.torch_utils" title="Permalink to this headline">¶</a></h1>
 <p>Pytorch-related utils.</p>
 <dl class="py function">
 <dt id="torchkit.utils.torch_utils.freeze_model">
-<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">freeze_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_freeze_affine</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_use_running_stats</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">freeze_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_freeze_affine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_use_running_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#freeze_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Freeze PyTorch model weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – The model to freeze, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
-<li><p><strong>bn_freeze_affine</strong> – If True, freezes batch norm params gamma and beta.</p></li>
-<li><p><strong>bn_use_running_stats</strong> – If True, switches from batch statistics to running
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>) – The model to freeze, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
+<li><p><strong>bn_freeze_affine</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If True, freezes batch norm params gamma and beta.</p></li>
+<li><p><strong>bn_use_running_stats</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If True, switches from batch statistics to running
 mean and std. This is recommended for very small batch sizes.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="torchkit.utils.torch_utils.get_total_params">
-<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">get_total_params</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">get_total_params</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#get_total_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the total number of parameters in a PyTorch model <a class="reference external" href="https://stackoverflow.com/a/62508086">1</a>.</p>
 <p>Example usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -218,15 +222,20 @@ mean and std. This is recommended for very small batch sizes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – The model, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
-<li><p><strong>trainable</strong> – Only return trainable parameters.</p></li>
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>) – The model, a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p></li>
+<li><p><strong>trainable</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Only return trainable parameters.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">References</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -241,7 +250,7 @@ mean and std. This is recommended for very small batch sizes.</p></li>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Kevin Zakka.
+        &#169; Copyright 2021, Kevin Zakka.
 
     </p>
   </div>

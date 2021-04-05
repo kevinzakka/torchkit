@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>torchkit.logger &mdash; torchkit 0.0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #06203A" >
+          
+
+          
+            <a href="../../../" class="icon icon-home"> torchkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/installation/">Installation</a></li>
+</ul>
+<p><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/activations/">torchkit.activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">torchkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../">Module code</a> &raquo;</li>
+        
+      <li>torchkit.logger</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for torchkit.logger</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+
+<span class="n">TensorType</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+<span class="n">ImageType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">TensorType</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Logger"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger">[docs]</a><span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A Tensorboard-based logger.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Logger.__init__"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_write</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            log_dir: The directory in which to store Tensorboard logs.</span>
+<span class="sd">            force_write: Whether to force write to an already existing log dir.</span>
+<span class="sd">                Set to `True` if resuming training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_dir</span> <span class="o">=</span> <span class="n">log_dir</span>
+
+        <span class="c1"># Setup the summary writer.</span>
+        <span class="n">writer_dir</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_dir</span><span class="p">,</span> <span class="s2">&quot;train_logs&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">osp</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">writer_dir</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force_write</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;You might be overwriting a directory that already &quot;</span>
+                <span class="s2">&quot;has train_logs. Please provide a new experiment name &quot;</span>
+                <span class="s2">&quot;or set --resume to True when launching train script.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">writer_dir</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.close"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logger.log_scalar"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_scalar">[docs]</a>    <span class="k">def</span> <span class="nf">log_scalar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scalar</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TensorType</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Log a scalar value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            scalar: A scalar `torch.Tensor` or float.</span>
+<span class="sd">            global_step: The training iteration step.</span>
+<span class="sd">            name: The name of the logged scalar.</span>
+<span class="sd">            prefix: A prefix to prepend to the logged scalar.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cast</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tensor must be scalar-valued.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cast</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cast</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tensor must be scalar-valued.&quot;</span><span class="p">)</span>
+            <span class="n">scalar</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">scalar</span><span class="p">),</span> <span class="s2">&quot;Not a scalar.&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span> <span class="k">if</span> <span class="n">prefix</span> <span class="k">else</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.log_image"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_image">[docs]</a>    <span class="k">def</span> <span class="nf">log_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">ImageType</span><span class="p">,</span>
+        <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">nrow</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Log an image or batch of images.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image: A numpy ndarray or a torch Tensor. If the image is 4D (i.e.</span>
+<span class="sd">                batched), it will be converted to a 3D image using make_grid.</span>
+<span class="sd">                The numpy array should be in channel-last format while the torch</span>
+<span class="sd">                Tensor should be in channel-first format.</span>
+<span class="sd">            global_step: The training iteration step.</span>
+<span class="sd">            name: The name of the logged image(s).</span>
+<span class="sd">            prefix: A prefix to prepend to the logged image(s).</span>
+<span class="sd">            nrow: The number of images displayed in each row of the grid if the</span>
+<span class="sd">                input image is 4D.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span> <span class="k">if</span> <span class="n">prefix</span> <span class="k">else</span> <span class="n">name</span>
+        <span class="k">assert</span> <span class="n">image</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="s2">&quot;Must be an image or batch of images.&quot;</span>
+        <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="n">nrow</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">dataformats</span><span class="o">=</span><span class="s2">&quot;CHW&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.log_video"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_video">[docs]</a>    <span class="k">def</span> <span class="nf">log_video</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">video</span><span class="p">,</span>
+        <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Log a sequence of images or a batch of sequence of images.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            video: A torch Tensor or numpy ndarray. The numpy array should be in</span>
+<span class="sd">                channel-last format while the torch Tensor should be in</span>
+<span class="sd">                channel-first format. Should be either a single sequence of</span>
+<span class="sd">                images of shape (T, CHW/HWC) or a batch of sequences of shape</span>
+<span class="sd">                (B, T, CHW/HWC). The batch of sequences will get converted to</span>
+<span class="sd">                one grid sequence of images.</span>
+<span class="sd">            global_step: The training iteration step.</span>
+<span class="sd">            name: The name of the logged video(s).</span>
+<span class="sd">            prefix: A prefix to prepend to the logged video(s).</span>
+<span class="sd">            fps: The frames per second.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">/image/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be a video or batch of videos.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Numpy array should have THWC format.&quot;</span><span class="p">)</span>
+                <span class="c1"># (T, H, W, C) -&gt; (T, C, H, W).</span>
+                <span class="n">video</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">video</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Torch tensor should have TCHW format.&quot;</span><span class="p">)</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="n">video</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (T, C, H, W) -&gt; (1, T, C, H, W).</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Numpy array should have BTHWC format.&quot;</span><span class="p">)</span>
+                <span class="c1"># (B, T, H, W, C) -&gt; (B, T, C, H, W).</span>
+                <span class="n">video</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">video</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Torch tensor should have BTCHW format.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_video</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.log_learning_rate"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_learning_rate">[docs]</a>    <span class="k">def</span> <span class="nf">log_learning_rate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">],</span>
+        <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Log the learning rate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            optimizer: An optimizer.</span>
+<span class="sd">            global_step: The training iteration step.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Optimizer must be an instance of torch.optim.Optimizer.&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">:</span>
+            <span class="n">lr</span> <span class="o">=</span> <span class="n">param_group</span><span class="p">[</span><span class="s2">&quot;lr&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_scalar</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Kevin Zakka.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
