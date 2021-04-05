@@ -17,7 +17,7 @@ def swish(x: TensorType, inplace: bool = False) -> TensorType:
 class Swish(nn.Module):
     """`Swish`_ activation function.
 
-    .. _Swish: Searching for Activation Functions, https://arxiv.org/abs/1710.05941
+    .. _Swish: https://arxiv.org/abs/1710.05941
     """
 
     def __init__(self, inplace: bool = False) -> None:

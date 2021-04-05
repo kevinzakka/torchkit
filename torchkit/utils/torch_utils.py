@@ -1,7 +1,6 @@
 """Pytorch-related utils."""
 
 import torch
-from prettytable import PrettyTable
 
 
 def freeze_model(
@@ -74,6 +73,8 @@ def get_total_params(
 
     .. _1: https://stackoverflow.com/a/62508086
     """
+    from prettytable import PrettyTable
+
     table = PrettyTable(["Modules", "Parameters"])
 
     total_params = 0
