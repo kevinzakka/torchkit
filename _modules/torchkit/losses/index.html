@@ -165,7 +165,11 @@
 <span class="n">TensorType</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
 
 
-<div class="viewcode-block" id="one_hot"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.one_hot">[docs]</a><span class="k">def</span> <span class="nf">one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">smooth_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+<div class="viewcode-block" id="one_hot"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.one_hot">[docs]</a><span class="k">def</span> <span class="nf">one_hot</span><span class="p">(</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">smooth_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;One-hot encodes a tensor with optional label smoothing.</span>
 
 <span class="sd">    Args:</span>
@@ -227,7 +231,10 @@
 
 
 <div class="viewcode-block" id="huber_loss"><a class="viewcode-back" href="../../../torchkit/losses/#torchkit.losses.huber_loss">[docs]</a><span class="k">def</span> <span class="nf">huber_loss</span><span class="p">(</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">TensorType</span><span class="p">,</span>
+    <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Huber loss with tunable margin, as defined in `1`_.</span>
 

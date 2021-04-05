@@ -256,7 +256,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">dataformats</span><span class="o">=</span><span class="s2">&quot;CHW&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Logger.log_video"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_video">[docs]</a>    <span class="k">def</span> <span class="nf">log_video</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">video</span><span class="p">,</span>
+        <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Log a sequence of images or a batch of sequence of images.</span>
 
