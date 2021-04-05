@@ -162,7 +162,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;Pytorch-related utils.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">prettytable</span> <span class="kn">import</span> <span class="n">PrettyTable</span>
 
 
 <div class="viewcode-block" id="freeze_model"><a class="viewcode-back" href="../../../../torchkit/utils.torch_utils/#torchkit.utils.torch_utils.freeze_model">[docs]</a><span class="k">def</span> <span class="nf">freeze_model</span><span class="p">(</span>
@@ -235,6 +234,8 @@
 
 <span class="sd">    .. _1: https://stackoverflow.com/a/62508086</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">prettytable</span> <span class="kn">import</span> <span class="n">PrettyTable</span>
+
     <span class="n">table</span> <span class="o">=</span> <span class="n">PrettyTable</span><span class="p">([</span><span class="s2">&quot;Modules&quot;</span><span class="p">,</span> <span class="s2">&quot;Parameters&quot;</span><span class="p">])</span>
 
     <span class="n">total_params</span> <span class="o">=</span> <span class="mi">0</span>
