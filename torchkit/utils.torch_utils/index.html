@@ -191,9 +191,9 @@ mean and std. This is recommended for very small batch sizes.</p></li>
 <dl class="py function">
 <dt id="torchkit.utils.torch_utils.get_total_params">
 <code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">get_total_params</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#get_total_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the total number of parameters in a PyTorch model <a class="reference external" href="https://stackoverflow.com/a/62508086">1</a>.</p>
+<dd><p>Get the total number of parameters in a PyTorch model, from <a class="reference external" href="https://stackoverflow.com/a/62508086">1</a>.</p>
 <p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
@@ -225,11 +225,11 @@ mean and std. This is recommended for very small batch sizes.</p></li>
 <li><p><strong>trainable</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Only return trainable parameters.</p></li>
 </ul>
 </dd>
-</dl>
-<p class="rubric">References</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Either all model parameters or solely the trainable parameters.</p>
 </dd>
 </dl>
 </dd></dl>

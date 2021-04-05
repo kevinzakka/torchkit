@@ -174,7 +174,8 @@
 <dl class="py function">
 <dt id="torchkit.experiment.seed_rng">
 <code class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></code><code class="sig-name descname"><span class="pre">seed_rng</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rng" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seeds python, numpy, pytorch and CUDA/cudNN RNGs <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">1</a>.</p>
+<dd><p>Seeds python, numpy, pytorch and CUDA/cudNN RNGs.</p>
+<p>See the <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">PyTorch Reproducibility Guide</a> for more information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -189,7 +190,6 @@ cost in performance.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">References</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>

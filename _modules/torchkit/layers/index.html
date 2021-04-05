@@ -242,9 +242,8 @@
 <span class="sd">    This is a convenience module meant to be plugged into a</span>
 <span class="sd">    `torch.nn.Sequential` model.</span>
 
-<span class="sd">    Example usage:</span>
+<span class="sd">    Example usage::</span>
 
-<span class="sd">    ```python</span>
 <span class="sd">        import torch.nn as nn</span>
 <span class="sd">        from torchkit import layers</span>
 
@@ -259,7 +258,6 @@
 <span class="sd">            nn.ReLU(),</span>
 <span class="sd">            nn.Linear(256, 2),</span>
 <span class="sd">        )</span>
-<span class="sd">    ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Flatten.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.Flatten.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -270,15 +268,13 @@
 
 
 <div class="viewcode-block" id="SpatialSoftArgmax"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.SpatialSoftArgmax">[docs]</a><span class="k">class</span> <span class="nc">SpatialSoftArgmax</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Spatial softmax as defined in [1].</span>
+    <span class="sd">&quot;&quot;&quot;Spatial softmax as defined in `1`_.</span>
 
 <span class="sd">    Concretely, the spatial softmax of each feature map is used to compute a</span>
 <span class="sd">    weighted mean of the pixel locations, effectively performing a soft arg-max</span>
 <span class="sd">    over the feature dimension.</span>
 
-<span class="sd">     References:</span>
-<span class="sd">         [1]: End-to-End Training of Deep Visuomotor Policies,</span>
-<span class="sd">         https://arxiv.org/abs/1504.00702</span>
+<span class="sd">    .. _1: https://arxiv.org/abs/1504.00702</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="SpatialSoftArgmax.__init__"><a class="viewcode-back" href="../../../torchkit/layers/#torchkit.layers.SpatialSoftArgmax.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
@@ -292,12 +288,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span></div>
 
-    <span class="k">def</span> <span class="nf">_coord_grid</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_coord_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,)</span> <span class="o">-&gt;</span> <span class="n">TensorType</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
                 <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
@@ -307,8 +298,7 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
             <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
-                <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
-                <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span>
 
@@ -442,8 +432,6 @@
 <span class="sd">            stride: The filter stride.</span>
 <span class="sd">            dilation: The filter dilation factor.</span>
 <span class="sd">            bias: Whether to add the bias term or not.</span>
-
-<span class="sd">        :meta public:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dilation</span>
 

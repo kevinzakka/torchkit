@@ -174,11 +174,12 @@
 <dl class="py class">
 <dt id="torchkit.checkpoint.Checkpoint">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.checkpoint.</span></code><code class="sig-name descname"><span class="pre">Checkpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/checkpoint/#Checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.checkpoint.Checkpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Save and restore PyTorch objects implementing <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attributes.</p>
-<p>A Checkpoint object should be used in conjunction with a CheckpointManager.</p>
+<dd><p>Save and restore PyTorch objects implementing <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attributes.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Checkpoint</span></code> object should be used in conjunction with a
+<a class="reference internal" href="#torchkit.checkpoint.CheckpointManager" title="torchkit.checkpoint.CheckpointManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckpointManager</span></code></a>.</p>
+<p>Note: This is a re-implementation of <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint">1</a>.</p>
 <p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">torchkit.checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span>
 
 <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="s2">&quot;/tmp/training_checkpoints&quot;</span>
@@ -190,10 +191,6 @@
 <span class="n">status</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Note: This is a re-implementation of [1].</p>
-<p class="rubric">References</p>
-<p>[1]: Tensorflow’s <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code>,
-<a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint">https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint</a></p>
 <dl class="py method">
 <dt id="torchkit.checkpoint.Checkpoint.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/checkpoint/#Checkpoint.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.__init__" title="Permalink to this definition">¶</a></dt>
@@ -250,10 +247,10 @@ attribute.</p>
 <dl class="py class">
 <dt id="torchkit.checkpoint.CheckpointManager">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.checkpoint.</span></code><code class="sig-name descname"><span class="pre">CheckpointManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_to_keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/checkpoint/#CheckpointManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Manages multiple checkpoints by keeping some and deleting unneeded ones.</p>
+<dd><p>Manages multiple checkpoints by keeping some and deleting unneeded ones.</p>
+<p>Note: This is a re-implementation of <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager/">2</a>.</p>
 <p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchkit.checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span><span class="p">,</span> <span class="n">CheckpointManager</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchkit.checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span><span class="p">,</span> <span class="n">CheckpointManager</span>
 
 <span class="c1"># Create a checkpoint manager instance.</span>
 <span class="n">checkpoint_manager</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">CheckpointManager</span><span class="p">(</span>
@@ -270,10 +267,6 @@ attribute.</p>
         <span class="n">checkpoint_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Note: This is a re-implementation of [1].</p>
-<p class="rubric">References</p>
-<p>[1]: Tensorflow’s <code class="docutils literal notranslate"><span class="pre">tf.train.CheckpointManager</span></code>,
-<a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager">https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager</a></p>
 <dl class="py method">
 <dt id="torchkit.checkpoint.CheckpointManager.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_to_keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/checkpoint/#CheckpointManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.checkpoint.CheckpointManager.__init__" title="Permalink to this definition">¶</a></dt>

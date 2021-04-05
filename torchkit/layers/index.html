@@ -209,12 +209,11 @@
 <dl class="py class">
 <dt id="torchkit.layers.Flatten">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">Flatten</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#Flatten"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.Flatten" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
-<p>Flattens convolutional feature maps for fully-connected layers.</p>
+<dd><p>Flattens convolutional feature maps for fully-connected layers.</p>
 <p>This is a convenience module meant to be plugged into a
 <code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code> model.</p>
 <p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">from</span> <span class="nn">torchkit</span> <span class="kn">import</span> <span class="n">layers</span>
 
 <span class="c1"># Assume an input of shape (3, 28, 28).</span>
@@ -246,18 +245,10 @@
 <dl class="py class">
 <dt id="torchkit.layers.SpatialSoftArgmax">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">SpatialSoftArgmax</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#SpatialSoftArgmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.SpatialSoftArgmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
-<p>Spatial softmax as defined in [1].</p>
+<dd><p>Spatial softmax as defined in <a class="reference external" href="https://arxiv.org/abs/1504.00702">1</a>.</p>
 <p>Concretely, the spatial softmax of each feature map is used to compute a
 weighted mean of the pixel locations, effectively performing a soft arg-max
 over the feature dimension.</p>
-<blockquote>
-<div><dl class="simple">
-<dt>References:</dt><dd><p>[1]: End-to-End Training of Deep Visuomotor Policies,
-<a class="reference external" href="https://arxiv.org/abs/1504.00702">https://arxiv.org/abs/1504.00702</a></p>
-</dd>
-</dl>
-</div></blockquote>
 <dl class="py method">
 <dt id="torchkit.layers.SpatialSoftArgmax.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#SpatialSoftArgmax.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.SpatialSoftArgmax.__init__" title="Permalink to this definition">¶</a></dt>
@@ -280,8 +271,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalMaxPool1d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalMaxPool1d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool1d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalMaxPool</span></code></p>
-<p>Global max pooling operation for temporal or 1D data.</p>
+<dd><p>Global max pooling operation for temporal or 1D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalMaxPool1d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool1d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool1d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -298,8 +288,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalMaxPool2d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalMaxPool2d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalMaxPool</span></code></p>
-<p>Global max pooling operation for spatial or 2D data.</p>
+<dd><p>Global max pooling operation for spatial or 2D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalMaxPool2d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool2d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool2d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -316,8 +305,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalMaxPool3d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalMaxPool3d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalMaxPool</span></code></p>
-<p>Global max pooling operation for 3D data.</p>
+<dd><p>Global max pooling operation for 3D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalMaxPool3d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalMaxPool3d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalMaxPool3d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -334,8 +322,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalAvgPool1d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalAvgPool1d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool1d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalAvgPool</span></code></p>
-<p>Global average pooling operation for temporal or 1D data.</p>
+<dd><p>Global average pooling operation for temporal or 1D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalAvgPool1d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool1d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool1d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -352,8 +339,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalAvgPool2d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalAvgPool2d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalAvgPool</span></code></p>
-<p>Global average pooling operation for spatial or 2D data.</p>
+<dd><p>Global average pooling operation for spatial or 2D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalAvgPool2d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool2d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool2d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -370,8 +356,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.GlobalAvgPool3d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">GlobalAvgPool3d</span></code><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torchkit.layers._GlobalAvgPool</span></code></p>
-<p>Global average pooling operation for 3D data.</p>
+<dd><p>Global average pooling operation for 3D data.</p>
 <dl class="py method">
 <dt id="torchkit.layers.GlobalAvgPool3d.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#GlobalAvgPool3d.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.GlobalAvgPool3d.__init__" title="Permalink to this definition">¶</a></dt>
@@ -388,8 +373,7 @@ coordinates in the range <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt id="torchkit.layers.CausalConv1d">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">torchkit.layers.</span></code><code class="sig-name descname"><span class="pre">CausalConv1d</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/layers/#CausalConv1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.layers.CausalConv1d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.conv.Conv1d</span></code></p>
-<p>A causal a.k.a. masked 1D convolution.</p>
+<dd><p>A causal a.k.a. masked 1D convolution.</p>
 <dl class="py attribute">
 <dt id="torchkit.layers.CausalConv1d.bias">
 <code class="sig-name descname"><span class="pre">bias</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#torchkit.layers.CausalConv1d.bias" title="Permalink to this definition">¶</a></dt>

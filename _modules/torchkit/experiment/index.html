@@ -166,11 +166,11 @@
 
 
 <div class="viewcode-block" id="seed_rng"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.seed_rng">[docs]</a><span class="k">def</span> <span class="nf">seed_rng</span><span class="p">(</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Seeds python, numpy, pytorch and CUDA/cudNN RNGs [1].</span>
+    <span class="sd">&quot;&quot;&quot;Seeds python, numpy, pytorch and CUDA/cudNN RNGs.</span>
+
+<span class="sd">    See the `PyTorch Reproducibility Guide`_ for more information.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        seed: The seed to use.</span>
@@ -182,8 +182,8 @@
 <span class="sd">            cuDNN will deterministically select the same algorithm at a possible</span>
 <span class="sd">            cost in performance.</span>
 
-<span class="sd">    References:</span>
-<span class="sd">        [1]: https://pytorch.org/docs/stable/notes/randomness.html</span>
+<span class="sd">    .. _PyTorch Reproducibility Guide:</span>
+<span class="sd">        https://pytorch.org/docs/stable/notes/randomness.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Seed for Python libraries.</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
