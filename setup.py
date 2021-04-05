@@ -16,6 +16,7 @@ DOCS_REQUIRE = [
     "sphinx-autodoc-typehints",
     "sphinx-rtd-theme",
     "m2r",
+    "docutils==0.16",
 ]
 
 

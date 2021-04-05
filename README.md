@@ -12,7 +12,7 @@
       <td><code>torchkit.<strong>Logger</strong></code></td>
       <td>
         A wrapper around <a href="https://www.tensorflow.org/tensorboard">Tensorboard</a>'s <code>SummaryWriter</code> for safe
-        logging of losses, learning rates and metrics.
+        logging of scalars, images, videos and learning rates. Supports both numpy arrays and torch Tensors.
       </td>
     </tr>
     <tr>
@@ -69,4 +69,6 @@ pip install -e .[dev]
 ### Acknowledgments
 
 * Thanks to Karan Desai's [VirTex](https://github.com/kdexd/virtex) which I used to figure out documentation-related setup for torchkit and for just being an excellent example of stellar open-source research release.
+* Thanks to [seals](https://github.com/HumanCompatibleAI/seals) for the excellent software development
+  practices that I've tried to emulate in this repo.
 * Thanks to Brent Yi for encouraging me to use type hinting and for letting me use his awesome [Bayesian filtering library](https://github.com/stanford-iprl-lab/torchfilter)'s README as a template.
