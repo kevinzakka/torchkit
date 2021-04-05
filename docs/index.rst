@@ -1,5 +1,7 @@
-torchkit User Guide
-===================
+.. raw:: html
+
+    <h1 style="text-align: center">TorchKit: A PyTorch Toolkit for Research</h1>
+    <br>
 
 **torchkit** is a *lightweight* library containing PyTorch utilities useful for day-to-day research.
 Its main goal is to abstract away a lot of the redundant boilerplate associated with research projects

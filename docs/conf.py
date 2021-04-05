@@ -26,7 +26,6 @@ extensions = [
 
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
-napoleon_use_admonition_for_references = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -47,9 +46,8 @@ autodoc_default_options = {
 # -- Options for HTML output -------------------------------------------------
 
 html_theme = "sphinx_rtd_theme"
-# html_logo = "_static/img/logo.svg"
 html_theme_options = {
-    # "logo_only": True,
+    "logo_only": True,
     "style_nav_header_background": "#06203A",
 }
 
