@@ -297,9 +297,9 @@
                 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">state_dict</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
-                    <span class="k">except</span><span class="p">:</span>
+                    <span class="k">except</span><span class="p">:</span>  <span class="c1"># noqa: E722</span>
                         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not load </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> state.&quot;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded model weights from </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded checkpoint state from </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="c1"># There was an issue loading the state which means either the</span>
