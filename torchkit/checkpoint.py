@@ -131,8 +131,11 @@ class Checkpoint:
             state = torch.load(save_path, map_location=device)
             try:
                 for name, state_dict in state.items():
-                    getattr(self, name).load_state_dict(state_dict)
-                logging.info(f"Successfully loaded model weights from {save_path}.")
+                    try:
+                        getattr(self, name).load_state_dict(state_dict)
+                    except:  # noqa: E722
+                        print(f"Could not load {name} state.")
+                logging.info(f"Successfully loaded checkpoint state from {save_path}.")
                 return True
             except Exception as e:
                 # There was an issue loading the state which means either the
@@ -278,3 +281,32 @@ class CheckpointManager:
             checkpoint.restore(checkpoint_filename, device)
         except Exception as e:
             raise e
+
+
+class CheckpointManagerBestMetric:
+    """A checkpoint manager that only stores a best performing model."""
+
+    def __init__(
+        self,
+        checkpoint: Checkpoint,
+        directory: str,
+        device: torch.device,
+    ):
+        """Constructor.
+
+        Args:
+            checkpoint: An instance of `Checkpoint`.
+            directory: The directory in which checkpoints will be saved.
+            device: The computing device on which to restore checkpoints.
+        """
+        self.checkpoint = checkpoint
+        self.directory = directory
+        self.device = device
+
+        # Create checkpoint directory if it doesn't already exist.
+        if not osp.exists(self.directory):
+            os.makedirs(self.directory)
+
+        self._best_metric = -np.inf
+        self._best_checkpoint = None
+        self._last_checkpoint = None
