@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -170,8 +173,8 @@
 <span id="torchkit-utils-torch-utils"></span><h1>torchkit.utils.torch_utils<a class="headerlink" href="#module-torchkit.utils.torch_utils" title="Permalink to this headline">¶</a></h1>
 <p>Pytorch-related utils.</p>
 <dl class="py function">
-<dt id="torchkit.utils.torch_utils.freeze_model">
-<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">freeze_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_freeze_affine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_use_running_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#freeze_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="torchkit.utils.torch_utils.freeze_model">
+<span class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></span><span class="sig-name descname"><span class="pre">freeze_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_freeze_affine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_use_running_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#freeze_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.freeze_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Freeze PyTorch model weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -189,8 +192,8 @@ mean and std. This is recommended for very small batch sizes.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="torchkit.utils.torch_utils.get_total_params">
-<code class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></code><code class="sig-name descname"><span class="pre">get_total_params</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#get_total_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="torchkit.utils.torch_utils.get_total_params">
+<span class="sig-prename descclassname"><span class="pre">torchkit.utils.torch_utils.</span></span><span class="sig-name descname"><span class="pre">get_total_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/utils/torch_utils/#get_total_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.torch_utils.get_total_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the total number of parameters in a PyTorch model, from <a class="reference external" href="https://stackoverflow.com/a/62508086">1</a>.</p>
 <p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>

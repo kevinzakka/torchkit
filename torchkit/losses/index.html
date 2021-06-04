@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -165,8 +168,8 @@
   <div class="section" id="module-torchkit.losses">
 <span id="torchkit-losses"></span><h1>torchkit.losses<a class="headerlink" href="#module-torchkit.losses" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="torchkit.losses.one_hot">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">one_hot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#one_hot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.one_hot" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="torchkit.losses.one_hot">
+<span class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></span><span class="sig-name descname"><span class="pre">one_hot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#one_hot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.one_hot" title="Permalink to this definition">¶</a></dt>
 <dd><p>One-hot encodes a tensor with optional label smoothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -184,8 +187,8 @@ label for each element in the batch.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="torchkit.losses.cross_entropy">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#cross_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="torchkit.losses.cross_entropy">
+<span class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></span><span class="sig-name descname"><span class="pre">cross_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#cross_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.cross_entropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cross-entropy loss with support for label smoothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,8 +213,8 @@ If reduction is <code class="docutils literal notranslate"><span class="pre">mea
 </dd></dl>
 
 <dl class="py function">
-<dt id="torchkit.losses.huber_loss">
-<code class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></code><code class="sig-name descname"><span class="pre">huber_loss</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#huber_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.huber_loss" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="torchkit.losses.huber_loss">
+<span class="sig-prename descclassname"><span class="pre">torchkit.losses.</span></span><span class="sig-name descname"><span class="pre">huber_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/losses/#huber_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.losses.huber_loss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Huber loss with tunable margin, as defined in <a class="reference external" href="https://en.wikipedia.org/wiki/Huber_loss">1</a>.</p>
 <p>This is a more general version of PyTorch’s
 <code class="docutils literal notranslate"><span class="pre">torch.nn.functional.smooth_l1_loss</span></code> that allows the user to change the
