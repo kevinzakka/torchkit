@@ -281,32 +281,3 @@ class CheckpointManager:
             checkpoint.restore(checkpoint_filename, device)
         except Exception as e:
             raise e
-
-
-class CheckpointManagerBestMetric:
-    """A checkpoint manager that only stores a best performing model."""
-
-    def __init__(
-        self,
-        checkpoint: Checkpoint,
-        directory: str,
-        device: torch.device,
-    ):
-        """Constructor.
-
-        Args:
-            checkpoint: An instance of `Checkpoint`.
-            directory: The directory in which checkpoints will be saved.
-            device: The computing device on which to restore checkpoints.
-        """
-        self.checkpoint = checkpoint
-        self.directory = directory
-        self.device = device
-
-        # Create checkpoint directory if it doesn't already exist.
-        if not osp.exists(self.directory):
-            os.makedirs(self.directory)
-
-        self._best_metric = -np.inf
-        self._best_checkpoint = None
-        self._last_checkpoint = None
