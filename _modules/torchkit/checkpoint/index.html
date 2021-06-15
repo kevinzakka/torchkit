@@ -445,35 +445,6 @@
             <span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_filename</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">e</span></div></div>
-
-
-<span class="k">class</span> <span class="nc">CheckpointManagerBestMetric</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;A checkpoint manager that only stores a best performing model.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">checkpoint</span><span class="p">:</span> <span class="n">Checkpoint</span><span class="p">,</span>
-        <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructor.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            checkpoint: An instance of `Checkpoint`.</span>
-<span class="sd">            directory: The directory in which checkpoints will be saved.</span>
-<span class="sd">            device: The computing device on which to restore checkpoints.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">checkpoint</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
-
-        <span class="c1"># Create checkpoint directory if it doesn&#39;t already exist.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">osp</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_best_checkpoint</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_last_checkpoint</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 
            </div>
