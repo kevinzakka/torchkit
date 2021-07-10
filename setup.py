@@ -30,7 +30,7 @@ def get_version() -> str:
     locals_dict = {}
     with open(os.path.join(THIS_DIR, "torchkit", "version.py"), "r") as fp:
         exec(fp.read(), globals(), locals_dict)
-    return locals_dict["__version__"]  # pytype: disable=key-error
+    return locals_dict["__version__"]  # pytype: disable=invalid-directive
 
 
 setup(

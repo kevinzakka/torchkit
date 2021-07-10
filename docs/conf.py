@@ -1,6 +1,7 @@
 """Configuration file for the Sphinx documentation builder."""
 
 import m2r
+
 import torchkit
 
 # -- Project information -----------------------------------------------------
