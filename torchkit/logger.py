@@ -33,6 +33,9 @@ class Logger:
     def close(self):
         self._writer.close()
 
+    def flush(self):
+        self._writer.flush()
+
     def log_scalar(
         self,
         scalar: Union[TensorType, float],

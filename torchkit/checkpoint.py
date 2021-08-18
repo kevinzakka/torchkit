@@ -7,6 +7,7 @@ from typing import Callable, List, Optional
 
 import numpy as np
 import torch
+from torch import nn
 
 
 def get_files(
@@ -70,7 +71,8 @@ class Checkpoint:
         """Constructor.
 
         Accepts keyword arguments whose values are objects that contain a
-        `state_dict` attribute and thus can be serialized to disk.
+        `state_dict` attribute and thus can be serialized to disk. Also accepts
+        `nn.Parameter` objects.
 
         Args:
             kwargs: Keyword arguments are set as attributes of this object,
@@ -82,9 +84,12 @@ class Checkpoint:
                 attribute.
         """
         for k, v in sorted(kwargs.items()):
-            if not getattr(v, "state_dict"):
-                raise ValueError(f"{k} does not have a state_dict attribute.")
-            setattr(self, k, v)
+            if isinstance(v, nn.Parameter):
+                setattr(self, k, v)
+            else:
+                if not getattr(v, "state_dict"):
+                    raise ValueError(f"{k} does not have a state_dict attribute.")
+                setattr(self, k, v)
 
     def save(self, save_path: str) -> None:
         """Save a state to disk.
@@ -105,7 +110,13 @@ class Checkpoint:
         # Atomic save.
         save_dir = osp.dirname(save_path)
         tmp_path = osp.join(save_dir, f"tmp-{np.random.randint(1e10)}.ckpt")
-        torch.save({k: v.state_dict() for k, v in self.__dict__.items()}, tmp_path)
+        save_dict = dict()
+        for k, v in self.__dict__.items():
+            if isinstance(v, nn.Parameter):
+                save_dict[k] = v
+            else:
+                save_dict[k] = v.state_dict()
+        torch.save(save_dict, tmp_path)
         # Rename is POSIX-compliant and as such, is an atomic operation
         # according to the Python docs:
         # https://docs.python.org/3/library/os.html#os.rename
@@ -131,10 +142,13 @@ class Checkpoint:
             state = torch.load(save_path, map_location=device)
             try:
                 for name, state_dict in state.items():
-                    try:
-                        getattr(self, name).load_state_dict(state_dict)
-                    except:  # noqa: E722
-                        print(f"Could not load {name} state.")
+                    if isinstance(getattr(self, name), nn.Parameter):
+                        setattr(self, name, state_dict)
+                    else:
+                        try:
+                            getattr(self, name).load_state_dict(state_dict)
+                        except:  # noqa: E722
+                            print(f"Could not load {name} state.")
                 logging.info(f"Successfully loaded checkpoint state from {save_path}.")
                 return True
             except Exception as e:

@@ -6,6 +6,8 @@ SRC_FILES=(torchkit/ tests/ docs/conf.py setup.py)
 set -x  # echo commands
 set -e  # quit immediately on error
 
+N_CPU=$(grep -c ^processor /proc/cpuinfo)
+
 echo "Source format checking"
 flake8 ${SRC_FILES[@]}
 black --check ${SRC_FILES}
@@ -18,5 +20,5 @@ if [ "$skipexpensive" != "true" ]; then
   popd
 
   echo "Type checking"
-  pytype ${SRC_FILES[@]}
+  pytype -n "${N_CPU}" ${SRC_FILES[@]}
 fi
