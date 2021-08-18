@@ -1,37 +1,24 @@
 import random
+import subprocess
 
 import numpy as np
 import torch
 
 
-def seed_rng(
-    seed: int,
-    cudnn_deterministic: bool = False,
-    cudnn_benchmark: bool = True,
-) -> None:
-    """Seeds python, numpy, pytorch and CUDA/cudNN RNGs.
+# Reference: https://stackoverflow.com/a/21901260
+def git_revision_hash() -> str:
+    """Return git revision hash as a string."""
+    return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
 
-    See the `PyTorch Reproducibility Guide`_ for more information.
 
-    Args:
-        seed: The seed to use.
-        cudnn_deterministic: Enforce CUDA convolution determinism. The algorithm
-            itself might not be deterministic so setting this to True ensures
-            we make it repeatable.
-        cudnn_benchmark: Set this to True to allow CUDA to find the best
-            convolutional algorithm to use for the given parameters. When False,
-            cuDNN will deterministically select the same algorithm at a possible
-            cost in performance.
-
-    .. _PyTorch Reproducibility Guide:
-        https://pytorch.org/docs/stable/notes/randomness.html
-    """
-    # Seed for Python libraries.
+def seed_rngs(seed: int):
+    """Seeds python, numpy, and torch RNGs."""
     random.seed(seed)
     np.random.seed(seed)
-    # Seed for PyTorch.
     torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    # Seed for CUDA/cuDNN.
-    torch.backends.cudnn.deterministic = cudnn_deterministic
-    torch.backends.cudnn.benchmark = cudnn_benchmark
+
+
+def set_cudnn(deterministic: bool = False, benchmark: bool = True):
+    """Set PyTorch-related CUDNN settings."""
+    torch.backends.cudnn.deterministic = deterministic
+    torch.backends.cudnn.benchmark = benchmark

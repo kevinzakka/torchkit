@@ -21,17 +21,14 @@ class Logger:
             force_write: Whether to force write to an already existing log dir.
                 Set to `True` if resuming training.
         """
-        self._log_dir = log_dir
-
         # Setup the summary writer.
-        writer_dir = osp.join(self._log_dir, "train_logs")
-        if osp.exists(writer_dir) and not force_write:
+        if osp.exists(log_dir) and not force_write:
             raise ValueError(
                 "You might be overwriting a directory that already "
                 "has train_logs. Please provide a new experiment name "
                 "or set --resume to True when launching train script."
             )
-        self._writer = SummaryWriter(writer_dir)
+        self._writer = SummaryWriter(log_dir)
 
     def close(self):
         self._writer.close()
