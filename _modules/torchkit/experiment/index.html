@@ -85,11 +85,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
@@ -163,42 +163,29 @@
             
   <h1>Source code for torchkit.experiment</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 
 
-<div class="viewcode-block" id="seed_rng"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.seed_rng">[docs]</a><span class="k">def</span> <span class="nf">seed_rng</span><span class="p">(</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Seeds python, numpy, pytorch and CUDA/cudNN RNGs.</span>
+<span class="c1"># Reference: https://stackoverflow.com/a/21901260</span>
+<div class="viewcode-block" id="git_revision_hash"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.git_revision_hash">[docs]</a><span class="k">def</span> <span class="nf">git_revision_hash</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Return git revision hash as a string.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
 
-<span class="sd">    See the `PyTorch Reproducibility Guide`_ for more information.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        seed: The seed to use.</span>
-<span class="sd">        cudnn_deterministic: Enforce CUDA convolution determinism. The algorithm</span>
-<span class="sd">            itself might not be deterministic so setting this to True ensures</span>
-<span class="sd">            we make it repeatable.</span>
-<span class="sd">        cudnn_benchmark: Set this to True to allow CUDA to find the best</span>
-<span class="sd">            convolutional algorithm to use for the given parameters. When False,</span>
-<span class="sd">            cuDNN will deterministically select the same algorithm at a possible</span>
-<span class="sd">            cost in performance.</span>
-
-<span class="sd">    .. _PyTorch Reproducibility Guide:</span>
-<span class="sd">        https://pytorch.org/docs/stable/notes/randomness.html</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Seed for Python libraries.</span>
+<div class="viewcode-block" id="seed_rngs"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.seed_rngs">[docs]</a><span class="k">def</span> <span class="nf">seed_rngs</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Seeds python, numpy, and torch RNGs.&quot;&quot;&quot;</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="c1"># Seed for PyTorch.</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="c1"># Seed for CUDA/cuDNN.</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">cudnn_deterministic</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">cudnn_benchmark</span></div>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_cudnn"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.set_cudnn">[docs]</a><span class="k">def</span> <span class="nf">set_cudnn</span><span class="p">(</span><span class="n">deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set PyTorch-related CUDNN settings.&quot;&quot;&quot;</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">deterministic</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span></div>
 </pre></div>
 
            </div>

@@ -87,11 +87,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../expm/">Experiment Management</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.experiment</a></li>
@@ -175,29 +175,26 @@
   <div class="section" id="module-torchkit.experiment">
 <span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="torchkit.experiment.seed_rng">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">seed_rng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cudnn_benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rng" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seeds python, numpy, pytorch and CUDA/cudNN RNGs.</p>
-<p>See the <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">PyTorch Reproducibility Guide</a> for more information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The seed to use.</p></li>
-<li><p><strong>cudnn_deterministic</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Enforce CUDA convolution determinism. The algorithm
-itself might not be deterministic so setting this to True ensures
-we make it repeatable.</p></li>
-<li><p><strong>cudnn_benchmark</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Set this to True to allow CUDA to find the best
-convolutional algorithm to use for the given parameters. When False,
-cuDNN will deterministically select the same algorithm at a possible
-cost in performance.</p></li>
-</ul>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="torchkit.experiment.git_revision_hash">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">git_revision_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#git_revision_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.git_revision_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return git revision hash as a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.seed_rngs">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">seed_rngs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rngs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rngs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds python, numpy, and torch RNGs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.set_cudnn">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">set_cudnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#set_cudnn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.set_cudnn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set PyTorch-related CUDNN settings.</p>
 </dd></dl>
 
 </div>
