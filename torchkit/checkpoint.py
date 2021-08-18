@@ -142,6 +142,12 @@ class Checkpoint:
             state = torch.load(save_path, map_location=device)
             try:
                 for name, state_dict in state.items():
+                    if not hasattr(self, name):
+                        print(
+                            f"{name} in saved checkpoint not in checkpoint to "
+                            "reload. Skipping it."
+                        )
+                        continue
                     if isinstance(getattr(self, name), nn.Parameter):
                         setattr(self, name, state_dict)
                     else:
