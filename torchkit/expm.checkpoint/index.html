@@ -199,7 +199,8 @@
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/checkpoint/#Checkpoint.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.checkpoint.Checkpoint.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <p>Accepts keyword arguments whose values are objects that contain a
-<code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attribute and thus can be serialized to disk.</p>
+<code class="docutils literal notranslate"><span class="pre">state_dict</span></code> attribute and thus can be serialized to disk. Also accepts
+<code class="docutils literal notranslate"><span class="pre">nn.Parameter</span></code> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>kwargs</strong> – Keyword arguments are set as attributes of this object,
