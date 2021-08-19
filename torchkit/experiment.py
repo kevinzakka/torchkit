@@ -1,3 +1,7 @@
+"""Methods useful for running experiments."""
+
+import functools
+import pdb
 import random
 import subprocess
 
@@ -22,3 +26,21 @@ def set_cudnn(deterministic: bool = False, benchmark: bool = True):
     """Set PyTorch-related CUDNN settings."""
     torch.backends.cudnn.deterministic = deterministic
     torch.backends.cudnn.benchmark = benchmark
+
+
+# Reference: https://github.com/deepmind/jaxline/blob/master/jaxline/utils.py
+def pdb_fallback(f):
+    """Wraps f with a pdb callback."""
+
+    @functools.wraps(f)
+    def inner_wrapper(*args, **kwargs):
+        """Main entry function."""
+        try:
+            return f(*args, **kwargs)
+        # KeyboardInterrupt and SystemExit are not derived from BaseException,
+        # hence not caught by the post-mortem.
+        except Exception as e:
+            pdb.post_mortem(e.__traceback__)
+            raise
+
+    return inner_wrapper
