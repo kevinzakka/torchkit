@@ -162,7 +162,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for torchkit.experiment</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span></span><span class="sd">&quot;&quot;&quot;Methods useful for running experiments.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">pdb</span>
+<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -186,6 +190,24 @@
     <span class="sd">&quot;&quot;&quot;Set PyTorch-related CUDNN settings.&quot;&quot;&quot;</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">deterministic</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span></div>
+
+
+<span class="c1"># Reference: https://github.com/deepmind/jaxline/blob/master/jaxline/utils.py</span>
+<div class="viewcode-block" id="debugger_fallback"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.debugger_fallback">[docs]</a><span class="k">def</span> <span class="nf">debugger_fallback</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Maybe wraps f with a pdb-callback.&quot;&quot;&quot;</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">inner_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Main entry function.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># KeyboardInterrupt and SystemExit are not derived from BaseException,</span>
+        <span class="c1"># hence not caught by the post-mortem.</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">pdb</span><span class="o">.</span><span class="n">post_mortem</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+    <span class="k">return</span> <span class="n">inner_wrapper</span></div>
 </pre></div>
 
            </div>
