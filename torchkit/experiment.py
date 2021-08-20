@@ -4,6 +4,7 @@ import functools
 import pdb
 import random
 import subprocess
+import uuid
 
 import numpy as np
 import torch
@@ -44,3 +45,17 @@ def pdb_fallback(f):
             raise
 
     return inner_wrapper
+
+
+def string_from_kwargs(**kwargs) -> str:
+    """Concatenate kwargs into an underscore-separated string.
+
+    Used to generate an experiment name based on supplied config kwargs.
+    """
+    return "_".join([f"{k}={v}" for k, v in kwargs.items()])
+
+
+def unique_id() -> str:
+    """Generate a unique ID as specified in RFC 4122."""
+    # See https://docs.python.org/3/library/uuid.html
+    return str(uuid.uuid4())
