@@ -2,7 +2,7 @@ import logging
 import os
 import signal
 from pathlib import Path
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional
 
 import torch
 
