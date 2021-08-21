@@ -164,23 +164,21 @@
   <h1>Source code for torchkit.checkpoint</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
 <span class="kn">import</span> <span class="nn">signal</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="kn">from</span> <span class="nn">.experiment</span> <span class="kn">import</span> <span class="n">unique_id</span>
 
 
 <span class="k">def</span> <span class="nf">get_files</span><span class="p">(</span>
-    <span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">d</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
     <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">lexicographical</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">sortfunc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Return a list of files in a given directory.</span>
 
 <span class="sd">    Args:</span>
@@ -189,54 +187,25 @@
 <span class="sd">        sort: Whether to sort the returned list.</span>
 <span class="sd">        lexicographical: If sort, use lexicographical order. Set to `False` for</span>
 <span class="sd">            numerical ordering.</span>
-<span class="sd">        sortfunc : An optional sorting Callable to use if sort is set to `True`.</span>
-<span class="sd">            Ignores the value of `lexicographical`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sortfunc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sort</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`sort` must be True when `sortfunc` is provided.&quot;</span><span class="p">)</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">osp</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
     <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">sortfunc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">sortfunc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lexicographical</span><span class="p">:</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">lexicographical</span><span class="p">:</span>
-                <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">osp</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">files</span>
 
 
 <div class="viewcode-block" id="Checkpoint"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint">[docs]</a><span class="k">class</span> <span class="nc">Checkpoint</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Save and restore PyTorch objects implementing `state_dict` attributes.</span>
-
-<span class="sd">    A `Checkpoint` object should be used in conjunction with a</span>
-<span class="sd">    :class:`~torchkit.checkpoint.CheckpointManager`.</span>
-
-<span class="sd">    Note: This is a re-implementation of `1`_.</span>
-
-<span class="sd">    Example usage::</span>
-
-<span class="sd">        import os</span>
-<span class="sd">        from torchkit.checkpoint import Checkpoint</span>
-
-<span class="sd">        checkpoint_dir = &quot;/tmp/training_checkpoints&quot;</span>
-<span class="sd">        checkpoint_path = os.path.join(checkpoint_dir, &quot;weights.ckpt&quot;)</span>
-
-<span class="sd">        # Create a Checkpoint that will manage the model and optimizer.</span>
-<span class="sd">        checkpoint = Checkpoint(model=model, optimizer=optimizer)</span>
-<span class="sd">        checkpoint.save(checkpoint_path)</span>
-<span class="sd">        status = checkpoint.restore(checkpoint_path)</span>
-
-<span class="sd">    .. _1: https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Save and restore PyTorch objects implementing a `state_dict` method.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Checkpoint.__init__"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
 <span class="sd">        Accepts keyword arguments whose values are objects that contain a</span>
-<span class="sd">        `state_dict` attribute and thus can be serialized to disk. Also accepts</span>
-<span class="sd">        `nn.Parameter` objects.</span>
+<span class="sd">        `state_dict` attribute and thus can be serialized to disk.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            kwargs: Keyword arguments are set as attributes of this object,</span>
@@ -248,14 +217,11 @@
 <span class="sd">                attribute.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">):</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;state_dict&quot;</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> does not have a state_dict attribute.&quot;</span><span class="p">)</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;state_dict&quot;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> does not have a state_dict attribute.&quot;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Checkpoint.save"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Checkpoint.save"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Save a state to disk.</span>
 
 <span class="sd">        Modified from brentyi/fannypack.</span>
@@ -271,81 +237,67 @@
             <span class="c1"># Signal throws a ValueError if we&#39;re not in the main thread.</span>
             <span class="n">orig_handler</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># Atomic save.</span>
-        <span class="n">save_dir</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
-        <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tmp-</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mf">1e10</span><span class="p">)</span><span class="si">}</span><span class="s2">.ckpt&quot;</span><span class="p">)</span>
+        <span class="c1"># Create a snapshot of the current state.</span>
         <span class="n">save_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">):</span>
-                <span class="n">save_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">save_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_dict</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">)</span>
+            <span class="n">save_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+
         <span class="c1"># Rename is POSIX-compliant and as such, is an atomic operation</span>
         <span class="c1"># according to the Python docs:</span>
         <span class="c1"># https://docs.python.org/3/library/os.html#os.rename</span>
+        <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;tmp-</span><span class="si">{</span><span class="n">unique_id</span><span class="p">()</span><span class="si">}</span><span class="s2">.ckpt&quot;</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_dict</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved checkpoint at </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Restore SIGINT handler.</span>
         <span class="k">if</span> <span class="n">orig_handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">orig_handler</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Checkpoint.restore"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Checkpoint.restore"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Restore a state from a saved checkpoint.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            save_path: The filepath to the saved checkpoint.</span>
-<span class="sd">            device: The device on which to restore the state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if restoring was successful or partially (not all</span>
+<span class="sd">            checkpointables could be restored) successful and False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">state_dict</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-                        <span class="nb">print</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> in saved checkpoint not in checkpoint to &quot;</span>
-                            <span class="s2">&quot;reload. Skipping it.&quot;</span>
-                        <span class="p">)</span>
-                        <span class="k">continue</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">):</span>
-                        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">try</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
-                        <span class="k">except</span><span class="p">:</span>  <span class="c1"># noqa: E722</span>
-                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not load </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> state.&quot;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded checkpoint state from </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">True</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="c1"># There was an issue loading the state which means either the</span>
-                <span class="c1"># model definition and saved weights do not agree or they were</span>
-                <span class="c1"># not saved in the first place.</span>
-                <span class="c1"># Since this is a severe issue, we raise an error rather than</span>
-                <span class="c1"># allowing the program to proceed.</span>
-                <span class="k">raise</span> <span class="n">e</span>
-        <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">),</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">state_dict</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> in saved checkpoint not in checkpoint to &quot;</span>
+                        <span class="s2">&quot;reload. Skipping it.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span></div></div>
 
 
+<span class="c1"># TODO(kevin): Add saving of best checkpoint based on specified metric.</span>
 <div class="viewcode-block" id="CheckpointManager"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager">[docs]</a><span class="k">class</span> <span class="nc">CheckpointManager</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Manages multiple checkpoints by keeping some and deleting unneeded ones.</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Periodically save PyTorch checkpointables (any object that implements a</span>
+<span class="sd">    `state_dict` method) to disk and restore them to resume training.</span>
 
 <span class="sd">    Note: This is a re-implementation of `2`_.</span>
 
 <span class="sd">    Example usage::</span>
 
-<span class="sd">        from torchkit.checkpoint import Checkpoint, CheckpointManager</span>
+<span class="sd">        from torchkit.checkpoint import CheckpointManager</span>
 
 <span class="sd">        # Create a checkpoint manager instance.</span>
 <span class="sd">        checkpoint_manager = checkpoint.CheckpointManager(</span>
-<span class="sd">            checkpoint.Checkpoint(model=model, optimizer=optimizer),</span>
-<span class="sd">            checkpoint_dir, device)</span>
+<span class="sd">            checkpoint_dir,</span>
+<span class="sd">            device,</span>
+<span class="sd">            model=model,</span>
+<span class="sd">            optimizer=optimizer,</span>
+<span class="sd">        )</span>
 
 <span class="sd">        # Restore last checkpoint if it exists.</span>
 <span class="sd">        global_step = checkpoint_manager.restore_or_initialize()</span>
@@ -361,32 +313,27 @@
 
 <div class="viewcode-block" id="CheckpointManager.__init__"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">checkpoint</span><span class="p">:</span> <span class="n">Checkpoint</span><span class="p">,</span>
         <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
         <span class="n">max_to_keep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">checkpointables</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            checkpoint: An instance of `Checkpoint`.</span>
 <span class="sd">            directory: The directory in which checkpoints will be saved.</span>
-<span class="sd">            device: The computing device on which to restore checkpoints.</span>
 <span class="sd">            max_to_keep: The maximum number of checkpoints to keep.</span>
 <span class="sd">                Amongst all saved checkpoints, checkpoints will be deleted</span>
 <span class="sd">                oldest first, until `max_to_keep` remain.</span>
+<span class="sd">            **checkpointables: Keyword args with checkpointable PyTorch objects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">max_to_keep</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;max_to_keep should be a positive integer.&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">checkpoint</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_to_keep</span> <span class="o">=</span> <span class="n">max_to_keep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">Checkpoint</span><span class="p">(</span><span class="o">**</span><span class="n">checkpointables</span><span class="p">)</span>
 
         <span class="c1"># Create checkpoint directory if it doesn&#39;t already exist.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">osp</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CheckpointManager.restore_or_initialize"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.restore_or_initialize">[docs]</a>    <span class="k">def</span> <span class="nf">restore_or_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Restore items in checkpoint from the latest checkpoint file.</span>
@@ -396,15 +343,14 @@
 <span class="sd">            file if one is found, else 0 is returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ckpts</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="o">.</span><span class="n">list_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ckpts</span><span class="p">:</span>
-            <span class="n">last_ckpt</span> <span class="o">=</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">last_ckpt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Could not restore latest checkpoint file.&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="mi">0</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">last_ckpt</span>
-            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">last_ckpt</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">return</span> <span class="mi">0</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ckpts</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">last_ckpt</span> <span class="o">=</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">last_ckpt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Could not restore latest checkpoint file.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_ckpt</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CheckpointManager.save"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create a new checkpoint.</span>
@@ -413,58 +359,41 @@
 <span class="sd">            global_step: The iteration number which will be used to name the</span>
 <span class="sd">                checkpoint.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:016d}</span><span class="s2">.ckpt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">global_step</span><span class="p">))</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">global_step</span><span class="si">}</span><span class="s2">.ckpt&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">save_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trim_checkpoints</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_trim_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Trim older checkpoints until `max_to_keep` remain.&quot;&quot;&quot;</span>
-        <span class="c1"># Get a list of checkpoints in reverse chronological order.</span>
+        <span class="c1"># Get a list of checkpoints in reverse global_step order.</span>
         <span class="n">ckpts</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="o">.</span><span class="n">list_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
         <span class="c1"># Remove until `max_to_keep` remain.</span>
-        <span class="n">num_remove</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ckpts</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_to_keep</span>
-        <span class="k">while</span> <span class="n">num_remove</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">ckpt_name</span> <span class="o">=</span> <span class="n">ckpts</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ckpt_name</span><span class="p">)</span>
-            <span class="n">num_remove</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ckpts</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_to_keep</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ckpts</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
-<div class="viewcode-block" id="CheckpointManager.load_latest_checkpoint"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_latest_checkpoint">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">load_latest_checkpoint</span><span class="p">(</span>
-        <span class="n">checkpoint</span><span class="p">:</span> <span class="n">Checkpoint</span><span class="p">,</span>
-        <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="CheckpointManager.load_latest_checkpoint"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_latest_checkpoint">[docs]</a>    <span class="k">def</span> <span class="nf">load_latest_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load the last saved checkpoint.&quot;&quot;&quot;</span>
-        <span class="n">ckpts</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="o">.</span><span class="n">list_checkpoints</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ckpts</span><span class="p">:</span>
-            <span class="n">last_ckpt</span> <span class="o">=</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">last_ckpt</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No checkpoints found in </span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CheckpointManager.load_checkpoint_at"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_checkpoint_at">[docs]</a>    <span class="k">def</span> <span class="nf">load_checkpoint_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load a checkpoint at a given global step.&quot;&quot;&quot;</span>
+        <span class="n">ckpt_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">global_step</span><span class="si">}</span><span class="s2">.ckpt&quot;</span>
+        <span class="k">if</span> <span class="n">ckpt_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CheckpointManager</span><span class="o">.</span><span class="n">list_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No checkpoint found at step </span><span class="si">{</span><span class="n">global_step</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">ckpt_name</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">latest_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get the last saved checkpoint.&quot;&quot;&quot;</span>
+        <span class="n">ckpts</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="o">.</span><span class="n">list_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ckpts</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No checkpoints found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
 <div class="viewcode-block" id="CheckpointManager.list_checkpoints"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.list_checkpoints">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_checkpoints</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_checkpoints</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;List all checkpoints in a checkpoint directory.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">get_files</span><span class="p">(</span>
-            <span class="n">directory</span><span class="p">,</span>
-            <span class="s2">&quot;*.ckpt&quot;</span><span class="p">,</span>
-            <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">sortfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]),</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="CheckpointManager.load_specific_checkpoint"><a class="viewcode-back" href="../../../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_specific_checkpoint">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">load_specific_checkpoint</span><span class="p">(</span>
-        <span class="n">checkpoint</span><span class="p">:</span> <span class="n">Checkpoint</span><span class="p">,</span>
-        <span class="n">checkpoint_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Load a specific checkpoint.&quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_filename</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">e</span></div></div>
+        <span class="k">return</span> <span class="n">get_files</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span> <span class="s2">&quot;*.ckpt&quot;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
