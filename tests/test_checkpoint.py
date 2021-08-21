@@ -1,5 +1,3 @@
-import os
-
 import pytest
 import torch
 import torch.nn as nn
@@ -35,22 +33,44 @@ class TestCheckpoint:
         checkpoint.save(checkpoint_path)
         assert checkpoint.restore(checkpoint_path)
 
-    def test_checkpoint_manager(self, tmp_path, init_model_and_optimizer):
+    def test_checkpoint_save_partial_restore(self, tmp_path, init_model_and_optimizer):
         model, optimizer = init_model_and_optimizer
         checkpoint = Checkpoint(model=model, optimizer=optimizer)
         checkpoint_dir = tmp_path / "ckpts"
         checkpoint_dir.mkdir()
+        checkpoint_path = checkpoint_dir / "test.ckpt"
+        checkpoint.save(checkpoint_path)
+        assert Checkpoint(model=model).restore(checkpoint_path)
+        assert Checkpoint(optimizer=optimizer).restore(checkpoint_path)
+
+    def test_checkpoint_save_faulty_restore(self, tmp_path, init_model_and_optimizer):
+        model, optimizer = init_model_and_optimizer
+        checkpoint = Checkpoint(model=model, optimizer=optimizer)
+        checkpoint_dir = tmp_path / "ckpts"
+        checkpoint_dir.mkdir()
+        checkpoint_path = checkpoint_dir / "test.ckpt"
+        checkpoint.save(checkpoint_path)
+        model.fc2 = nn.Linear(2, 2)  # Purposely modify model.
+        assert not checkpoint.restore(checkpoint_path)
+
+    def test_checkpoint_manager(self, tmp_path, init_model_and_optimizer):
+        model, optimizer = init_model_and_optimizer
+        ckpt_dir = tmp_path / "ckpts"
         checkpoint_manager = CheckpointManager(
-            checkpoint, checkpoint_dir, torch.device("cpu"), max_to_keep=5
+            ckpt_dir,
+            max_to_keep=5,
+            model=model,
+            optimizer=optimizer,
         )
         global_step = checkpoint_manager.restore_or_initialize()
         assert global_step == 0
         for i in range(10):
             checkpoint_manager.save(i)
-        available_ckpts = checkpoint_manager.list_checkpoints(checkpoint_dir)
+        available_ckpts = checkpoint_manager.list_checkpoints(ckpt_dir)
         assert len(available_ckpts) == 5
-        ckpts = [int(os.path.basename(d).split(".")[0]) for d in available_ckpts]
+        ckpts = [int(d.stem) for d in available_ckpts]
         expected = list(range(5, 10))
         assert all([a == b for a, b in zip(ckpts, expected)])
         global_step = checkpoint_manager.restore_or_initialize()
         assert global_step == 9
+        assert int(checkpoint_manager.latest_checkpoint.stem) == 9
