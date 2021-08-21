@@ -2,7 +2,7 @@ import logging
 import os
 import signal
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Union
 
 import torch
 
@@ -14,7 +14,7 @@ def get_files(
     pattern: str,
     sort: bool = False,
     lexicographical: bool = False,
-) -> List[str]:
+) -> List[Path]:
     """Return a list of files in a given directory.
 
     Args:
@@ -89,7 +89,7 @@ class Checkpoint:
         if orig_handler is not None:
             signal.signal(signal.SIGINT, orig_handler)
 
-    def restore(self, save_path: str) -> bool:
+    def restore(self, save_path: Union[str, Path]) -> bool:
         """Restore a state from a saved checkpoint.
 
         Args:
@@ -100,7 +100,7 @@ class Checkpoint:
             checkpointables could be restored) successful and False otherwise.
         """
         try:
-            state = torch.load(save_path, map_location="cpu")
+            state = torch.load(Path(save_path), map_location="cpu")
             for name, state_dict in state.items():
                 if not hasattr(self, name):
                     print(
@@ -227,6 +227,6 @@ class CheckpointManager:
         return ckpts[-1]
 
     @staticmethod
-    def list_checkpoints(directory: str) -> List[str]:
+    def list_checkpoints(directory: Union[Path, str]) -> List[Path]:
         """List all checkpoints in a checkpoint directory."""
         return get_files(Path(directory), "*.ckpt", sort=True)
