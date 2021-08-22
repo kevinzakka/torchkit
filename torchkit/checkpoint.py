@@ -12,25 +12,23 @@ from .experiment import unique_id
 def get_files(
     d: Path,
     pattern: str,
-    sort: bool = False,
-    lexicographical: bool = False,
+    sort_lexicographical: bool = False,
+    sort_numerical: bool = False,
 ) -> List[Path]:
     """Return a list of files in a given directory.
 
     Args:
         d: The path to the directory.
         pattern: The wildcard to filter files with.
-        sort: Whether to sort the returned list.
-        lexicographical: If sort, use lexicographical order. Set to `False` for
-            numerical ordering.
+        sort_lexicographical: Lexicographical sort.
+        sort_numerical: Numerical sort.
     """
     files = d.glob(pattern)
     files = [f for f in files if f.is_file()]
-    if sort:
-        if lexicographical:
-            files.sort(key=lambda x: x.name)
-        else:
-            files.sort(key=lambda x: x.stem)
+    if sort_lexicographical:
+        files.sort(key=lambda x: x.stem)
+    if sort_numerical:
+        files.sort(key=lambda x: int(x.stem))
     return files
 
 
@@ -103,7 +101,7 @@ class Checkpoint:
             state = torch.load(Path(save_path), map_location="cpu")
             for name, state_dict in state.items():
                 if not hasattr(self, name):
-                    print(
+                    logging.debug(
                         f"{name} in saved checkpoint not in checkpoint to "
                         "reload. Skipping it."
                     )
@@ -229,4 +227,4 @@ class CheckpointManager:
     @staticmethod
     def list_checkpoints(directory: Union[Path, str]) -> List[Path]:
         """List all checkpoints in a checkpoint directory."""
-        return get_files(Path(directory), "*.ckpt", sort=True)
+        return get_files(Path(directory), "*.ckpt", sort_numerical=True)
