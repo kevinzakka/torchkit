@@ -24,12 +24,11 @@ def get_files(
         sort_numerical: Numerical sort.
     """
     files = d.glob(pattern)
-    files = [f for f in files if f.is_file()]
     if sort_lexicographical:
-        files.sort(key=lambda x: x.stem)
+        return sorted(files, key=lambda x: x.stem)
     if sort_numerical:
-        files.sort(key=lambda x: int(x.stem))
-    return files
+        return sorted(files, key=lambda x: int(x.stem))
+    return list(files)
 
 
 class Checkpoint:
@@ -101,7 +100,7 @@ class Checkpoint:
             state = torch.load(Path(save_path), map_location="cpu")
             for name, state_dict in state.items():
                 if not hasattr(self, name):
-                    logging.debug(
+                    logging.warning(
                         f"{name} in saved checkpoint not in checkpoint to "
                         "reload. Skipping it."
                     )
