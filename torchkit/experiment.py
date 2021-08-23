@@ -5,6 +5,7 @@ import pdb
 import random
 import subprocess
 import uuid
+from typing import Iterable, Iterator
 
 import numpy as np
 import torch
@@ -59,3 +60,10 @@ def unique_id() -> str:
     """Generate a unique ID as specified in RFC 4122."""
     # See https://docs.python.org/3/library/uuid.html
     return str(uuid.uuid4())
+
+
+# Reference: https://github.com/unixpickle/vq-voice-swap/blob/main/vq_voice_swap/util.py
+def infinite_dataset(data_loader: Iterable) -> Iterator:
+    """An infinite loop over a `torch.utils.DataLoader` Iterable."""
+    while True:
+        yield from data_loader
