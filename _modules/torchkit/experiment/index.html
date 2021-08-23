@@ -169,6 +169,7 @@
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -223,6 +224,13 @@
     <span class="sd">&quot;&quot;&quot;Generate a unique ID as specified in RFC 4122.&quot;&quot;&quot;</span>
     <span class="c1"># See https://docs.python.org/3/library/uuid.html</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span></div>
+
+
+<span class="c1"># Reference: https://github.com/unixpickle/vq-voice-swap/blob/main/vq_voice_swap/util.py</span>
+<div class="viewcode-block" id="infinite_dataset"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.infinite_dataset">[docs]</a><span class="k">def</span> <span class="nf">infinite_dataset</span><span class="p">(</span><span class="n">data_loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An infinite loop over a `torch.utils.DataLoader` Iterable.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield from</span> <span class="n">data_loader</span></div>
 </pre></div>
 
            </div>
