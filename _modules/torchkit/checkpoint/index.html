@@ -241,7 +241,7 @@
             <span class="n">save_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
 
         <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
-            <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;tmp.ckpt&quot;</span>
+            <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;tmp.ckpt&quot;</span>
             <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_dict</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">)</span>
             <span class="c1"># Rename is POSIX-compliant and as such, is an atomic operation</span>
             <span class="c1"># according to the Python docs:</span>
