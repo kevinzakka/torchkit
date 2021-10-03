@@ -1,73 +1,33 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>torchkit.experiment &mdash; torchkit 0.0.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex/" />
     <link rel="search" title="Search" href="../../search/" />
     <link rel="next" title="torchkit.checkpoint" href="../expm.checkpoint/" />
     <link rel="prev" title="Experiment Management" href="../expm/" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #06203A" >
-          
-
-          
             <a href="../../" class="icon icon-home"> torchkit
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,18 +35,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
@@ -105,79 +54,72 @@
 <li class="toctree-l1"><a class="reference internal" href="../utils/">torchkit.utils</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #06203A" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../">torchkit</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../expm/">Experiment Management</a> &raquo;</li>
-        
       <li>torchkit.experiment</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/torchkit/expm.experiment.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-torchkit.experiment">
-<span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline">¶</a></h1>
+<span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline"></a></h1>
 <p>Methods useful for running experiments.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.copy_config_and_replace">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">copy_config_and_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeze</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#copy_config_and_replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.copy_config_and_replace" title="Permalink to this definition"></a></dt>
+<dd><p>Makes a copy of a config and optionally updates its values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
+<li><p><strong>update_dict</strong> (<em>Optional</em><em>[</em><em>ml_collections.config_dict.config_dict.ConfigDict</em><em>]</em>) – </p></li>
+<li><p><strong>freeze</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.dump_config">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">dump_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#dump_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.dump_config" title="Permalink to this definition"></a></dt>
+<dd><p>Dump config to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
+<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.git_revision_hash">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">git_revision_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#git_revision_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.git_revision_hash" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">git_revision_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#git_revision_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.git_revision_hash" title="Permalink to this definition"></a></dt>
 <dd><p>Return git revision hash as a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -187,26 +129,94 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="torchkit.experiment.seed_rngs">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">seed_rngs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rngs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rngs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seeds python, numpy, and torch RNGs.</p>
+<dt class="sig sig-object py" id="torchkit.experiment.infinite_dataset">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">infinite_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#infinite_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.infinite_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>An infinite loop over a <cite>torch.utils.DataLoader</cite> Iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>data_loader</strong> (<em>Iterable</em>) – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="torchkit.experiment.set_cudnn">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">set_cudnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#set_cudnn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.set_cudnn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set PyTorch-related CUDNN settings.</p>
+<dt class="sig sig-object py" id="torchkit.experiment.load_config_from_dir">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">load_config_from_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#load_config_from_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.load_config_from_dir" title="Permalink to this definition"></a></dt>
+<dd><p>Load experiment config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
+<li><p><strong>config</strong> (<em>Optional</em><em>[</em><em>ml_collections.config_dict.config_dict.ConfigDict</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.pdb_fallback">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">pdb_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#pdb_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.pdb_fallback" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">pdb_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#pdb_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.pdb_fallback" title="Permalink to this definition"></a></dt>
 <dd><p>Wraps f with a pdb callback.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.seed_rngs">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">seed_rngs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pytorch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rngs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rngs" title="Permalink to this definition"></a></dt>
+<dd><p>Seed system RNGs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – </p></li>
+<li><p><strong>pytorch</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.set_cudnn">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">set_cudnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#set_cudnn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.set_cudnn" title="Permalink to this definition"></a></dt>
+<dd><p>Set PyTorch-related CUDNN settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deterministic</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>benchmark</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.setup_experiment">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.setup_experiment" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes an experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
+<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
+<li><p><strong>resume</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.string_from_kwargs">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">string_from_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#string_from_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.string_from_kwargs" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">string_from_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#string_from_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.string_from_kwargs" title="Permalink to this definition"></a></dt>
 <dd><p>Concatenate kwargs into an underscore-separated string.</p>
 <p>Used to generate an experiment name based on supplied config kwargs.</p>
 <dl class="field-list simple">
@@ -218,7 +228,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.unique_id">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">unique_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#unique_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.unique_id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">unique_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#unique_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.unique_id" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a unique ID as specified in RFC 4122.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -228,12 +238,22 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="torchkit.experiment.infinite_dataset">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">infinite_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#infinite_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.infinite_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>An infinite loop over a <code class="docutils literal notranslate"><span class="pre">torch.utils.DataLoader</span></code> Iterable.</p>
+<dt class="sig sig-object py" id="torchkit.experiment.validate_config">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">validate_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#validate_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.validate_config" title="Permalink to this definition"></a></dt>
+<dd><p>Ensures a config inherits from a base config.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>) – The base config.</p></li>
+<li><p><strong>config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>) – The child config.</p></li>
+<li><p><strong>base_filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Can be one of ‘pretraining’ or ‘rl’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if the base config contains keys that are not present in config.</p>
+</dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -242,50 +262,33 @@
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../expm.checkpoint/" class="btn btn-neutral float-right" title="torchkit.checkpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../expm/" class="btn btn-neutral float-left" title="Experiment Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../expm.checkpoint/" class="btn btn-neutral float-right" title="torchkit.checkpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Kevin Zakka.
-
-    </p>
+    <p>&#169; Copyright 2021, Kevin Zakka.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
