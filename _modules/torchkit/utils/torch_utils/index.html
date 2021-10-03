@@ -43,7 +43,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/activations/">torchkit.activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/utils/">torchkit.utils</a></li>
 </ul>
 
@@ -106,11 +105,13 @@
                 <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span></div>
 
 
+<span class="c1"># Reference: https://stackoverflow.com/a/62508086</span>
 <div class="viewcode-block" id="get_total_params"><a class="viewcode-back" href="../../../../torchkit/utils.torch_utils/#torchkit.utils.torch_utils.get_total_params">[docs]</a><span class="k">def</span> <span class="nf">get_total_params</span><span class="p">(</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
     <span class="n">trainable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">print_table</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the total number of parameters in a PyTorch model, from `1`_.</span>
+    <span class="sd">&quot;&quot;&quot;Get the total number of parameters in a PyTorch model.</span>
 
 <span class="sd">    Example usage::</span>
 
@@ -125,7 +126,7 @@
 <span class="sd">                return self.fc2(out)</span>
 
 <span class="sd">        net = SimpleMLP()</span>
-<span class="sd">        num_params = torch_utils.get_total_params(net)</span>
+<span class="sd">        num_params = torch_utils.get_total_params(net, print_table=True)</span>
 
 <span class="sd">        # prints the following:</span>
 <span class="sd">        +------------+------------+</span>
@@ -139,13 +140,14 @@
 <span class="sd">        Total Trainable Params: 98</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        model: The model, a subclass of `torch.nn.Module`.</span>
-<span class="sd">        trainable: Only return trainable parameters.</span>
+<span class="sd">        model (torch.nn.Module): The pytorch model.</span>
+<span class="sd">        trainable (bool, optional): Only consider trainable parameters. Defaults to</span>
+<span class="sd">            True.</span>
+<span class="sd">        print_table (bool, optional): Print the parameters in a pretty table. Defaults</span>
+<span class="sd">            to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Either all model parameters or solely the trainable parameters.</span>
-
-<span class="sd">    .. _1: https://stackoverflow.com/a/62508086</span>
+<span class="sd">        int: Either all model parameters or only the trainable ones.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">prettytable</span> <span class="kn">import</span> <span class="n">PrettyTable</span>
 
@@ -159,8 +161,9 @@
         <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="p">])</span>
         <span class="n">total_params</span> <span class="o">+=</span> <span class="n">param</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total Trainable Params: </span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_params</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">print_table</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total Trainable Params: </span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_params</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">total_params</span></div>
 </pre></div>

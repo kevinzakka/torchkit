@@ -43,7 +43,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/activations/">torchkit.activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
 </ul>
 
@@ -80,14 +79,14 @@
 <span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
 
-<span class="n">TensorType</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-<span class="n">ImageType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">TensorType</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+<span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+<span class="n">ImageType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="Logger"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger">[docs]</a><span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A Tensorboard-based logger.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Logger.__init__"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_write</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Logger.__init__"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_write</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
 <span class="sd">        Args:</span>
@@ -104,15 +103,15 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Logger.close"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Logger.close"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Logger.flush"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Logger.flush"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Logger.log_scalar"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_scalar">[docs]</a>    <span class="k">def</span> <span class="nf">log_scalar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">scalar</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TensorType</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">scalar</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
         <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>

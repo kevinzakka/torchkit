@@ -43,7 +43,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/activations/">torchkit.activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../torchkit/utils/">torchkit.utils</a></li>
 </ul>
 
@@ -78,7 +77,15 @@
 
 
 <div class="viewcode-block" id="Stopwatch"><a class="viewcode-back" href="../../../../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch">[docs]</a><span class="k">class</span> <span class="nc">Stopwatch</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;A simple timer for measuring elapsed time.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A simple timer for measuring elapsed time.</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        stopwatch = Stopwatch()</span>
+<span class="sd">        some_func()</span>
+<span class="sd">        print(f&quot;some_func took: {stopwatch.elapsed()} seconds.&quot;)</span>
+<span class="sd">        stopwatch.reset()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Stopwatch.__init__"><a class="viewcode-back" href="../../../../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>

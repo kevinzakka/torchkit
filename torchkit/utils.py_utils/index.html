@@ -45,7 +45,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../expm/">Experiment Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../activations/">torchkit.activations</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../utils/">torchkit.utils</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">torchkit.utils.py_utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils.torch_utils/">torchkit.utils.torch_utils</a></li>
@@ -84,6 +83,13 @@
 <dt class="sig sig-object py" id="torchkit.utils.py_utils.Stopwatch">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torchkit.utils.py_utils.</span></span><span class="sig-name descname"><span class="pre">Stopwatch</span></span><a class="reference internal" href="../../_modules/torchkit/utils/py_utils/#Stopwatch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.py_utils.Stopwatch" title="Permalink to this definition"></a></dt>
 <dd><p>A simple timer for measuring elapsed time.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stopwatch</span> <span class="o">=</span> <span class="n">Stopwatch</span><span class="p">()</span>
+<span class="n">some_func</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;some_func took: </span><span class="si">{</span><span class="n">stopwatch</span><span class="o">.</span><span class="n">elapsed</span><span class="p">()</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
+<span class="n">stopwatch</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>None</p>

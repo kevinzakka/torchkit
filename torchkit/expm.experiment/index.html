@@ -50,7 +50,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../activations/">torchkit.activations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utils/">torchkit.utils</a></li>
 </ul>
 
@@ -87,15 +86,20 @@
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">copy_config_and_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeze</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#copy_config_and_replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.copy_config_and_replace" title="Permalink to this definition"></a></dt>
 <dd><p>Makes a copy of a config and optionally updates its values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>]</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
-<li><p><strong>update_dict</strong> (<em>Optional</em><em>[</em><em>ml_collections.config_dict.config_dict.ConfigDict</em><em>]</em>) – </p></li>
-<li><p><strong>freeze</strong> (<em>bool</em>) – </p></li>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>ConfigDict</em>) – The config to copy.</p></li>
+<li><p><strong>update_dict</strong> (<em>Optional</em><em>[</em><em>ConfigDict</em><em>]</em><em>, </em><em>optional</em>) – A config that will optionally
+update the copy. Defaults to None.</p></li>
+<li><p><strong>freeze</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to freeze the config after the copy. Defaults
+to False.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A copy of the config.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ConfigDict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -103,16 +107,31 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.dump_config">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">dump_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#dump_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.dump_config" title="Permalink to this definition"></a></dt>
-<dd><p>Dump config to disk.</p>
+<dd><p>Dump a config to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – Path to the experiment directory.</p></li>
+<li><p><strong>config</strong> (<em>ConfigDict</em>) – The config to dump.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.git_commit_hash">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">git_commit_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torchkit.experiment.git_commit_hash" title="Permalink to this definition"></a></dt>
+<dd><p>Return the git commit hash of the current directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Will return a <cite>fatal: not a git repository</cite> string if the command fails.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
-<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
-</ul>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -120,7 +139,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.git_revision_hash">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">git_revision_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#git_revision_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.git_revision_hash" title="Permalink to this definition"></a></dt>
-<dd><p>Return git revision hash as a string.</p>
+<dd><p>Return the git commit hash of the current directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Will return a <cite>fatal: not a git repository</cite> string if the command fails.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
@@ -131,13 +154,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.infinite_dataset">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">infinite_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#infinite_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.infinite_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>An infinite loop over a <cite>torch.utils.DataLoader</cite> Iterable.</p>
+<dd><p>Create an infinite loop over a <cite>torch.utils.DataLoader</cite> Iterable.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>Iterable</em>) – A <cite>torch.utils.DataLoader</cite> object.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Iterator</em> – An iterator over the dataloader that repeats ad infinitum.</p>
+</dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><p><strong>data_loader</strong> (<em>Iterable</em>) – </p>
 </dd>
 </dl>
 </dd></dl>
@@ -145,16 +171,22 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.load_config_from_dir">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">load_config_from_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#load_config_from_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.load_config_from_dir" title="Permalink to this definition"></a></dt>
-<dd><p>Load experiment config.</p>
+<dd><p>Load a config from an experiment directory.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>]</p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
-<li><p><strong>config</strong> (<em>Optional</em><em>[</em><em>ml_collections.config_dict.config_dict.ConfigDict</em><em>]</em>) – </p></li>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – Path to the experiment directory.</p></li>
+<li><p><strong>config</strong> (<em>Optional</em><em>[</em><em>ConfigDict</em><em>]</em><em>, </em><em>optional</em>) – An optional config object to inplace
+update. If one isn’t provided, a new config object is returned. Defaults to
+None.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The config file that was stored in the experiment
+directory.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Optional[ConfigDict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,6 +195,14 @@
 <dt class="sig sig-object py" id="torchkit.experiment.pdb_fallback">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">pdb_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#pdb_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.pdb_fallback" title="Permalink to this definition"></a></dt>
 <dd><p>Wraps f with a pdb callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>~CallableType</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>f</strong> (<em>torchkit.experiment.CallableType</em>) – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -170,14 +210,15 @@
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">seed_rngs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pytorch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#seed_rngs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.seed_rngs" title="Permalink to this definition"></a></dt>
 <dd><p>Seed system RNGs.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>seed</strong> (<em>int</em>) – </p></li>
-<li><p><strong>pytorch</strong> (<em>bool</em>) – </p></li>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – The desired seed.</p></li>
+<li><p><strong>pytorch</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to seed the <cite>torch</cite> RNG as well. Defaults to
+True.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -189,9 +230,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deterministic</strong> (<em>bool</em>) – </p></li>
-<li><p><strong>benchmark</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>deterministic</strong> (<em>bool</em><em>, </em><em>optional</em>) – Make CUDA algorithms deterministic. Defaults to
+False.</p></li>
+<li><p><strong>benchmark</strong> (<em>bool</em><em>, </em><em>optional</em>) – Make CUDA arlgorithm selection deterministic.
+Defaults to True.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -200,16 +246,24 @@
 <dt class="sig sig-object py" id="torchkit.experiment.setup_experiment">
 <span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.setup_experiment" title="Permalink to this definition"></a></dt>
 <dd><p>Initializes an experiment.</p>
+<p>If the experiment directory doesn’t exist yet, creates it and dumps the config
+dict as a yaml file and git hash as a text file. If it exists already, raises a
+ValueError to prevent overwriting unless resume is set to True.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – Path to the experiment directory.</p></li>
+<li><p><strong>config</strong> (<em>ConfigDict</em>) – The config for the experiment.</p></li>
+<li><p><strong>resume</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to resume from a previously created experiment.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the experiment directory exists already and resume is not set to
+    True.</p>
+</dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>exp_dir</strong> (<em>str</em>) – </p></li>
-<li><p><strong>config</strong> (<em>ml_collections.config_dict.config_dict.ConfigDict</em>) – </p></li>
-<li><p><strong>resume</strong> (<em>bool</em>) – </p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -239,14 +293,13 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.experiment.validate_config">
-<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">validate_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#validate_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.validate_config" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">validate_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#validate_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.validate_config" title="Permalink to this definition"></a></dt>
 <dd><p>Ensures a config inherits from a base config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base_config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>) – The base config.</p></li>
-<li><p><strong>config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code>) – The child config.</p></li>
-<li><p><strong>base_filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Can be one of ‘pretraining’ or ‘rl’.</p></li>
+<li><p><strong>base_config</strong> (<em>ConfigDict</em>) – The base config.</p></li>
+<li><p><strong>config</strong> (<em>ConfigDict</em>) – The child config.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
