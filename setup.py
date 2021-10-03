@@ -15,7 +15,6 @@ DOCS_REQUIRE = [
     "sphinx",
     "sphinx-autodoc-typehints",
     "sphinx-rtd-theme",
-    "m2r",
     "docutils==0.16",
 ]
 
@@ -50,6 +49,7 @@ setup(
         "prettytable",
         "opencv-python",
         "moviepy",
+        "ml_collections",
     ],
     extras_require={
         "dev": ["ipdb", "jupyter", *TESTS_REQUIRE, *DOCS_REQUIRE],

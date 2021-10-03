@@ -35,7 +35,7 @@ def get_files(
 class Checkpoint:
     """Save and restore PyTorch objects implementing a `state_dict` method."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Constructor.
 
         Accepts keyword arguments whose values are objects that contain a
@@ -55,7 +55,7 @@ class Checkpoint:
                 raise ValueError(f"{k} does not have a state_dict attribute.")
             setattr(self, k, v)
 
-    def save(self, save_path: Path):
+    def save(self, save_path: Path) -> None:
         """Save a state to disk.
 
         Modified from brentyi/fannypack.
@@ -154,7 +154,7 @@ class CheckpointManager:
         directory: str,
         max_to_keep: int = 10,
         **checkpointables: Any,
-    ):
+    ) -> None:
         """Constructor.
 
         Args:
@@ -162,7 +162,7 @@ class CheckpointManager:
             max_to_keep: The maximum number of checkpoints to keep.
                 Amongst all saved checkpoints, checkpoints will be deleted
                 oldest first, until `max_to_keep` remain.
-            **checkpointables: Keyword args with checkpointable PyTorch objects.
+            checkpointables: Keyword args with checkpointable PyTorch objects.
         """
         assert max_to_keep > 0, "max_to_keep should be a positive integer."
 
@@ -201,7 +201,7 @@ class CheckpointManager:
         self.checkpoint.save(save_path)
         self._trim_checkpoints()
 
-    def _trim_checkpoints(self):
+    def _trim_checkpoints(self) -> None:
         """Trim older checkpoints until `max_to_keep` remain."""
         # Get a list of checkpoints in reverse global_step order.
         ckpts = CheckpointManager.list_checkpoints(self.directory)[::-1]
@@ -209,11 +209,11 @@ class CheckpointManager:
         while len(ckpts) - self.max_to_keep > 0:
             ckpts.pop().unlink()
 
-    def load_latest_checkpoint(self):
+    def load_latest_checkpoint(self) -> None:
         """Load the last saved checkpoint."""
         self.checkpoint.restore(self.latest_checkpoint)
 
-    def load_checkpoint_at(self, global_step: int):
+    def load_checkpoint_at(self, global_step: int) -> None:
         """Load a checkpoint at a given global step."""
         ckpt_name = self.directory / f"{global_step}.ckpt"
         if ckpt_name not in CheckpointManager.list_checkpoints(self.directory):
