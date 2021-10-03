@@ -6,14 +6,14 @@ import torch
 import torchvision
 from torch.utils.tensorboard import SummaryWriter
 
-TensorType = torch.Tensor
-ImageType = Union[TensorType, np.ndarray]
+Tensor = torch.Tensor
+ImageType = Union[Tensor, np.ndarray]
 
 
 class Logger:
     """A Tensorboard-based logger."""
 
-    def __init__(self, log_dir: str, force_write: bool = False):
+    def __init__(self, log_dir: str, force_write: bool = False) -> None:
         """Constructor.
 
         Args:
@@ -30,15 +30,15 @@ class Logger:
             )
         self._writer = SummaryWriter(log_dir)
 
-    def close(self):
+    def close(self) -> None:
         self._writer.close()
 
-    def flush(self):
+    def flush(self) -> None:
         self._writer.flush()
 
     def log_scalar(
         self,
-        scalar: Union[TensorType, float],
+        scalar: Union[Tensor, float],
         global_step: int,
         name: str,
         prefix: str = "",

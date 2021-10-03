@@ -32,11 +32,13 @@ def freeze_model(
                 m.eval()
 
 
+# Reference: https://stackoverflow.com/a/62508086
 def get_total_params(
     model: torch.nn.Module,
     trainable: bool = True,
+    print_table: bool = False,
 ) -> int:
-    """Get the total number of parameters in a PyTorch model, from `1`_.
+    """Get the total number of parameters in a PyTorch model.
 
     Example usage::
 
@@ -51,7 +53,7 @@ def get_total_params(
                 return self.fc2(out)
 
         net = SimpleMLP()
-        num_params = torch_utils.get_total_params(net)
+        num_params = torch_utils.get_total_params(net, print_table=True)
 
         # prints the following:
         +------------+------------+
@@ -65,13 +67,14 @@ def get_total_params(
         Total Trainable Params: 98
 
     Args:
-        model: The model, a subclass of `torch.nn.Module`.
-        trainable: Only return trainable parameters.
+        model (torch.nn.Module): The pytorch model.
+        trainable (bool, optional): Only consider trainable parameters. Defaults to
+            True.
+        print_table (bool, optional): Print the parameters in a pretty table. Defaults
+            to False.
 
     Returns:
-        Either all model parameters or solely the trainable parameters.
-
-    .. _1: https://stackoverflow.com/a/62508086
+        int: Either all model parameters or only the trainable ones.
     """
     from prettytable import PrettyTable
 
@@ -85,7 +88,8 @@ def get_total_params(
         table.add_row([name, param])
         total_params += param
 
-    print(table)
-    print("Total Trainable Params: {:,}".format(total_params))
+    if print_table:
+        print(table)
+        print("Total Trainable Params: {:,}".format(total_params))
 
     return total_params

@@ -20,7 +20,6 @@ like experimental configurations, logging and model checkpointing.
     torchkit/expm
     torchkit/layers
     torchkit/losses
-    torchkit/activations
     torchkit/utils
 
 Indices and tables

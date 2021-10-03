@@ -1,21 +1,25 @@
 import torch
 import torch.nn.functional as F
 
-TensorType = torch.Tensor
+Tensor = torch.Tensor
 
 
 def one_hot(
-    y: TensorType,
+    y: Tensor,
     K: int,
     smooth_eps: float = 0,
-) -> TensorType:
-    """One-hot encodes a tensor with optional label smoothing.
+) -> Tensor:
+    """One-hot encodes a tensor, with optional label smoothing.
 
     Args:
-        y: A tensor containing the ground-truth labels of shape `(N,)`, i.e. one
-            label for each element in the batch.
-        K: The number of classes.
-        smooth_eps: Label smoothing factor in `[0, 1]` range.
+        y (Tensor): A tensor containing the ground-truth labels of shape `(N,)`, i.e.
+            one label for each element in the batch.
+        K (int): The number of classes.
+        smooth_eps (float, optional): Label smoothing factor in `[0, 1]` range. Defaults
+            to 0, which corresponds to no label smoothing.
+
+    Returns:
+        Tensor: The one-hot encoded tensor.
     """
     assert 0 <= smooth_eps <= 1
     assert y.ndim == 1, "Label tensor must be rank 1."
@@ -24,25 +28,27 @@ def one_hot(
 
 
 def cross_entropy(
-    logits: TensorType,
-    labels: TensorType,
+    logits: Tensor,
+    labels: Tensor,
     smooth_eps: float = 0,
     reduction: str = "mean",
-) -> TensorType:
+) -> Tensor:
     """Cross-entropy loss with support for label smoothing.
 
     Args:
-        logits: A `FloatTensor` containing the raw logits, i.e. no softmax has
+        logits (Tensor): A `FloatTensor` containing the raw logits, i.e. no softmax has
             been applied to the model output. The tensor should be of shape
             `(N, K)` where K is the number of classes.
-        labels: A rank-1 `LongTensor` containing the ground truth labels.
-        smooth_eps: The label smoothing factor in `[0, 1]` range.
-        reduction: The reduction strategy on the final loss tensor.
+        labels (Tensor): A rank-1 `LongTensor` containing the ground truth labels.
+        smooth_eps (float, optional): The label smoothing factor in `[0, 1]` range.
+            Defaults to 0.
+        reduction (str, optional): The reduction strategy on the final loss tensor.
+            Defaults to "mean".
 
     Returns:
-        If reduction is `none`, a 2D tensor.
-        If reduction is `sum`, a 1D tensor.
-        If reduction is `mean`, a scalar 1D tensor.
+        If reduction is `none`, a 2D Tensor.
+        If reduction is `sum`, a 1D Tensor.
+        If reduction is `mean`, a scalar 1D Tensor.
     """
     assert isinstance(logits, (torch.FloatTensor, torch.cuda.FloatTensor))
     assert isinstance(labels, (torch.LongTensor, torch.cuda.LongTensor))
@@ -66,33 +72,30 @@ def cross_entropy(
         return loss
     elif reduction == "mean":
         return loss.mean()
-    return loss.sum(dim=-1)  # sum
+    return loss.sum(dim=-1)
 
 
 def huber_loss(
-    input: TensorType,
-    target: TensorType,
+    input: Tensor,
+    target: Tensor,
     delta: float,
     reduction: str = "mean",
-) -> TensorType:
+) -> Tensor:
     """Huber loss with tunable margin, as defined in `1`_.
 
-    This is a more general version of PyTorch's
-    `torch.nn.functional.smooth_l1_loss` that allows the user to change the
-    margin parameter.
-
     Args:
-        input: A `FloatTensor` representing the model output.
-        target: A `FloatTensor` representing the target values.
-        delta: Given the tensor difference `diff`, delta is the value at which
+        input (Tensor): A FloatTensor representing the model output.
+        target (Tensor): A FloatTensor representing the target values.
+        delta (float): Given the tensor difference `diff`, delta is the value at which
             we incur a quadratic penalty if `diff` is at least delta and a
             linear penalty otherwise.
-        reduction: The reduction strategy on the final loss tensor.
+        reduction (str, optional): The reduction strategy on the final loss tensor.
+            Defaults to "mean".
 
     Returns:
-        If reduction is `none`, a 2D tensor.
-        If reduction is `sum`, a 1D tensor.
-        If reduction is `mean`, a scalar 1D tensor.
+        If reduction is `none`, a 2D Tensor.
+        If reduction is `sum`, a 1D Tensor.
+        If reduction is `mean`, a scalar 1D Tensor.
 
     .. _1: https://en.wikipedia.org/wiki/Huber_loss
     """
@@ -108,4 +111,4 @@ def huber_loss(
         return loss
     elif reduction == "mean":
         return loss.mean()
-    return loss.sum(dim=-1)  # sum
+    return loss.sum(dim=-1)

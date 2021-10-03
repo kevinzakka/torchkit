@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 ConvType = Union[torch.nn.modules.conv.Conv2d, torch.nn.modules.conv.Conv3d]
-TensorType = torch.Tensor
+Tensor = torch.Tensor
 
 
 def _conv(
@@ -102,7 +102,7 @@ class Flatten(nn.Module):
     def __init__(self):
         super().__init__()
 
-    def forward(self, x: TensorType) -> TensorType:
+    def forward(self, x: Tensor) -> Tensor:
         return x.view(x.shape[0], -1)
 
 
@@ -132,7 +132,7 @@ class SpatialSoftArgmax(nn.Module):
         h: int,
         w: int,
         device: torch.device,
-    ) -> TensorType:
+    ) -> Tensor:
         if self.normalize:
             return torch.stack(
                 torch.meshgrid(
@@ -147,7 +147,7 @@ class SpatialSoftArgmax(nn.Module):
             )
         )
 
-    def forward(self, x: TensorType) -> TensorType:
+    def forward(self, x: Tensor) -> Tensor:
         assert x.ndim == 4, "Expecting a tensor of shape (B, C, H, W)."
 
         # Compute a spatial softmax over the input:
@@ -185,7 +185,7 @@ class _GlobalMaxPool(nn.Module):
         else:
             raise ValueError("{}D is not supported.")
 
-    def forward(self, x: TensorType) -> TensorType:
+    def forward(self, x: Tensor) -> Tensor:
         out = self._pool(x, kernel_size=x.size()[2:])
         for _ in range(len(out.shape[2:])):
             out.squeeze_(dim=-1)
@@ -228,7 +228,7 @@ class _GlobalAvgPool(nn.Module):
         else:
             raise ValueError("{}D is not supported.")
 
-    def forward(self, x: TensorType) -> TensorType:
+    def forward(self, x: Tensor) -> Tensor:
         out = self._pool(x, kernel_size=x.size()[2:])
         for _ in range(len(out.shape[2:])):
             out.squeeze_(dim=-1)
@@ -290,7 +290,7 @@ class CausalConv1d(nn.Conv1d):
             bias=bias,
         )
 
-    def forward(self, x: TensorType) -> TensorType:
+    def forward(self, x: Tensor) -> Tensor:
         res = super().forward(x)
         if self.__padding != 0:
             return res[:, :, : -self.__padding]

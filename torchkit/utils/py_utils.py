@@ -4,7 +4,15 @@ from typing import Callable, Iterable, Tuple
 
 
 class Stopwatch:
-    """A simple timer for measuring elapsed time."""
+    """A simple timer for measuring elapsed time.
+
+    Example usage::
+
+        stopwatch = Stopwatch()
+        some_func()
+        print(f"some_func took: {stopwatch.elapsed()} seconds.")
+        stopwatch.reset()
+    """
 
     def __init__(self) -> None:
         self.reset()
@@ -25,22 +33,6 @@ def threaded_func(
     multithreaded: bool,
 ) -> None:
     """Applies a func on a tuple of args with optional multithreading.
-
-    Example usage::
-
-        frames_paths = ["./images/img1.png", "./images/img2.png"]
-        frames = [None for _ in range(len(frame_paths))]
-
-        def get_image(image_index: int, image_path: str) -> None:
-            frames[image_index] = np.asarray(Image.open(image_path))
-
-        threaded_func(
-            func=get_image,
-            args_iterable=enumerate(frame_paths),
-            multithreaded=True,
-        )
-
-        # Images are now stored in `frames` as numpy arrays.
 
     Args:
       func: The func to execute.

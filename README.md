@@ -16,13 +16,15 @@
       </td>
     </tr>
     <tr>
-      <td><code>torchkit.<strong>checkpoint</strong></code></td>
+      <td><code>torchkit.<strong>CheckpointManager</strong></code></td>
       <td>
-        A port of Tensorflow's checkpoint management tools containing:
-        <ul>
-            <li><code><strong>Checkpoint</strong></code>: For saving and restoring any object with a <code>state_dict</code> attribute.</li>
-            <li><code><strong>CheckpointManager</strong></code>: For automatically managing multiple checkpoints in an experimental run.</li>
-        </ul>
+        A port of Tensorflow's checkpoint manager that automatically manages multiple checkpoints in an experimental run.
+      </td>
+    </tr>
+    <tr>
+      <td><code>torchkit.<strong>experiment</strong></code></td>
+      <td>
+        A collection of methods for setting up experiment directories, dumping/loading config files (we use <a href="https://github.com/google/ml_collections">ml_collections</a>), seeding RNGs across all modules, and more!
       </td>
     </tr>
     <tr>
