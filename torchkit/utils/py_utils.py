@@ -1,36 +1,12 @@
 import threading
 import time
-from typing import Any, Callable, Dict, Iterable, Mapping, Sequence, Tuple
-
-import numpy as np
-
-
-def dict_mean(
-    dict_list: Sequence[Mapping[Any, Sequence[float]]],
-) -> Dict[Any, float]:
-    """Take the mean of a list of dicts.
-
-    Raises:
-        ValueError: If the dicts do not have the same keys.
-    """
-    # Ensure all dicts have the same keys.
-    keys = dict_list[0].keys()
-    for d in dict_list:
-        if d.keys() != keys:
-            raise ValueError("Dictionary keys must be identical.")
-
-    # Combine list of dictionaries into one dictionary where each key's value is
-    # a list containing the elements from all the subdictionaries.
-    res = {k: [dict_list[i][k] for i in range(len(dict_list))] for k in keys}
-
-    # Now take the average over the lists.
-    return {k: np.mean(v) for k, v in res.items()}
+from typing import Callable, Iterable, Tuple
 
 
 class Stopwatch:
     """A simple timer for measuring elapsed time."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.reset()
 
     def elapsed(self) -> float:
@@ -47,8 +23,24 @@ def threaded_func(
     func: Callable,
     args_iterable: Iterable[Tuple],
     multithreaded: bool,
-):
+) -> None:
     """Applies a func on a tuple of args with optional multithreading.
+
+    Example usage::
+
+        frames_paths = ["./images/img1.png", "./images/img2.png"]
+        frames = [None for _ in range(len(frame_paths))]
+
+        def get_image(image_index: int, image_path: str) -> None:
+            frames[image_index] = np.asarray(Image.open(image_path))
+
+        threaded_func(
+            func=get_image,
+            args_iterable=enumerate(frame_paths),
+            multithreaded=True,
+        )
+
+        # Images are now stored in `frames` as numpy arrays.
 
     Args:
       func: The func to execute.

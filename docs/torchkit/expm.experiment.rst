@@ -3,5 +3,5 @@ torchkit.experiment
 
 .. automodule:: torchkit.experiment
     :members:
-    :member-order: bysource
+    :member-order: alphabetical
     :exclude-members: __init__

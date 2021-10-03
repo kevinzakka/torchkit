@@ -1,7 +1,5 @@
 """Configuration file for the Sphinx documentation builder."""
 
-import m2r
-
 import torchkit
 
 # -- Project information -----------------------------------------------------
@@ -24,6 +22,9 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_rtd_theme",
 ]
+
+
+autodoc_typehints = "description"
 
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
@@ -58,13 +59,6 @@ html_static_path = ["_static"]
 
 # ---------------------------------------------------------------------------
 
-
-def docstring(app, what, name, obj, options, lines):
-    md = "\n".join(lines)
-    rst = m2r.convert(md)
-    lines.clear()
-    lines += rst.splitlines()
-
-
-def setup(app):
-    app.connect("autodoc-process-docstring", docstring)
+sphinx_to_github = True
+sphinx_to_github_verbose = True
+sphinx_to_github_encoding = "utf-8"
