@@ -107,22 +107,6 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Applies a func on a tuple of args with optional multithreading.</span>
 
-<span class="sd">    Example usage::</span>
-
-<span class="sd">        frames_paths = [&quot;./images/img1.png&quot;, &quot;./images/img2.png&quot;]</span>
-<span class="sd">        frames = [None for _ in range(len(frame_paths))]</span>
-
-<span class="sd">        def get_image(image_index: int, image_path: str) -&gt; None:</span>
-<span class="sd">            frames[image_index] = np.asarray(Image.open(image_path))</span>
-
-<span class="sd">        threaded_func(</span>
-<span class="sd">            func=get_image,</span>
-<span class="sd">            args_iterable=enumerate(frame_paths),</span>
-<span class="sd">            multithreaded=True,</span>
-<span class="sd">        )</span>
-
-<span class="sd">        # Images are now stored in `frames` as numpy arrays.</span>
-
 <span class="sd">    Args:</span>
 <span class="sd">      func: The func to execute.</span>
 <span class="sd">      args_iterable: An iterable of arg tuples to feed to func.</span>
