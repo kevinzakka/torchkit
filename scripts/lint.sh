@@ -1,12 +1,16 @@
-# Modified from https://raw.githubusercontent.com/HumanCompatibleAI/seals/master/ci/code_checks.sh
 #!/usr/bin/env bash
+#
+# Modified from https://raw.githubusercontent.com/HumanCompatibleAI/seals/master/ci/code_checks.sh
+set -x
+set -e
 
 SRC_FILES=(torchkit/ tests/ docs/conf.py setup.py)
 
-set -x  # echo commands
-set -e  # quit immediately on error
-
-N_CPU=$(grep -c ^processor /proc/cpuinfo)
+if [ "$(uname)" == "Darwin" ]; then
+  N_CPU=$(sysctl -n hw.ncpu)
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  N_CPU=$(grep -c ^processor /proc/cpuinfo)
+fi
 
 echo "Source format checking"
 flake8 ${SRC_FILES[@]}

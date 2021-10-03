@@ -50,9 +50,10 @@ setup(
         "opencv-python",
         "moviepy",
         "ml_collections",
+        "ipdb",
     ],
     extras_require={
-        "dev": ["ipdb", "jupyter", *TESTS_REQUIRE, *DOCS_REQUIRE],
+        "dev": ["jupyter", *TESTS_REQUIRE, *DOCS_REQUIRE],
         "test": TESTS_REQUIRE,
     },
     tests_require=TESTS_REQUIRE,

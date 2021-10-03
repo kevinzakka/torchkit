@@ -2,11 +2,10 @@
 
 import functools
 import os
-import pdb
 import random
 import subprocess
 import uuid
-from typing import Callable, Iterable, Iterator, Optional, TypeVar
+from typing import Any, Callable, Iterable, Iterator, Optional, TypeVar
 
 import numpy as np
 import torch
@@ -15,6 +14,7 @@ from ml_collections import config_dict
 
 ConfigDict = config_dict.ConfigDict
 FrozenConfigDict = config_dict.FrozenConfigDict
+CallableType = TypeVar("CallableType", bound=Callable)
 
 
 # Reference: https://stackoverflow.com/a/21901260
@@ -65,28 +65,55 @@ def set_cudnn(deterministic: bool = False, benchmark: bool = True) -> None:
     torch.backends.cudnn.benchmark = benchmark
 
 
-# Reference: https://github.com/deepmind/jaxline/blob/master/jaxline/utils.py
-CallableType = TypeVar("CallableType", bound=Callable)
-
-
+# Reference: https://github.com/brentyi/fannypack/blob/master/fannypack/utils/_pdb_safety_net.py  # noqa: E501
 def pdb_fallback(f: CallableType) -> CallableType:
-    """Wraps f with a pdb callback."""
+    """Wraps a function in a pdb safety net for unexpected errors in a Python script.
+
+    When called, pdb will be automatically opened when either (a) the user hits Ctrl+C
+    or (b) we encounter an uncaught exception. Helpful for bypassing minor errors,
+    diagnosing problems, and rescuing unsaved models.
+
+    Example usage::
+
+        from torchkit.experiment import pdb_fallback
+
+        @pdb_fallback
+        def main():
+            # A very interesting function that might fail because we did something
+            # stupid.
+            ...
+
+        if __name__ == "__main__":
+            main()
+    """
+
+    import signal
+    import sys
+    import traceback as tb
+
+    import ipdb
 
     @functools.wraps(f)
     def inner_wrapper(*args, **kwargs):
-        """Main entry function."""
-        try:
-            return f(*args, **kwargs)
-        # KeyboardInterrupt and SystemExit are not derived from BaseException,
-        # hence not caught by the post-mortem.
-        except Exception as e:
-            pdb.post_mortem(e.__traceback__)
-            raise
+        # Open pdb on Ctrl-C.
+        def handler(sig, frame):
+            ipdb.set_trace()
+
+        signal.signal(signal.SIGINT, handler)
+
+        # Open pdb when we encounter an uncaught exception.
+        def excepthook(type_, value, traceback):
+            tb.print_exception(type_, value, traceback, limit=100)
+            ipdb.post_mortem(traceback)
+
+        sys.excepthook = excepthook
+
+        return f(*args, **kwargs)
 
     return inner_wrapper
 
 
-def string_from_kwargs(**kwargs) -> str:
+def string_from_kwargs(**kwargs: Any) -> str:
     """Concatenate kwargs into an underscore-separated string.
 
     Used to generate an experiment name based on supplied config kwargs.
@@ -102,7 +129,7 @@ def unique_id() -> str:
 
 # Reference: https://github.com/unixpickle/vq-voice-swap/blob/main/vq_voice_swap/util.py
 def infinite_dataset(data_loader: Iterable) -> Iterator:
-    """Create an infinite loop over a `torch.utils.DataLoader` Iterable.
+    """Create an infinite loop over a `torch.utils.DataLoader`.
 
     Args:
         data_loader (Iterable): A `torch.utils.DataLoader` object.
