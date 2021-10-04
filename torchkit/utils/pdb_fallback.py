@@ -14,7 +14,7 @@ def pdb_fallback(f: CallableType) -> CallableType:
 
     Example usage::
 
-        from torchkit.experiment import pdb_fallback
+        from torchkit.utils import pdb_fallback
 
         @pdb_fallback
         def main():

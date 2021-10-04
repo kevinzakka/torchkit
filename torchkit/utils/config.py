@@ -77,7 +77,7 @@ def load_config(
         return
     if freeze:
         return FrozenConfigDict(cfg)
-    return cfg
+    return ConfigDict(cfg)
 
 
 def copy_config_and_replace(
