@@ -24,7 +24,7 @@
     <tr>
       <td><code>torchkit.<strong>experiment</strong></code></td>
       <td>
-        A collection of methods for setting up experiment directories, dumping/loading config files (we use <a href="https://github.com/google/ml_collections">ml_collections</a>), seeding RNGs across all modules, and more!
+        A collection of methods for setting up experiment directories.
       </td>
     </tr>
     <tr>
@@ -42,7 +42,7 @@
     <tr>
       <td><code>torchkit.<strong>utils</strong></code></td>
       <td>
-        A growing list of PyTorch-related helper functions.
+        A bunch of helper functions for config manipulation, I/O, timing, debugging, etc.
       </td>
     </tr>
   </tbody>

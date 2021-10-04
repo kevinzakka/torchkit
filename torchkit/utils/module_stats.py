@@ -1,35 +1,4 @@
-"""Pytorch-related utils."""
-
 import torch
-
-
-def freeze_model(
-    model: torch.nn.Module,
-    bn_freeze_affine: bool = False,
-    bn_use_running_stats: bool = False,
-) -> None:
-    """Freeze PyTorch model weights.
-
-    Args:
-        model: The model to freeze, a subclass of `torch.nn.Module`.
-        bn_freeze_affine: If True, freezes batch norm params gamma and beta.
-        bn_use_running_stats: If True, switches from batch statistics to running
-            mean and std. This is recommended for very small batch sizes.
-    """
-    for m in model.modules():
-        if not isinstance(m, torch.nn.modules.batchnorm._BatchNorm):
-            for p in m.parameters(recurse=False):
-                p.requires_grad = False
-            m.eval()
-        else:
-            if bn_freeze_affine:
-                for p in m.parameters(recurse=False):
-                    p.requires_grad = False
-            else:
-                for p in m.parameters(recurse=False):
-                    p.requires_grad = True
-            if bn_use_running_stats:
-                m.eval()
 
 
 # Reference: https://stackoverflow.com/a/62508086
@@ -45,10 +14,11 @@ def get_total_params(
         class SimpleMLP(nn.Module):
             def __init__(self):
                 super().__init__()
+
                 self.fc1 = nn.Linear(3, 16)
                 self.fc2 = nn.Linear(16, 2)
 
-            def forward(self, x):
+            def forward(self, x: torch.Tensor) -> torch.Tensor:
                 out = F.relu(self.fc1(x))
                 return self.fc2(out)
 

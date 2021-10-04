@@ -17,10 +17,12 @@ like experimental configurations, logging and model checkpointing.
     :maxdepth: 2
     :caption: API Reference
 
-    torchkit/expm
+    torchkit/logger
+    torchkit/checkpoint
+    torchkit/experiment
     torchkit/layers
     torchkit/losses
-    torchkit/utils
+    torchkit/utils/index
 
 Indices and tables
 ==================
