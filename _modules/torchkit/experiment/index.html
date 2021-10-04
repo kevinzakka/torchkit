@@ -40,7 +40,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/logger/">torchkit.logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/checkpoint/">torchkit.checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/experiment/">torchkit.experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
@@ -73,120 +75,18 @@
   <h1>Source code for torchkit.experiment</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Methods useful for running experiments.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">from</span> <span class="nn">ml_collections</span> <span class="kn">import</span> <span class="n">config_dict</span>
 
+<span class="kn">from</span> <span class="nn">torchkit.utils</span> <span class="kn">import</span> <span class="n">dump_config</span><span class="p">,</span> <span class="n">git_revision_hash</span><span class="p">,</span> <span class="n">load_config</span>
+
 <span class="n">ConfigDict</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">ConfigDict</span>
-<span class="n">FrozenConfigDict</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">FrozenConfigDict</span>
-<span class="n">CallableType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;CallableType&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span>
 
 
-<span class="c1"># Reference: https://stackoverflow.com/a/21901260</span>
-<div class="viewcode-block" id="git_revision_hash"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.git_revision_hash">[docs]</a><span class="k">def</span> <span class="nf">git_revision_hash</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the git commit hash of the current directory.</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        Will return a `fatal: not a git repository` string if the command fails.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">],</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span>
-        <span class="p">)</span>
-    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">output</span>
-    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
-
-
-<span class="c1"># Alias.</span>
-<span class="n">git_commit_hash</span> <span class="o">=</span> <span class="n">git_revision_hash</span>
-
-
-<div class="viewcode-block" id="seed_rngs"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.seed_rngs">[docs]</a><span class="k">def</span> <span class="nf">seed_rngs</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pytorch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Seed system RNGs.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        seed (int): The desired seed.</span>
-<span class="sd">        pytorch (bool, optional): Whether to seed the `torch` RNG as well. Defaults to</span>
-<span class="sd">            True.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONHASHSEED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">pytorch</span><span class="p">:</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="set_cudnn"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.set_cudnn">[docs]</a><span class="k">def</span> <span class="nf">set_cudnn</span><span class="p">(</span><span class="n">deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Set PyTorch-related CUDNN settings.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        deterministic (bool, optional): Make CUDA algorithms deterministic. Defaults to</span>
-<span class="sd">            False.</span>
-<span class="sd">        benchmark (bool, optional): Make CUDA arlgorithm selection deterministic.</span>
-<span class="sd">            Defaults to True.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">deterministic</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span></div>
-
-
-<span class="c1"># Reference: https://github.com/brentyi/fannypack/blob/master/fannypack/utils/_pdb_safety_net.py  # noqa: E501</span>
-<div class="viewcode-block" id="pdb_fallback"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.pdb_fallback">[docs]</a><span class="k">def</span> <span class="nf">pdb_fallback</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">CallableType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CallableType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Wraps a function in a pdb safety net for unexpected errors in a Python script.</span>
-
-<span class="sd">    When called, pdb will be automatically opened when either (a) the user hits Ctrl+C</span>
-<span class="sd">    or (b) we encounter an uncaught exception. Helpful for bypassing minor errors,</span>
-<span class="sd">    diagnosing problems, and rescuing unsaved models.</span>
-
-<span class="sd">    Example usage::</span>
-
-<span class="sd">        from torchkit.experiment import pdb_fallback</span>
-
-<span class="sd">        @pdb_fallback</span>
-<span class="sd">        def main():</span>
-<span class="sd">            # A very interesting function that might fail because we did something</span>
-<span class="sd">            # stupid.</span>
-<span class="sd">            ...</span>
-
-<span class="sd">        if __name__ == &quot;__main__&quot;:</span>
-<span class="sd">            main()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="kn">import</span> <span class="nn">signal</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">import</span> <span class="nn">traceback</span> <span class="k">as</span> <span class="nn">tb</span>
-
-    <span class="kn">import</span> <span class="nn">ipdb</span>
-
-    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">inner_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># Open pdb on Ctrl-C.</span>
-        <span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-            <span class="n">ipdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
-
-        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
-
-        <span class="c1"># Open pdb when we encounter an uncaught exception.</span>
-        <span class="k">def</span> <span class="nf">excepthook</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
-            <span class="n">tb</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-            <span class="n">ipdb</span><span class="o">.</span><span class="n">post_mortem</span><span class="p">(</span><span class="n">traceback</span><span class="p">)</span>
-
-        <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">excepthook</span>
-
-        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">inner_wrapper</span></div>
-
-
-<div class="viewcode-block" id="string_from_kwargs"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.string_from_kwargs">[docs]</a><span class="k">def</span> <span class="nf">string_from_kwargs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="string_from_kwargs"><a class="viewcode-back" href="../../../torchkit/experiment/#torchkit.experiment.string_from_kwargs">[docs]</a><span class="k">def</span> <span class="nf">string_from_kwargs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Concatenate kwargs into an underscore-separated string.</span>
 
 <span class="sd">    Used to generate an experiment name based on supplied config kwargs.</span>
@@ -194,88 +94,13 @@
     <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
 
 
-<div class="viewcode-block" id="unique_id"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.unique_id">[docs]</a><span class="k">def</span> <span class="nf">unique_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="unique_id"><a class="viewcode-back" href="../../../torchkit/experiment/#torchkit.experiment.unique_id">[docs]</a><span class="k">def</span> <span class="nf">unique_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Generate a unique ID as specified in RFC 4122.&quot;&quot;&quot;</span>
     <span class="c1"># See https://docs.python.org/3/library/uuid.html</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span></div>
 
 
-<span class="c1"># Reference: https://github.com/unixpickle/vq-voice-swap/blob/main/vq_voice_swap/util.py</span>
-<div class="viewcode-block" id="infinite_dataset"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.infinite_dataset">[docs]</a><span class="k">def</span> <span class="nf">infinite_dataset</span><span class="p">(</span><span class="n">data_loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create an infinite loop over a `torch.utils.DataLoader`.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        data_loader (Iterable): A `torch.utils.DataLoader` object.</span>
-
-<span class="sd">    Yields:</span>
-<span class="sd">        Iterator: An iterator over the dataloader that repeats ad infinitum.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">yield from</span> <span class="n">data_loader</span></div>
-
-
-<span class="c1"># Reference: https://github.com/deepmind/jaxline/blob/master/jaxline/base_config.py</span>
-<div class="viewcode-block" id="validate_config"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.validate_config">[docs]</a><span class="k">def</span> <span class="nf">validate_config</span><span class="p">(</span><span class="n">base_config</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Ensures a config inherits from a base config.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        base_config (ConfigDict): The base config.</span>
-<span class="sd">        config (ConfigDict): The child config.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: if the base config contains keys that are not present in config.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">base_config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> missing from config. This config is required to have &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;keys: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">base_config</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_config</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">ConfigDict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">validate_config</span><span class="p">(</span><span class="n">base_config</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
-
-
-<div class="viewcode-block" id="dump_config"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.dump_config">[docs]</a><span class="k">def</span> <span class="nf">dump_config</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Dump a config to disk.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        exp_dir (str): Path to the experiment directory.</span>
-<span class="sd">        config (ConfigDict): The config to dump.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Note: No need to explicitly delete the previous config file as &quot;w&quot; will overwrite</span>
-    <span class="c1"># the file if it already exists.</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="s2">&quot;config.yaml&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">ConfigDict</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">config</span><span class="p">),</span> <span class="n">fp</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="copy_config_and_replace"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.copy_config_and_replace">[docs]</a><span class="k">def</span> <span class="nf">copy_config_and_replace</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">,</span>
-    <span class="n">update_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ConfigDict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">freeze</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigDict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Makes a copy of a config and optionally updates its values.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        config (ConfigDict): The config to copy.</span>
-<span class="sd">        update_dict (Optional[ConfigDict], optional): A config that will optionally</span>
-<span class="sd">            update the copy. Defaults to None.</span>
-<span class="sd">        freeze (bool, optional): Whether to freeze the config after the copy. Defaults</span>
-<span class="sd">            to False.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        ConfigDict: A copy of the config.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Using the ConfigDict constructor leaves the `FieldReferences` untouched unlike</span>
-    <span class="c1"># `ConfigDict.copy_and_resolve_references`.</span>
-    <span class="n">new_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">update_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">new_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">update_dict</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">freeze</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">FrozenConfigDict</span><span class="p">(</span><span class="n">new_config</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_config</span></div>
-
-
-<div class="viewcode-block" id="setup_experiment"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.setup_experiment">[docs]</a><span class="k">def</span> <span class="nf">setup_experiment</span><span class="p">(</span>
+<div class="viewcode-block" id="setup_experiment"><a class="viewcode-back" href="../../../torchkit/experiment/#torchkit.experiment.setup_experiment">[docs]</a><span class="k">def</span> <span class="nf">setup_experiment</span><span class="p">(</span>
     <span class="n">exp_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">,</span>
     <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -283,8 +108,11 @@
     <span class="sd">&quot;&quot;&quot;Initializes an experiment.</span>
 
 <span class="sd">    If the experiment directory doesn&#39;t exist yet, creates it and dumps the config</span>
-<span class="sd">    dict as a yaml file and git hash as a text file. If it exists already, raises a</span>
-<span class="sd">    ValueError to prevent overwriting unless resume is set to True.</span>
+<span class="sd">    dict as a yaml file and git hash as a text file.</span>
+<span class="sd">    If it exists already, raises a ValueError to prevent overwriting unless resume is</span>
+<span class="sd">    set to True.</span>
+<span class="sd">    If it exists already and resume is set to True, inplace updates the config with the</span>
+<span class="sd">    values in the saved yaml file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        exp_dir (str): Path to the experiment directory.</span>
@@ -301,37 +129,15 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Experiment already exists. Run with --resume to continue.&quot;</span>
             <span class="p">)</span>
-        <span class="n">load_config_from_dir</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="c1"># Inplace-update the config using the values in the saved yaml file.</span>
+        <span class="n">load_config</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">)</span>
+        <span class="c1"># Dump config as a yaml file.</span>
         <span class="n">dump_config</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Dump git hash as a text file.</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="s2">&quot;git_hash.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">git_revision_hash</span><span class="p">())</span></div>
-
-
-<div class="viewcode-block" id="load_config_from_dir"><a class="viewcode-back" href="../../../torchkit/expm.experiment/#torchkit.experiment.load_config_from_dir">[docs]</a><span class="k">def</span> <span class="nf">load_config_from_dir</span><span class="p">(</span>
-    <span class="n">exp_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ConfigDict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ConfigDict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Load a config from an experiment directory.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        exp_dir (str): Path to the experiment directory.</span>
-<span class="sd">        config (Optional[ConfigDict], optional): An optional config object to inplace</span>
-<span class="sd">            update. If one isn&#39;t provided, a new config object is returned. Defaults to</span>
-<span class="sd">            None.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Optional[ConfigDict]: The config file that was stored in the experiment</span>
-<span class="sd">        directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exp_dir</span><span class="p">,</span> <span class="s2">&quot;config.yaml&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">cfg</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
-    <span class="c1"># Inplace update the config if one is provided.</span>
-    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">return</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

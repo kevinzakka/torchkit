@@ -40,7 +40,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchkit/logger/">torchkit.logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchkit/checkpoint/">torchkit.checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../torchkit/experiment/">torchkit.experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../torchkit/losses/">torchkit.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../torchkit/utils/">torchkit.utils</a></li>
@@ -98,10 +100,10 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.__init__">__init__() (torchkit.checkpoint.Checkpoint method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.Checkpoint.__init__">__init__() (torchkit.checkpoint.Checkpoint method)</a>
 
       <ul>
-        <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.__init__">(torchkit.checkpoint.CheckpointManager method)</a>
+        <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.__init__">(torchkit.checkpoint.CheckpointManager method)</a>
 </li>
         <li><a href="../torchkit/layers/#torchkit.layers.CausalConv1d.__init__">(torchkit.layers.CausalConv1d method)</a>
 </li>
@@ -121,9 +123,9 @@
 </li>
         <li><a href="../torchkit/layers/#torchkit.layers.SpatialSoftArgmax.__init__">(torchkit.layers.SpatialSoftArgmax method)</a>
 </li>
-        <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.__init__">(torchkit.logger.Logger method)</a>
+        <li><a href="../torchkit/logger/#torchkit.logger.Logger.__init__">(torchkit.logger.Logger method)</a>
 </li>
-        <li><a href="../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch.__init__">(torchkit.utils.py_utils.Stopwatch method)</a>
+        <li><a href="../torchkit/utils/timer/#torchkit.utils.timer.Stopwatch.__init__">(torchkit.utils.timer.Stopwatch method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -142,11 +144,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../torchkit/layers/#torchkit.layers.CausalConv1d">CausalConv1d (class in torchkit.layers)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint">Checkpoint (class in torchkit.checkpoint)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.Checkpoint">Checkpoint (class in torchkit.checkpoint)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager">CheckpointManager (class in torchkit.checkpoint)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager">CheckpointManager (class in torchkit.checkpoint)</a>
 </li>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.close">close() (torchkit.logger.Logger method)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.close">close() (torchkit.logger.Logger method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -154,7 +156,7 @@
 </li>
       <li><a href="../torchkit/layers/#torchkit.layers.conv3d">conv3d() (in module torchkit.layers)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.copy_config_and_replace">copy_config_and_replace() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/config/#torchkit.utils.config.copy_config_and_replace">copy_config_and_replace() (in module torchkit.utils.config)</a>
 </li>
       <li><a href="../torchkit/losses/#torchkit.losses.cross_entropy">cross_entropy() (in module torchkit.losses)</a>
 </li>
@@ -168,7 +170,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.dump_config">dump_config() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/config/#torchkit.utils.config.dump_config">dump_config() (in module torchkit.utils.config)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -176,7 +178,7 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch.elapsed">elapsed() (torchkit.utils.py_utils.Stopwatch method)</a>
+      <li><a href="../torchkit/utils/timer/#torchkit.utils.timer.Stopwatch.elapsed">elapsed() (torchkit.utils.timer.Stopwatch method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -188,9 +190,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.flush">flush() (torchkit.logger.Logger method)</a>
-</li>
-      <li><a href="../torchkit/utils.torch_utils/#torchkit.utils.torch_utils.freeze_model">freeze_model() (in module torchkit.utils.torch_utils)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.flush">flush() (torchkit.logger.Logger method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -198,11 +198,11 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/utils.torch_utils/#torchkit.utils.torch_utils.get_total_params">get_total_params() (in module torchkit.utils.torch_utils)</a>
+      <li><a href="../torchkit/utils/module_stats/#torchkit.utils.module_stats.get_total_params">get_total_params() (in module torchkit.utils.module_stats)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.git_commit_hash">git_commit_hash() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/git/#torchkit.utils.git.git_commit_hash">git_commit_hash() (in module torchkit.utils.git)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.git_revision_hash">git_revision_hash() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/git/#torchkit.utils.git.git_revision_hash">git_revision_hash() (in module torchkit.utils.git)</a>
 </li>
       <li><a href="../torchkit/layers/#torchkit.layers.GlobalAvgPool1d">GlobalAvgPool1d (class in torchkit.layers)</a>
 </li>
@@ -234,7 +234,7 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.infinite_dataset">infinite_dataset() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/dataset/#torchkit.utils.dataset.infinite_dataset">infinite_dataset() (in module torchkit.utils.dataset)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -250,27 +250,29 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.latest_checkpoint">latest_checkpoint (torchkit.checkpoint.CheckpointManager property)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.latest_checkpoint">latest_checkpoint (torchkit.checkpoint.CheckpointManager property)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.list_checkpoints">list_checkpoints() (torchkit.checkpoint.CheckpointManager static method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.list_checkpoints">list_checkpoints() (torchkit.checkpoint.CheckpointManager static method)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_checkpoint_at">load_checkpoint_at() (torchkit.checkpoint.CheckpointManager method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.load_checkpoint_at">load_checkpoint_at() (torchkit.checkpoint.CheckpointManager method)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.load_config_from_dir">load_config_from_dir() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/config/#torchkit.utils.config.load_config">load_config() (in module torchkit.utils.config)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.load_latest_checkpoint">load_latest_checkpoint() (torchkit.checkpoint.CheckpointManager method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.load_latest_checkpoint">load_latest_checkpoint() (torchkit.checkpoint.CheckpointManager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.log_image">log_image() (torchkit.logger.Logger method)</a>
+      <li><a href="../torchkit/utils/io/#torchkit.utils.io.load_pickle">load_pickle() (in module torchkit.utils.io)</a>
 </li>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.log_learning_rate">log_learning_rate() (torchkit.logger.Logger method)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.log_image">log_image() (torchkit.logger.Logger method)</a>
 </li>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.log_scalar">log_scalar() (torchkit.logger.Logger method)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.log_learning_rate">log_learning_rate() (torchkit.logger.Logger method)</a>
 </li>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger.log_video">log_video() (torchkit.logger.Logger method)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.log_scalar">log_scalar() (torchkit.logger.Logger method)</a>
 </li>
-      <li><a href="../torchkit/expm.logger/#torchkit.logger.Logger">Logger (class in torchkit.logger)</a>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger.log_video">log_video() (torchkit.logger.Logger method)</a>
+</li>
+      <li><a href="../torchkit/logger/#torchkit.logger.Logger">Logger (class in torchkit.logger)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -282,15 +284,27 @@
     module
 
       <ul>
-        <li><a href="../torchkit/expm.experiment/#module-torchkit.experiment">torchkit.experiment</a>
+        <li><a href="../torchkit/experiment/#module-torchkit.experiment">torchkit.experiment</a>
 </li>
         <li><a href="../torchkit/layers/#module-torchkit.layers">torchkit.layers</a>
 </li>
         <li><a href="../torchkit/losses/#module-torchkit.losses">torchkit.losses</a>
 </li>
-        <li><a href="../torchkit/utils.py_utils/#module-torchkit.utils.py_utils">torchkit.utils.py_utils</a>
+        <li><a href="../torchkit/utils/config/#module-torchkit.utils.config">torchkit.utils.config</a>
 </li>
-        <li><a href="../torchkit/utils.torch_utils/#module-torchkit.utils.torch_utils">torchkit.utils.torch_utils</a>
+        <li><a href="../torchkit/utils/dataset/#module-torchkit.utils.dataset">torchkit.utils.dataset</a>
+</li>
+        <li><a href="../torchkit/utils/git/#module-torchkit.utils.git">torchkit.utils.git</a>
+</li>
+        <li><a href="../torchkit/utils/io/#module-torchkit.utils.io">torchkit.utils.io</a>
+</li>
+        <li><a href="../torchkit/utils/module_stats/#module-torchkit.utils.module_stats">torchkit.utils.module_stats</a>
+</li>
+        <li><a href="../torchkit/utils/pdb_fallback/#module-torchkit.utils.pdb_fallback">torchkit.utils.pdb_fallback</a>
+</li>
+        <li><a href="../torchkit/utils/seed/#module-torchkit.utils.seed">torchkit.utils.seed</a>
+</li>
+        <li><a href="../torchkit/utils/timer/#module-torchkit.utils.timer">torchkit.utils.timer</a>
 </li>
       </ul></li>
   </ul></td>
@@ -319,7 +333,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../torchkit/layers/#torchkit.layers.CausalConv1d.padding_mode">padding_mode (torchkit.layers.CausalConv1d attribute)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.pdb_fallback">pdb_fallback() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/pdb_fallback/#torchkit.utils.pdb_fallback.pdb_fallback">pdb_fallback() (in module torchkit.utils.pdb_fallback)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -327,13 +341,13 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch.reset">reset() (torchkit.utils.py_utils.Stopwatch method)</a>
+      <li><a href="../torchkit/utils/timer/#torchkit.utils.timer.Stopwatch.reset">reset() (torchkit.utils.timer.Stopwatch method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.restore">restore() (torchkit.checkpoint.Checkpoint method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.Checkpoint.restore">restore() (torchkit.checkpoint.Checkpoint method)</a>
 </li>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.restore_or_initialize">restore_or_initialize() (torchkit.checkpoint.CheckpointManager method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.restore_or_initialize">restore_or_initialize() (torchkit.checkpoint.CheckpointManager method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -341,27 +355,29 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.Checkpoint.save">save() (torchkit.checkpoint.Checkpoint method)</a>
+      <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.Checkpoint.save">save() (torchkit.checkpoint.Checkpoint method)</a>
 
       <ul>
-        <li><a href="../torchkit/expm.checkpoint/#torchkit.checkpoint.CheckpointManager.save">(torchkit.checkpoint.CheckpointManager method)</a>
+        <li><a href="../torchkit/checkpoint/#torchkit.checkpoint.CheckpointManager.save">(torchkit.checkpoint.CheckpointManager method)</a>
 </li>
       </ul></li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.seed_rngs">seed_rngs() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/io/#torchkit.utils.io.save_pickle">save_pickle() (in module torchkit.utils.io)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.set_cudnn">set_cudnn() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/seed/#torchkit.utils.seed.seed_rngs">seed_rngs() (in module torchkit.utils.seed)</a>
+</li>
+      <li><a href="../torchkit/utils/seed/#torchkit.utils.seed.set_cudnn">set_cudnn() (in module torchkit.utils.seed)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.setup_experiment">setup_experiment() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/experiment/#torchkit.experiment.setup_experiment">setup_experiment() (in module torchkit.experiment)</a>
 </li>
       <li><a href="../torchkit/layers/#torchkit.layers.SpatialSoftArgmax">SpatialSoftArgmax (class in torchkit.layers)</a>
 </li>
-      <li><a href="../torchkit/utils.py_utils/#torchkit.utils.py_utils.Stopwatch">Stopwatch (class in torchkit.utils.py_utils)</a>
+      <li><a href="../torchkit/utils/timer/#torchkit.utils.timer.Stopwatch">Stopwatch (class in torchkit.utils.timer)</a>
 </li>
       <li><a href="../torchkit/layers/#torchkit.layers.CausalConv1d.stride">stride (torchkit.layers.CausalConv1d attribute)</a>
 </li>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.string_from_kwargs">string_from_kwargs() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/experiment/#torchkit.experiment.string_from_kwargs">string_from_kwargs() (in module torchkit.experiment)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -369,13 +385,11 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/utils.py_utils/#torchkit.utils.py_utils.threaded_func">threaded_func() (in module torchkit.utils.py_utils)</a>
-</li>
       <li>
     torchkit.experiment
 
       <ul>
-        <li><a href="../torchkit/expm.experiment/#module-torchkit.experiment">module</a>
+        <li><a href="../torchkit/experiment/#module-torchkit.experiment">module</a>
 </li>
       </ul></li>
       <li>
@@ -393,21 +407,63 @@
 </li>
       </ul></li>
       <li>
-    torchkit.utils.py_utils
+    torchkit.utils.config
 
       <ul>
-        <li><a href="../torchkit/utils.py_utils/#module-torchkit.utils.py_utils">module</a>
+        <li><a href="../torchkit/utils/config/#module-torchkit.utils.config">module</a>
 </li>
       </ul></li>
       <li>
-    torchkit.utils.torch_utils
+    torchkit.utils.dataset
 
       <ul>
-        <li><a href="../torchkit/utils.torch_utils/#module-torchkit.utils.torch_utils">module</a>
+        <li><a href="../torchkit/utils/dataset/#module-torchkit.utils.dataset">module</a>
+</li>
+      </ul></li>
+      <li>
+    torchkit.utils.git
+
+      <ul>
+        <li><a href="../torchkit/utils/git/#module-torchkit.utils.git">module</a>
+</li>
+      </ul></li>
+      <li>
+    torchkit.utils.io
+
+      <ul>
+        <li><a href="../torchkit/utils/io/#module-torchkit.utils.io">module</a>
+</li>
+      </ul></li>
+      <li>
+    torchkit.utils.module_stats
+
+      <ul>
+        <li><a href="../torchkit/utils/module_stats/#module-torchkit.utils.module_stats">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    torchkit.utils.pdb_fallback
+
+      <ul>
+        <li><a href="../torchkit/utils/pdb_fallback/#module-torchkit.utils.pdb_fallback">module</a>
+</li>
+      </ul></li>
+      <li>
+    torchkit.utils.seed
+
+      <ul>
+        <li><a href="../torchkit/utils/seed/#module-torchkit.utils.seed">module</a>
+</li>
+      </ul></li>
+      <li>
+    torchkit.utils.timer
+
+      <ul>
+        <li><a href="../torchkit/utils/timer/#module-torchkit.utils.timer">module</a>
+</li>
+      </ul></li>
       <li><a href="../torchkit/layers/#torchkit.layers.Flatten.training">training (torchkit.layers.Flatten attribute)</a>
 
       <ul>
@@ -434,7 +490,7 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.unique_id">unique_id() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/experiment/#torchkit.experiment.unique_id">unique_id() (in module torchkit.experiment)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -442,7 +498,7 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../torchkit/expm.experiment/#torchkit.experiment.validate_config">validate_config() (in module torchkit.experiment)</a>
+      <li><a href="../torchkit/utils/config/#torchkit.utils.config.validate_config">validate_config() (in module torchkit.utils.config)</a>
 </li>
   </ul></td>
 </tr></table>

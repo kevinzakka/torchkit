@@ -40,7 +40,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/expm/">Experiment Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/logger/">torchkit.logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/checkpoint/">torchkit.checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../torchkit/experiment/">torchkit.experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/layers/">torchkit.layers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/losses/">torchkit.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../torchkit/utils/">torchkit.utils</a></li>
@@ -83,10 +85,10 @@
 <span class="n">ImageType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="Logger"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger">[docs]</a><span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
+<div class="viewcode-block" id="Logger"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger">[docs]</a><span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A Tensorboard-based logger.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Logger.__init__"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_write</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Logger.__init__"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_write</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
 <span class="sd">        Args:</span>
@@ -103,13 +105,13 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Logger.close"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Logger.close"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Logger.flush"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Logger.flush"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Logger.log_scalar"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_scalar">[docs]</a>    <span class="k">def</span> <span class="nf">log_scalar</span><span class="p">(</span>
+<div class="viewcode-block" id="Logger.log_scalar"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.log_scalar">[docs]</a>    <span class="k">def</span> <span class="nf">log_scalar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scalar</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
         <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -135,7 +137,7 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span> <span class="k">if</span> <span class="n">prefix</span> <span class="k">else</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Logger.log_image"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_image">[docs]</a>    <span class="k">def</span> <span class="nf">log_image</span><span class="p">(</span>
+<div class="viewcode-block" id="Logger.log_image"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.log_image">[docs]</a>    <span class="k">def</span> <span class="nf">log_image</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">image</span><span class="p">:</span> <span class="n">ImageType</span><span class="p">,</span>
         <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -167,7 +169,7 @@
                 <span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">dataformats</span><span class="o">=</span><span class="s2">&quot;CHW&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Logger.log_video"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_video">[docs]</a>    <span class="k">def</span> <span class="nf">log_video</span><span class="p">(</span>
+<div class="viewcode-block" id="Logger.log_video"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.log_video">[docs]</a>    <span class="k">def</span> <span class="nf">log_video</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">video</span><span class="p">,</span>
         <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -213,7 +215,7 @@
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Torch tensor should have BTCHW format.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_video</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Logger.log_learning_rate"><a class="viewcode-back" href="../../../torchkit/expm.logger/#torchkit.logger.Logger.log_learning_rate">[docs]</a>    <span class="k">def</span> <span class="nf">log_learning_rate</span><span class="p">(</span>
+<div class="viewcode-block" id="Logger.log_learning_rate"><a class="viewcode-back" href="../../../torchkit/logger/#torchkit.logger.Logger.log_learning_rate">[docs]</a>    <span class="k">def</span> <span class="nf">log_learning_rate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">optimizer</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">],</span>
         <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>

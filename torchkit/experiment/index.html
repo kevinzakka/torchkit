@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>torchkit.experiment &mdash; torchkit 0.0.3 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="torchkit.layers" href="../layers/" />
+    <link rel="prev" title="torchkit.checkpoint" href="../checkpoint/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #06203A" >
+            <a href="../../" class="icon icon-home"> torchkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../logger/">torchkit.logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../checkpoint/">torchkit.checkpoint</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">torchkit.experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layers/">torchkit.layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../losses/">torchkit.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/">torchkit.utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #06203A" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">torchkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+      <li>torchkit.experiment</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/torchkit/experiment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-torchkit.experiment">
+<span id="torchkit-experiment"></span><h1>torchkit.experiment<a class="headerlink" href="#module-torchkit.experiment" title="Permalink to this headline"></a></h1>
+<p>Methods useful for running experiments.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.setup_experiment">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">setup_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#setup_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.setup_experiment" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes an experiment.</p>
+<p>If the experiment directory doesn’t exist yet, creates it and dumps the config
+dict as a yaml file and git hash as a text file.
+If it exists already, raises a ValueError to prevent overwriting unless resume is
+set to True.
+If it exists already and resume is set to True, inplace updates the config with the
+values in the saved yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp_dir</strong> (<em>str</em>) – Path to the experiment directory.</p></li>
+<li><p><strong>config</strong> (<em>ConfigDict</em>) – The config for the experiment.</p></li>
+<li><p><strong>resume</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to resume from a previously created experiment.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the experiment directory exists already and resume is not set to
+    True.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.string_from_kwargs">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">string_from_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#string_from_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.string_from_kwargs" title="Permalink to this definition"></a></dt>
+<dd><p>Concatenate kwargs into an underscore-separated string.</p>
+<p>Used to generate an experiment name based on supplied config kwargs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>kwargs</strong> (<em>Any</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="torchkit.experiment.unique_id">
+<span class="sig-prename descclassname"><span class="pre">torchkit.experiment.</span></span><span class="sig-name descname"><span class="pre">unique_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/torchkit/experiment/#unique_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.experiment.unique_id" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a unique ID as specified in RFC 4122.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../checkpoint/" class="btn btn-neutral float-left" title="torchkit.checkpoint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../layers/" class="btn btn-neutral float-right" title="torchkit.layers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Kevin Zakka.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
