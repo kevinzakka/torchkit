@@ -33,8 +33,11 @@ def setup_experiment(
     """Initializes an experiment.
 
     If the experiment directory doesn't exist yet, creates it and dumps the config
-    dict as a yaml file and git hash as a text file. If it exists already, raises a
-    ValueError to prevent overwriting unless resume is set to True.
+    dict as a yaml file and git hash as a text file.
+    If it exists already, raises a ValueError to prevent overwriting unless resume is
+    set to True.
+    If it exists already and resume is set to True, inplace updates the config with the
+    values in the saved yaml file.
 
     Args:
         exp_dir (str): Path to the experiment directory.
@@ -51,8 +54,10 @@ def setup_experiment(
             raise ValueError(
                 "Experiment already exists. Run with --resume to continue."
             )
+
         load_config(exp_dir, config)
     else:
-        dump_config(exp_dir, config)  # Takes care of creating dir if it does not exist.
+        dump_config(exp_dir, config)
+
         with open(os.path.join(exp_dir, "git_hash.txt"), "w") as fp:
             fp.write(git_revision_hash())

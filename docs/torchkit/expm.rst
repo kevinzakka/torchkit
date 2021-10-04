@@ -3,6 +3,6 @@ Experiment Management
 
 .. toctree::
 
-    expm.experiment
     expm.checkpoint
     expm.logger
+    expm.experiment
