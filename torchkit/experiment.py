@@ -54,10 +54,12 @@ def setup_experiment(
             raise ValueError(
                 "Experiment already exists. Run with --resume to continue."
             )
-
+        # Inplace-update the config using the values in the saved yaml file.
         load_config(exp_dir, config)
     else:
+        # Dump config as a yaml file.
         dump_config(exp_dir, config)
 
+        # Dump git hash as a text file.
         with open(os.path.join(exp_dir, "git_hash.txt"), "w") as fp:
             fp.write(git_revision_hash())
