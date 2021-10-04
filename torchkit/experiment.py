@@ -53,7 +53,6 @@ def setup_experiment(
             )
         load_config(exp_dir, config)
     else:
-        os.makedirs(exp_dir)
-        dump_config(exp_dir, config)
+        dump_config(exp_dir, config)  # Takes care of creating dir if it does not exist.
         with open(os.path.join(exp_dir, "git_hash.txt"), "w") as fp:
             fp.write(git_revision_hash())
