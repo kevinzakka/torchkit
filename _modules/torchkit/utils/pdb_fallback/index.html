@@ -80,7 +80,7 @@
 
 
 <span class="c1"># Reference: https://github.com/brentyi/fannypack/blob/master/fannypack/utils/_pdb_safety_net.py  # noqa: E501</span>
-<div class="viewcode-block" id="pdb_fallback"><a class="viewcode-back" href="../../../../torchkit/utils/pdb_fallback/#torchkit.utils.pdb_fallback.pdb_fallback">[docs]</a><span class="k">def</span> <span class="nf">pdb_fallback</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">CallableType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CallableType</span><span class="p">:</span>
+<div class="viewcode-block" id="pdb_fallback"><a class="viewcode-back" href="../../../../torchkit/utils/pdb_fallback/#torchkit.utils.pdb_fallback.pdb_fallback">[docs]</a><span class="k">def</span> <span class="nf">pdb_fallback</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">CallableType</span><span class="p">,</span> <span class="n">use_ipdb</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CallableType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Wraps a function in a pdb safety net for unexpected errors in a Python script.</span>
 
 <span class="sd">    When called, pdb will be automatically opened when either (a) the user hits Ctrl+C</span>
@@ -99,26 +99,34 @@
 
 <span class="sd">        if __name__ == &quot;__main__&quot;:</span>
 <span class="sd">            main()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f (CallableType): The function to wrap.</span>
+<span class="sd">        use_ipdb (bool, optional): Whether to use ipdb instead of pdb. Defaults to</span>
+<span class="sd">            False.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">import</span> <span class="nn">signal</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="kn">import</span> <span class="nn">traceback</span> <span class="k">as</span> <span class="nn">tb</span>
 
-    <span class="kn">import</span> <span class="nn">ipdb</span>
+    <span class="k">if</span> <span class="n">use_ipdb</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">ipdb</span> <span class="k">as</span> <span class="nn">pdb</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">pdb</span>
 
     <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">inner_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Open pdb on Ctrl-C.</span>
         <span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-            <span class="n">ipdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+            <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
 
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
 
         <span class="c1"># Open pdb when we encounter an uncaught exception.</span>
         <span class="k">def</span> <span class="nf">excepthook</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
             <span class="n">tb</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-            <span class="n">ipdb</span><span class="o">.</span><span class="n">post_mortem</span><span class="p">(</span><span class="n">traceback</span><span class="p">)</span>
+            <span class="n">pdb</span><span class="o">.</span><span class="n">post_mortem</span><span class="p">(</span><span class="n">traceback</span><span class="p">)</span>
 
         <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">excepthook</span>
 

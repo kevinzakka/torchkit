@@ -89,7 +89,7 @@
 <span id="torchkit-utils-pdb-fallback"></span><h1>torchkit.utils.pdb_fallback<a class="headerlink" href="#module-torchkit.utils.pdb_fallback" title="Permalink to this headline"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="torchkit.utils.pdb_fallback.pdb_fallback">
-<span class="sig-prename descclassname"><span class="pre">torchkit.utils.pdb_fallback.</span></span><span class="sig-name descname"><span class="pre">pdb_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/torchkit/utils/pdb_fallback/#pdb_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.pdb_fallback.pdb_fallback" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchkit.utils.pdb_fallback.</span></span><span class="sig-name descname"><span class="pre">pdb_fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ipdb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/torchkit/utils/pdb_fallback/#pdb_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchkit.utils.pdb_fallback.pdb_fallback" title="Permalink to this definition"></a></dt>
 <dd><p>Wraps a function in a pdb safety net for unexpected errors in a Python script.</p>
 <p>When called, pdb will be automatically opened when either (a) the user hits Ctrl+C
 or (b) we encounter an uncaught exception. Helpful for bypassing minor errors,
@@ -108,11 +108,15 @@ diagnosing problems, and rescuing unsaved models.</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>~CallableType</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>CallableType</em>) – The function to wrap.</p></li>
+<li><p><strong>use_ipdb</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use ipdb instead of pdb. Defaults to
+False.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><p><strong>f</strong> (<em>torchkit.utils.pdb_fallback.CallableType</em>) – </p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>~CallableType</p>
 </dd>
 </dl>
 </dd></dl>
