@@ -5,7 +5,7 @@ CallableType = TypeVar("CallableType", bound=Callable)
 
 
 # Reference: https://github.com/brentyi/fannypack/blob/master/fannypack/utils/_pdb_safety_net.py  # noqa: E501
-def pdb_fallback(f: CallableType) -> CallableType:
+def pdb_fallback(f: CallableType, use_ipdb: bool = False) -> CallableType:
     """Wraps a function in a pdb safety net for unexpected errors in a Python script.
 
     When called, pdb will be automatically opened when either (a) the user hits Ctrl+C
@@ -24,26 +24,34 @@ def pdb_fallback(f: CallableType) -> CallableType:
 
         if __name__ == "__main__":
             main()
+
+    Args:
+        f (CallableType): The function to wrap.
+        use_ipdb (bool, optional): Whether to use ipdb instead of pdb. Defaults to
+            False.
     """
 
     import signal
     import sys
     import traceback as tb
 
-    import ipdb
+    if use_ipdb:
+        import ipdb as pdb
+    else:
+        import pdb
 
     @functools.wraps(f)
     def inner_wrapper(*args, **kwargs):
         # Open pdb on Ctrl-C.
         def handler(sig, frame):
-            ipdb.set_trace()
+            pdb.set_trace()
 
         signal.signal(signal.SIGINT, handler)
 
         # Open pdb when we encounter an uncaught exception.
         def excepthook(type_, value, traceback):
             tb.print_exception(type_, value, traceback, limit=100)
-            ipdb.post_mortem(traceback)
+            pdb.post_mortem(traceback)
 
         sys.excepthook = excepthook
 
