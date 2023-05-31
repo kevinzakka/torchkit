@@ -76,16 +76,12 @@ class Checkpoint:
         for k, v in self.__dict__.items():
             save_dict[k] = v.state_dict()
 
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir) / "tmp.ckpt"
+        with tempfile.TemporaryDirectory(dir=save_path.parent) as tmp_dir:
+            tmp_path = Path(tmp_dir) / "tmp-{unique_id()}.ckpt"
             torch.save(save_dict, tmp_path)
             # `rename` is POSIX-compliant and thus, is an atomic operation.
             # Ref: https://docs.python.org/3/library/os.html#os.rename
             os.rename(tmp_path, save_path)
-
-        tmp_path = save_path.parent / f"tmp-{unique_id()}.ckpt"
-        torch.save(save_dict, tmp_path)
-        os.rename(tmp_path, save_path)
 
         # Restore SIGINT handler.
         if orig_handler is not None:
